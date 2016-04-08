@@ -1,7 +1,7 @@
 /**
  * 
  */
-package webapp;
+package edu.neu.ccs.community;
 
 /**
  * @author Zhenhuan

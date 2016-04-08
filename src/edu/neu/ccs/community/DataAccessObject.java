@@ -49,11 +49,13 @@ public class DataAccessObject {
 
 		return connection;
 	}
-
+	
+	/** close Connection */
 	public void closeConnection(Connection connection) throws SQLException {
 		connection.close();
 	}
 
+	
 	/**
 	 * @param args
 	 * @throws SQLException
@@ -68,6 +70,7 @@ public class DataAccessObject {
 		dao.create(new User("123", "123", "123@123.com", "127.0.0.1", false, false));
 	}
 
+	/** Create User */
 	public void create(User user) {
 		String sql = "CALL create_user(?,?,?,?,?,?,?,?)";
 		
@@ -83,13 +86,10 @@ public class DataAccessObject {
 			statement.setBoolean(6, user.isBanned());
 			statement.setDate(7, user.getRegisterationTime());
 			statement.setDate(8, user.getLastLoginTime());
-			
 			statement.execute();
-		}
-		catch (SQLException e) {
-			// TODO Auto-generated catch block
+			
+		} catch (SQLException e) {
 			e.printStackTrace();
 		}
-
 	}
 }

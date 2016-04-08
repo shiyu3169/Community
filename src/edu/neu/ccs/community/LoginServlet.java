@@ -1,4 +1,4 @@
-package webapp;
+package edu.neu.ccs.community;
 
 import java.io.IOException;
 import java.io.PrintWriter;
