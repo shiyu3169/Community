@@ -68,9 +68,10 @@ CREATE PROCEDURE delete_user (
 	Given_UserName 	VARCHAR(50)
 )
 BEGIN
-	
+	DELETE FROM Users WHERE UserName = Given_UserName;
 END//
 DELIMITER ;
+CALL delete_user("admin");
 /* Forums Table */
 DROP TABLE IF EXISTS Forums;
 CREATE TABLE Forums (
@@ -93,6 +94,7 @@ CREATE TABLE Forums (
 		FOREIGN KEY (Forum_Owner) REFERENCES Users(UserName)
         ON UPDATE CASCADE ON DELETE SET NULL
 );
+
 /* Thread Table */
 DROP TABLE IF EXISTS Threads;
 CREATE TABLE Threads (

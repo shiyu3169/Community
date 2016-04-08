@@ -20,4 +20,5 @@ public class Forum {
     private Date lastPostTime;
     
     private boolean isVerified;
+    
 }
