@@ -21,7 +21,9 @@
 	            <input type="email" name="email" id="email" class="form-control" placeholder="Email@example.com" value="${email}" required>
 	            <label for="inputPassword" class="sr-only">Password</label>   
 	            <input type="password" name="password" id="Password" class="form-control" placeholder="Password" value="${password}"  required>
-	            <p>${message }</p>
+	            <h3>
+	            	<font color="white">${message }</font>
+	            </h3>
 	            <button class="btn btn-lg btn-primary btn-block" type="submit">Sign up</button>
 	        </form>
 	    </div>
