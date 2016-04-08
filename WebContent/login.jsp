@@ -16,7 +16,7 @@
 		</form>
 		<%="Now is " + new java.util.Date() %>
 		<%
-		System.out.println(request.getParameter("password"));
+			System.out.println(request.getParameter("password"));
 		%>
 	</body>
 </html>

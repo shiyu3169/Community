@@ -37,41 +37,26 @@ public class DataAccessObject {
 	 * Class.forName("com.mysql.jdbc.Driver").newInstance(); String
 	 * connectionUrl = ""; return null; }
 	 */
-	public Connection getConnection() throws SQLException {
+	public Connection getConnection() throws SQLException, InstantiationException, IllegalAccessException, ClassNotFoundException {
+		Class.forName("com.mysql.jdbc.Driver").newInstance();
 		Connection connection = null;
 		Properties connectionProps = new Properties();
 		connectionProps.put("user", this.userName);
 		connectionProps.put("password", this.password);
 
 		connection = DriverManager.getConnection(
-				"jdbc:mysql://" + this.serverName + ":" + this.portNumber + "/" + this.dbName + "?useSSL=true",
+				"jdbc:mysql://" + this.serverName + ":" + this.portNumber + "/" + this.dbName,
 				connectionProps);
 
 		return connection;
 	}
-	
-	/** close Connection */
-	public void closeConnection(Connection connection) throws SQLException {
-		connection.close();
-	}
 
-	
-	/**
-	 * @param args
-	 * @throws SQLException
-	 */
-	public static void main(String[] args) throws SQLException {
-		// TODO Auto-generated method stub
-		System.out.println("Hello from data access object!");
-		DataAccessObject dao = new DataAccessObject();
-		Connection connection = dao.getConnection();
-		System.out.println(connection);
-		dao.closeConnection(connection);
-		dao.create(new User("123", "123", "123@123.com", "127.0.0.1", false, false));
-	}
-
-	/** Create User */
-	public void create(User user) {
+	/** Create User 
+	 * @throws ClassNotFoundException 
+	 * @throws IllegalAccessException 
+	 * @throws InstantiationException 
+	 * @throws SQLException */
+	public void create(User user) throws SQLException, InstantiationException, IllegalAccessException, ClassNotFoundException {
 		String sql = "CALL create_user(?,?,?,?,?,?,?,?)";
 		
 		try (
@@ -88,8 +73,6 @@ public class DataAccessObject {
 			statement.setDate(8, user.getLastLoginTime());
 			statement.execute();
 			
-		} catch (SQLException e) {
-			e.printStackTrace();
 		}
 	}
 }

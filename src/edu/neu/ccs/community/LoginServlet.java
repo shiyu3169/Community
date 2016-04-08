@@ -59,13 +59,8 @@ public class LoginServlet extends HttpServlet {
     	String password = request.getParameter("password");
         request.setAttribute("username", username);
         request.setAttribute("password", password);
-        boolean isValid = new UserValidationService().isValid(username, password);
-        if (isValid)
-        	request.getRequestDispatcher("/WEB-INF/views/Welcome.jsp").forward(request, response);
-        else {
-        	request.setAttribute("message", "Wrong!!!!");
-        	request.getRequestDispatcher("/WEB-INF/views/login.jsp").forward(request, response);
-        }
+        request.getRequestDispatcher("/WEB-INF/views/Welcome.jsp").forward(request, response);
+
         	
     	
     }   
