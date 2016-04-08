@@ -16,13 +16,31 @@
 	                    <div id="navbar" class="collapse navbar-collapse" aria-expanded="true">
 	                        <ul class="nav navbar-nav navbar-right">
 	                            <li><a href="#/login">Log in</a></li>
-	                            <li><a href="#/register">Sign up</a></li>
+	                            <li><a href="/Community/Register.jsp">Sign up</a></li>
 	                            <li><a href="#/logout">Log out</a></li>  
 	                        </ul>
 	                    </div>
 	                </div>
 	            </nav>
 	        </header>
+	    </div>
+	    <hr/>
+	    <hr/>
+	    <div class="text-center">
+	    	<img src="./image/title.png" alt="Mountain View">
+	    </div>
+	    
+	    <!-- Search -->
+	    <div class="container">
+	        <div class="col-lg-3"></div>
+	        <div class="col-lg-6">
+	            <div class="input-group">
+	                <input type="text" class="form-control" placeholder="Seaching for forum ...">
+	                <span class="input-group-btn">
+	                    <button class="btn btn-default" type="submit">Go!</button>
+	                </span>
+	            </div>
+	        </div>
 	    </div>
 	</body>
 </html>
