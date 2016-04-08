@@ -51,7 +51,8 @@ public class DataAccessObject {
 
 		return connection;
 	}
-
+	
+	/** Create User*/
 	public void create(User user) throws SQLException, InstantiationException, IllegalAccessException, ClassNotFoundException {
 		String sql = "SELECT create_user(?,?,?,?,?,?,?,?)";
 		
@@ -71,6 +72,7 @@ public class DataAccessObject {
 			
 		};
 	}
+	/** Delete User*/
 	public void delete(User user) throws SQLException, InstantiationException, IllegalAccessException, ClassNotFoundException {
 		String sql = "CALL delete_user(?)";
 		
@@ -85,6 +87,7 @@ public class DataAccessObject {
 		};
 
 	}
+	/** Delete user by name*/
 	public void deleteUser(String username) throws SQLException, InstantiationException, IllegalAccessException, ClassNotFoundException {
 		String sql = "CALL delete_user(?)";
 		
@@ -98,6 +101,7 @@ public class DataAccessObject {
 		}
 	}
 	
+	/** Create forum*/
 	public void create(Forum forum) throws SQLException, InstantiationException, IllegalAccessException, ClassNotFoundException {
 		String sql = "SELECT create_forum(?,?,?,?,?,?,?)";
 		
