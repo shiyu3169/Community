@@ -52,40 +52,8 @@ public class DataAccessObject {
 		return connection;
 	}
 
-<<<<<<< HEAD
-	public void closeConnection(Connection connection) throws SQLException {
-		connection.close();
-	}
-
-	/**
-	 * @param args
-	 * @throws SQLException
-	 * @throws ClassNotFoundException 
-	 * @throws IllegalAccessException 
-	 * @throws InstantiationException 
-	 */
-	public static void main(String[] args) throws SQLException, InstantiationException, IllegalAccessException, ClassNotFoundException{
-		// TODO Auto-generated method stub
-		System.out.println("Hello from data access object!");
-		DataAccessObject dao = new DataAccessObject();
-
-		//dao.create(new User("123", "123", "123@123.com", "127.0.0.1", false, false));
-		//dao.delete(new User("123", "123", "123@123.com", "127.0.0.1", false, false));
-		//dao.create(new Forum(null, "forumName", "123", "catagory", "description",
-		//		true));
-	}
-
 	public void create(User user) throws SQLException, InstantiationException, IllegalAccessException, ClassNotFoundException {
 		String sql = "SELECT create_user(?,?,?,?,?,?,?,?)";
-=======
-	/** Create User 
-	 * @throws ClassNotFoundException 
-	 * @throws IllegalAccessException 
-	 * @throws InstantiationException 
-	 * @throws SQLException */
-	public void create(User user) throws SQLException, InstantiationException, IllegalAccessException, ClassNotFoundException {
-		String sql = "CALL create_user(?,?,?,?,?,?,?,?)";
->>>>>>> origin/master
 		
 		try (
 			Connection connection = this.getConnection(); 
@@ -101,10 +69,6 @@ public class DataAccessObject {
 			statement.setDate(8, user.getLastLoginTime());
 			statement.execute();
 			
-<<<<<<< HEAD
-			this.closeConnection(connection);
-			this.closeConnection(connection);
-			this.closeConnection(connection);
 		};
 	}
 	public void delete(User user) throws SQLException, InstantiationException, IllegalAccessException, ClassNotFoundException {
@@ -118,7 +82,6 @@ public class DataAccessObject {
 			
 			statement.execute();
 			
-			this.closeConnection(connection);
 		};
 
 	}
@@ -132,14 +95,9 @@ public class DataAccessObject {
 			statement.setString(1, username);
 			
 			statement.execute();
-			
-			this.closeConnection(connection);
 		}
-
-=======
-		}
->>>>>>> origin/master
 	}
+	
 	public void create(Forum forum) throws SQLException, InstantiationException, IllegalAccessException, ClassNotFoundException {
 		String sql = "SELECT create_forum(?,?,?,?,?,?,?)";
 		
@@ -159,8 +117,6 @@ public class DataAccessObject {
 			statement.setBoolean(7, forum.isVerified());
 			
 			statement.execute();
-			//System.out.println(forumID);
-			this.closeConnection(connection);
 		}
 	}
 }
