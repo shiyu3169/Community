@@ -4,7 +4,7 @@
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
-<title>Insert title here</title>
+<title>Home</title>
 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" 
 		integrity="sha384-1q8mTJOASx8j1Au+a5WDVnPi2lkFfwwEAa8hDDdjZlpLegxhjVME1fgjWPGmkzs7" crossorigin="anonymous">
 </head>
@@ -32,15 +32,17 @@
 	    
 	    <!-- Search -->
 	    <div class="container">
-	        <div class="col-lg-3"></div>
-	        <div class="col-lg-6">
-	            <div class="input-group">
-	                <input type="text" class="form-control" placeholder="Seaching for forum ...">
-	                <span class="input-group-btn">
-	                    <button class="btn btn-default" type="submit">Go!</button>
-	                </span>
-	            </div>
-	        </div>
+	    	<form class="form" role="search">
+		        <div class="col-lg-3"></div>
+		        <div class="col-lg-6">
+		            <div class="input-group">
+		                <input type="text" class="form-control" placeholder="Seaching for forum ...">
+		                <span class="input-group-btn">
+		                    <button class="btn btn-default" type="submit">Go!</button>
+		                </span>
+		            </div>
+		        </div>
+	        </form>
 	    </div>
 	</body>
 </html>
