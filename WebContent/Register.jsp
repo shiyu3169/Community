@@ -11,16 +11,19 @@
 	</head>
 	<body background="./image/background.jpg">
 		<div class="container">
-	        <form class="form-signin">
+	        <form  method="post" class="form-signin">
 	            <h2 class="form-signin-heading"> 
 	            	<font color="white">Please Register </font>
 	            </h2>
 	            <label for="inputUserName" class="sr-only">User Name</label>
-	            <input type="username" id="Username" class="form-control" placeholder="UserName" required autofocus>
+	            <input type="username" name="username" id="Username" class="form-control" placeholder="UserName" value="${username}" required autofocus>
 	            <label for="inputEmail" class="sr-only">Email</label>
-	            <input type="email" id="email" class="form-control" placeholder="Email@example.com" required>
+	            <input type="email" name="email" id="email" class="form-control" placeholder="Email@example.com" value="${email}" required>
 	            <label for="inputPassword" class="sr-only">Password</label>   
-	            <input type="password" id="Password" class="form-control" placeholder="Password" required>
+	            <input type="password" name="password" id="Password" class="form-control" placeholder="Password" value="${password}"  required>
+	            <h3>
+	            	<font color="white">${message }</font>
+	            </h3>
 	            <button class="btn btn-lg btn-primary btn-block" type="submit">Sign up</button>
 	        </form>
 	    </div>
