@@ -24,7 +24,7 @@ CREATE TABLE Users(
 );
 DROP PROCEDURE IF EXISTS create_user;
 DELIMITER //
-CREATE PROCEDURE create_user (
+CREATE FUNCTION create_user (
     Given_UserName 	VARCHAR(50),    
     Given_User_Password	VARCHAR(512), -- in SHA3-512
     Given_User_EMail	VARCHAR(63),
@@ -37,7 +37,9 @@ CREATE PROCEDURE create_user (
     -- OUT Out_RegisterationTime DATE,
     -- OUT Out_RegisterationTime DATE,
 )
+RETURNS INT
 BEGIN
+	DECLARE result INT;
 	INSERT INTO Users(
 		UserName,
         User_Password,
@@ -58,9 +60,11 @@ BEGIN
 		Given_User_RegisterationTime,
 		Given_User_LastLoginTime
 	);
+    RETURN LAST_INSERT_ID();
 
 END //
-CALL create_user("admin", "admin", "admin@admin.org", "127.0.0.1", TRUE, FALSE, NOW(), NOW()) //
+SELECT (create_user("admin", "admin", "admin@admin.org", "127.0.0.1", TRUE, FALSE, NOW(), NOW())) //
+-- SELECT (create_forums("admin", "admin", "admin@admin.org", "127.0.0.1", TRUE, FALSE, NOW(), NOW())) //
 DELIMITER ;
 DROP PROCEDURE IF EXISTS delete_user;
 DELIMITER //
@@ -72,6 +76,8 @@ BEGIN
 END//
 DELIMITER ;
 CALL delete_user("admin");
+
+
 /* Forums Table */
 DROP TABLE IF EXISTS Forums;
 CREATE TABLE Forums (
@@ -94,6 +100,61 @@ CREATE TABLE Forums (
 		FOREIGN KEY (Forum_Owner) REFERENCES Users(UserName)
         ON UPDATE CASCADE ON DELETE SET NULL
 );
+DROP PROCEDURE IF EXISTS create_forum;
+DELIMITER //
+CREATE FUNCTION create_forum (
+	-- ForumID	INT,
+    Given_ParentID	INT,	-- foreign key to ForumID
+    Given_ForumName	VARCHAR(50), -- Forum can be identified by name
+    
+    Given_Forum_Owner	VARCHAR(50), -- foreign key to Users(Username) to speed up access
+    Given_Forum_Catagory	VARCHAR(63),
+    Given_Forum_Description VARCHAR(255),
+    
+    Given_Forum_CreationTime	DATETIME,
+    -- Given_Forum_LastPostTime	DATETIME,
+    
+    Given_Forum_IsVerified	BOOLEAN
+)
+RETURNS INT
+BEGIN
+	INSERT INTO Forums(
+		ParentID,	-- foreign key to ForumID
+		ForumName, -- Forum can be identified by name
+    
+		Forum_Owner, -- foreign key to Users(Username) to speed up access
+		Forum_Catagory,
+		Forum_Description,
+    
+		Forum_CreationTime,
+		-- Forum_LastPostTime,
+    
+		Forum_IsVerified
+
+    ) VALUES (
+		Given_ParentID,	-- foreign key to ForumID
+		Given_ForumName, -- Forum can be identified by name
+    
+		Given_Forum_Owner, -- foreign key to Users(Username) to speed up access
+		Given_Forum_Catagory,
+		Given_Forum_Description,
+    
+		Given_Forum_CreationTime,
+		-- Given_Forum_LastPostTime,
+    
+		Given_Forum_IsVerified
+	);
+    RETURN LAST_INSERT_ID();
+END//
+DELIMITER ;
+SELECT create_user("admin", "admin", "admin@admin.org", "127.0.0.1", TRUE, FALSE, NOW(), NOW());
+SELECT create_forum(NULL,	
+		"Root", 
+		"admin", 
+		"Forum_Catagory",
+		"Forum_Description",
+		NOW(),
+		TRUE);
 
 /* Thread Table */
 DROP TABLE IF EXISTS Threads;

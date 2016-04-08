@@ -7,6 +7,7 @@ import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
+import java.sql.Types;
 import java.util.Properties;
 
 /**
@@ -37,7 +38,8 @@ public class DataAccessObject {
 	 * Class.forName("com.mysql.jdbc.Driver").newInstance(); String
 	 * connectionUrl = ""; return null; }
 	 */
-	public Connection getConnection() throws SQLException {
+	public Connection getConnection() throws SQLException, InstantiationException, IllegalAccessException, ClassNotFoundException {
+		Class.forName("com.mysql.jdbc.Driver").newInstance();
 		Connection connection = null;
 		Properties connectionProps = new Properties();
 		connectionProps.put("user", this.userName);
@@ -57,19 +59,23 @@ public class DataAccessObject {
 	/**
 	 * @param args
 	 * @throws SQLException
+	 * @throws ClassNotFoundException 
+	 * @throws IllegalAccessException 
+	 * @throws InstantiationException 
 	 */
-	public static void main(String[] args) throws SQLException {
+	public static void main(String[] args) throws SQLException, InstantiationException, IllegalAccessException, ClassNotFoundException{
 		// TODO Auto-generated method stub
 		System.out.println("Hello from data access object!");
 		DataAccessObject dao = new DataAccessObject();
-		Connection connection = dao.getConnection();
-		System.out.println(connection);
-		dao.closeConnection(connection);
-		dao.create(new User("123", "123", "123@123.com", "127.0.0.1", false, false));
+
+		//dao.create(new User("123", "123", "123@123.com", "127.0.0.1", false, false));
+		//dao.delete(new User("123", "123", "123@123.com", "127.0.0.1", false, false));
+		//dao.create(new Forum(null, "forumName", "123", "catagory", "description",
+		//		true));
 	}
 
-	public void create(User user) {
-		String sql = "CALL create_user(?,?,?,?,?,?,?,?)";
+	public void create(User user) throws SQLException, InstantiationException, IllegalAccessException, ClassNotFoundException {
+		String sql = "SELECT create_user(?,?,?,?,?,?,?,?)";
 		
 		try (
 			Connection connection = this.getConnection(); 
@@ -85,11 +91,63 @@ public class DataAccessObject {
 			statement.setDate(8, user.getLastLoginTime());
 			
 			statement.execute();
-		}
-		catch (SQLException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+			
+			this.closeConnection(connection);
+			this.closeConnection(connection);
+			this.closeConnection(connection);
+		};
+	}
+	public void delete(User user) throws SQLException, InstantiationException, IllegalAccessException, ClassNotFoundException {
+		String sql = "CALL delete_user(?)";
+		
+		try (
+			Connection connection = this.getConnection(); 
+			PreparedStatement statement = connection.prepareStatement(sql))
+		{
+			statement.setString(1, user.getUsername());
+			
+			statement.execute();
+			
+			this.closeConnection(connection);
+		};
+
+	}
+	public void deleteUser(String username) throws SQLException, InstantiationException, IllegalAccessException, ClassNotFoundException {
+		String sql = "CALL delete_user(?)";
+		
+		try (
+			Connection connection = this.getConnection(); 
+			PreparedStatement statement = connection.prepareStatement(sql))
+		{
+			statement.setString(1, username);
+			
+			statement.execute();
+			
+			this.closeConnection(connection);
 		}
 
+	}
+	public void create(Forum forum) throws SQLException, InstantiationException, IllegalAccessException, ClassNotFoundException {
+		String sql = "SELECT create_forum(?,?,?,?,?,?,?)";
+		
+		try (
+			Connection connection = this.getConnection(); 
+			PreparedStatement statement = connection.prepareCall(sql))
+		{
+			if (forum.getParentID() == null)
+				statement.setNull(1, Types.INTEGER);
+			else
+				statement.setInt(1, forum.getParentID());
+			statement.setString(2, forum.getForumName());
+			statement.setString(3, forum.getOwner());
+			statement.setString(4, forum.getCatagory());
+			statement.setString(5, forum.getDescription());
+			statement.setDate(6, forum.getCreationTime());
+			statement.setBoolean(7, forum.isVerified());
+			
+			statement.execute();
+			//System.out.println(forumID);
+			this.closeConnection(connection);
+		}
 	}
 }
