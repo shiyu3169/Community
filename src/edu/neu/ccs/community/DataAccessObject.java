@@ -19,7 +19,7 @@ public class DataAccessObject {
 	private final String userName = "root";
 
 	/** The password for the MySQL account (or empty for anonymous) */
-	private final String password = "hpahzGSYCl05116";
+	private final String password = "cliff92711";
 
 	/** The name of the computer running MySQL */
 	private final String serverName = "localhost";
@@ -46,12 +46,13 @@ public class DataAccessObject {
 		connectionProps.put("password", this.password);
 
 		connection = DriverManager.getConnection(
-				"jdbc:mysql://" + this.serverName + ":" + this.portNumber + "/" + this.dbName + "?useSSL=true",
+				"jdbc:mysql://" + this.serverName + ":" + this.portNumber + "/" + this.dbName,
 				connectionProps);
 
 		return connection;
 	}
 
+<<<<<<< HEAD
 	public void closeConnection(Connection connection) throws SQLException {
 		connection.close();
 	}
@@ -76,6 +77,15 @@ public class DataAccessObject {
 
 	public void create(User user) throws SQLException, InstantiationException, IllegalAccessException, ClassNotFoundException {
 		String sql = "SELECT create_user(?,?,?,?,?,?,?,?)";
+=======
+	/** Create User 
+	 * @throws ClassNotFoundException 
+	 * @throws IllegalAccessException 
+	 * @throws InstantiationException 
+	 * @throws SQLException */
+	public void create(User user) throws SQLException, InstantiationException, IllegalAccessException, ClassNotFoundException {
+		String sql = "CALL create_user(?,?,?,?,?,?,?,?)";
+>>>>>>> origin/master
 		
 		try (
 			Connection connection = this.getConnection(); 
@@ -89,9 +99,9 @@ public class DataAccessObject {
 			statement.setBoolean(6, user.isBanned());
 			statement.setDate(7, user.getRegisterationTime());
 			statement.setDate(8, user.getLastLoginTime());
-			
 			statement.execute();
 			
+<<<<<<< HEAD
 			this.closeConnection(connection);
 			this.closeConnection(connection);
 			this.closeConnection(connection);
@@ -126,6 +136,9 @@ public class DataAccessObject {
 			this.closeConnection(connection);
 		}
 
+=======
+		}
+>>>>>>> origin/master
 	}
 	public void create(Forum forum) throws SQLException, InstantiationException, IllegalAccessException, ClassNotFoundException {
 		String sql = "SELECT create_forum(?,?,?,?,?,?,?)";

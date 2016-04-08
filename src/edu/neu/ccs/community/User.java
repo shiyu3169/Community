@@ -24,7 +24,8 @@ public class User {
 
 	boolean isAdministrator;
 	boolean isBanned;
-
+	
+	//Constructor
 	public User(String username, String password, String email, String loginIpAddress, Date registerationTime,
 			Date lastLoginTime, Date lastPostTime, boolean isAdministrator, boolean isBanned) {
 		super();
@@ -40,7 +41,7 @@ public class User {
 		this.isAdministrator = isAdministrator;
 		this.isBanned = isBanned;
 	}
-
+	//Constructor without time
 	public User(String username, String password, String email, String loginIpAddress, boolean isAdministrator,
 			boolean isBanned) {
 		super();
@@ -56,7 +57,8 @@ public class User {
 		this.isAdministrator = isAdministrator;
 		this.isBanned = isBanned;
 	}
-
+	
+	//getter and setter
 	public String getUsername() {
 		return username;
 	}
