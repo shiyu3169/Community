@@ -22,7 +22,7 @@ CREATE TABLE Users(
     User_IsAdministrator	BOOLEAN NOT NULL,
     User_IsBanned	BOOLEAN NOT NULL    
 );
-DROP PROCEDURE IF EXISTS create_user;
+DROP FUNCTION IF EXISTS create_user;
 DELIMITER //
 CREATE FUNCTION create_user (
     Given_UserName 	VARCHAR(50),    

@@ -12,7 +12,8 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-@WebServlet(urlPatterns = "/register")
+//@WebServlet(urlPatterns = "/register")
+@WebServlet("/register")
 public class RegisterServlet extends HttpServlet {
 
 	protected void doGet(HttpServletRequest request, HttpServletResponse response)
@@ -22,7 +23,7 @@ public class RegisterServlet extends HttpServlet {
 		request.setAttribute("password", request.getParameter("password"));
 		request.setAttribute("email", request.getParameter("email"));
 
-		request.getRequestDispatcher("/Register.jsp").forward(request, response);
+		request.getRequestDispatcher("/Login.jsp").forward(request, response);
 		PrintWriter out = response.getWriter();
 	}
 
@@ -40,7 +41,7 @@ public class RegisterServlet extends HttpServlet {
 		DataAccessObject dao = new DataAccessObject();
 		try {
 			dao.create(user);
-			request.getRequestDispatcher("/login.jsp").forward(request, response);
+			request.getRequestDispatcher("/Login.jsp").forward(request, response);
 		} catch (InstantiationException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -52,7 +53,7 @@ public class RegisterServlet extends HttpServlet {
 			e.printStackTrace();
 		} catch (SQLException e) {
 			request.setAttribute("message", e.getMessage());
-			request.getRequestDispatcher("/Register.jsp").forward(request, response);
+			request.getRequestDispatcher("/Login.jsp").forward(request, response);
 			e.printStackTrace();
 		}
 
