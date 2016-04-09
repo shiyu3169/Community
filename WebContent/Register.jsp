@@ -11,7 +11,7 @@
 	</head>
 	<body background="./image/background.jpg">
 		<div class="container">
-	        <form  method="post" class="form-signin">
+	        <form  method="post" class="form-signin" action="register">
 	            <h2 class="form-signin-heading"> 
 	            	<font color="white">Please Register </font>
 	            </h2>
