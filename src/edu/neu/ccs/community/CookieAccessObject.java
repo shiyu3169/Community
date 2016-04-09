@@ -33,7 +33,8 @@ public class CookieAccessObject {
 	}
 	public String get(String key) {
 		Cookie[] cookies = this.request.getCookies();
-		
+		if (cookies == null) 
+			return null;
 		for (int i = 0; i < cookies.length; i++) {
 			if (cookies[i].getName().equals(key))
 				return cookies[i].getValue();

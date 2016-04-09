@@ -44,6 +44,7 @@ public class LoginServlet extends HttpServlet {
 		if (loginManager.logIn(username, password, 60*60)) {
 			request.getRequestDispatcher("/Home.jsp").forward(request, response);
 		} else {
+			request.setAttribute("message", "User name or password is incorrect.");
 			request.getRequestDispatcher("/Login.jsp").forward(request, response);
 		}
 		
