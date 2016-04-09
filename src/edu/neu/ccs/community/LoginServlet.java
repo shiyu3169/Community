@@ -30,7 +30,7 @@ import javax.servlet.http.HttpServletResponse;
 //3. doGet(HttpServletRequest request, HttpServletResponse response)
 //4. How is the response created?
 
-@WebServlet(urlPatterns = "/login.exe")
+@WebServlet(urlPatterns = "/login")
 public class LoginServlet extends HttpServlet {
 
     @Override

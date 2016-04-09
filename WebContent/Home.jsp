@@ -1,5 +1,5 @@
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
-    pageEncoding="ISO-8859-1"%>
+    pageEncoding="ISO-8859-1" import="edu.neu.ccs.community.*, java.util.List"%>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
@@ -7,6 +7,7 @@
 <title>Home</title>
 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" 
 		integrity="sha384-1q8mTJOASx8j1Au+a5WDVnPi2lkFfwwEAa8hDDdjZlpLegxhjVME1fgjWPGmkzs7" crossorigin="anonymous">
+<link rel="stylesheet" href="./css/fresh-bootstrap-table.css">
 </head>
 	<body background="./image/background.jpg">
 	    <div>
@@ -24,25 +25,64 @@
 	            </nav>
 	        </header>
 	    </div>
-	    <hr/>
-	    <hr/>
+	    <br/>
+	    <br/>
+	    <br/>
+	    <br/>
+	    <br/>
+	    <br/>
+	    <br/>
+	    <br/>
 	    <div class="text-center">
 	    	<img src="./image/title.png" alt="Mountain View">
 	    </div>
 	    
 	    <!-- Search -->
 	    <div class="container">
-	    	<form class="form" role="search">
+	    	<form class="form" method="get">
 		        <div class="col-lg-3"></div>
 		        <div class="col-lg-6">
-		            <div class="input-group">
-		                <input type="text" class="form-control" placeholder="Seaching for forum ...">
+		           <div class="input-group">
+		                <input type="text" name="search" value="${search}" class="form-control" placeholder="Seaching for forum ...">
 		                <span class="input-group-btn">
-		                    <button class="btn btn-default" type="submit">Go!</button>
+		                    <button class="btn btn-primary btn-block" type="submit">Go!</button>
 		                </span>
 		            </div>
 		        </div>
 	        </form>
+	    </div>
+	    <br/>
+	    <br/>
+	    <div class=" container">
+		    <div class="row">
+		    	<div class="col-md-8 col-md-offset-2">
+		    		<div class="fresh-table full-color-orange">
+					    <table  id="fresh-table" class="table">
+					    	<tbody>
+						    	<%
+						    	if (request.getAttribute("search").equals("")) {
+						    		
+						    		return;
+						    	} else {
+						    		List<Forum> forums = (List<Forum>)request.getAttribute("result");
+						    		
+						    		if (forums.isEmpty()) {
+						    			%>
+						    			<p class="text-center">No one has created any related forums</p>
+						    			<p class="text-center"><strong><a href="#">Be the first One to Create it?</a></strong></p>
+						    			<%
+						    		} else {
+								    	 for (Forum forum: forums) {
+								    		 System.out.println(forum.getForumName());
+								    		 %><tr>
+								    		 	<td><%= forum.getForumName()%></td>
+								    		 <tr><%
+								    		 } } }%>
+						    </tbody>
+					    </table>
+				    </div>
+			    </div>
+			</div>
 	    </div>
 	</body>
 </html>

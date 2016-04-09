@@ -163,8 +163,7 @@ public class DataAccessObject {
 					Date lastPostTime = rs.getDate("Forum_LastPostTime");
 					boolean isVerified = rs.getBoolean("Forum_IsVerified");
 					result.add(new Forum(forumID, parentID, forumName, owner, 
-							catagory, description, creationTime, lastPostTime, isVerified));
-					System.out.println(forumName);	// **TEST**		
+							catagory, description, creationTime, lastPostTime, isVerified));	
 				}
 			}
 			
