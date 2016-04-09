@@ -24,7 +24,7 @@ public class DataAccessObject {
 	private final String userName = "root";
 
 	/** The password for the MySQL account (or empty for anonymous) */
-	private final String password = "hpahzGSYCl05116";
+	private final String password = "cliff92711";
 
 	/** The name of the computer running MySQL */
 	private final String serverName = "localhost";
@@ -45,16 +45,12 @@ public class DataAccessObject {
 			System.out.println(dao.userValidation("admin", "admin"));
 			System.out.println(dao.userValidation("admin", "123"));
 		} catch (InstantiationException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		} catch (IllegalAccessException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		} catch (ClassNotFoundException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		} catch (SQLException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 	}
@@ -154,24 +150,26 @@ public class DataAccessObject {
 			throws SQLException, InstantiationException, IllegalAccessException, ClassNotFoundException {
 		String sql = "CALL search_forum_by_name(?)";
 		ArrayList<Forum> result = new ArrayList<Forum>();
-		try (Connection connection = this.getConnection(); PreparedStatement statement = connection.prepareCall(sql)) {
-			statement.setString(1, name);
-			ResultSet rs = statement.executeQuery();
-			while (rs.next()) {
-				int forumID = rs.getInt("ForumID");
-				Integer parentID = rs.getInt("ParentID");
-				String forumName = rs.getString("ForumName");
-				String owner = rs.getString("Forum_Owner");
-				String catagory = rs.getString("Forum_Catagory");
-				String description = rs.getString("Forum_Description");
-				Date creationTime = rs.getDate("Forum_CreationTime");
-				Date lastPostTime = rs.getDate("Forum_LastPostTime");
-				boolean isVerified = rs.getBoolean("Forum_IsVerified");
-				result.add(new Forum(forumID, parentID, forumName, owner, catagory, description, creationTime,
-						lastPostTime, isVerified));
-				System.out.println(forumName); // **TEST**
+		try (
+				Connection connection = this.getConnection(); 
+				PreparedStatement statement = connection.prepareCall(sql))
+			{
+				statement.setString(1, name);
+				ResultSet rs = statement.executeQuery();
+				while (rs.next()) {
+					int forumID = rs.getInt("ForumID");
+					Integer parentID = rs.getInt("ParentID");
+					String forumName = rs.getString("ForumName");
+					String owner = rs.getString("Forum_Owner");
+					String catagory = rs.getString("Forum_Catagory");
+					String description = rs.getString("Forum_Description");
+					Date creationTime = rs.getDate("Forum_CreationTime");
+					Date lastPostTime = rs.getDate("Forum_LastPostTime");
+					boolean isVerified = rs.getBoolean("Forum_IsVerified");
+					result.add(new Forum(forumID, parentID, forumName, owner, 
+							catagory, description, creationTime, lastPostTime, isVerified));	
+				}
 			}
-		}
 
 		return result;
 	}
