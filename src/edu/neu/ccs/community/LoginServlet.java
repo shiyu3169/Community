@@ -41,7 +41,7 @@ public class LoginServlet extends HttpServlet {
 
     	request.getRequestDispatcher("/WEB-INF/views/login.jsp").forward(request, response);
     	PrintWriter out = response.getWriter();
-    
+    	
         out.println("<html>");
         out.println("<head>");
         out.println("<title>Yahoo!!!!!!!!</title>");

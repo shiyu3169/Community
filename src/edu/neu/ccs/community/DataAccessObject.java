@@ -23,7 +23,7 @@ public class DataAccessObject {
 	private final String userName = "root";
 
 	/** The password for the MySQL account (or empty for anonymous) */
-	private final String password = "hpahzGSYCl05116";
+	private final String password = "cliff92711";
 
 	/** The name of the computer running MySQL */
 	private final String serverName = "localhost";
@@ -74,6 +74,8 @@ public class DataAccessObject {
 		return connection;
 	}
 
+	
+	/** Create User*/
 	public void create(User user)
 			throws SQLException, InstantiationException, IllegalAccessException, ClassNotFoundException {
 		String sql = "SELECT create_user(?,?,?,?,?,?,?,?)";
@@ -93,7 +95,7 @@ public class DataAccessObject {
 		}
 		;
 	}
-
+/*	*//** Delete User*//*
 	public void delete(User user)
 			throws SQLException, InstantiationException, IllegalAccessException, ClassNotFoundException {
 		String sql = "CALL delete_user(?)";
@@ -106,9 +108,8 @@ public class DataAccessObject {
 
 		}
 		;
-
-	}
-
+	}*/
+/*	*//** Delete user by name*//*
 	public void deleteUser(String username)
 			throws SQLException, InstantiationException, IllegalAccessException, ClassNotFoundException {
 		String sql = "CALL delete_user(?)";
@@ -119,8 +120,9 @@ public class DataAccessObject {
 
 			statement.execute();
 		}
-	}
-
+	}*/
+	
+	/** Create forum*/
 	public void create(Forum forum)
 			throws SQLException, InstantiationException, IllegalAccessException, ClassNotFoundException {
 		String sql = "SELECT create_forum(?,?,?,?,?,?,?)";
