@@ -36,14 +36,11 @@ public class RegisterServlet extends HttpServlet {
 		request.setAttribute("username", username);
 		request.setAttribute("password", password);
 		request.setAttribute("email", email);
-		//User user = new User(username, password, email, request.getRemoteAddr(), now, now, null, false, false);
-		User user = new User(username, password, 
-				email, request.getRemoteAddr(), false,
-				false);
+		User user = new User(username, password, email, request.getRemoteAddr(), now, now, null, false, false);
+
 		DataAccessObject dao = new DataAccessObject();
 		try {
 			dao.create(user);
-			request.setAttribute("message", null);
 			request.getRequestDispatcher("/Login.jsp").forward(request, response);
 		} catch (InstantiationException e) {
 			// TODO Auto-generated catch block
@@ -56,7 +53,7 @@ public class RegisterServlet extends HttpServlet {
 			e.printStackTrace();
 		} catch (SQLException e) {
 			request.setAttribute("message", e.getMessage());
-			request.getRequestDispatcher("/Register.jsp").forward(request, response);
+			request.getRequestDispatcher("/Login.jsp").forward(request, response);
 			e.printStackTrace();
 		}
 

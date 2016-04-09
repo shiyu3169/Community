@@ -41,9 +41,6 @@ public class DataAccessObject {
 	public static void main(String[] args) {
 		DataAccessObject dao = new DataAccessObject();
 		try {
-			dao.create(new User("String username", "String password", 
-					"String email", "String loginIpAddress", false,
-					false));
 			dao.searchForumByName("cat");
 			System.out.println(dao.userValidation("admin", "admin"));
 			System.out.println(dao.userValidation("admin", "123"));
