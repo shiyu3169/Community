@@ -15,7 +15,7 @@
 	                <div class="container">
 	                    <div id="navbar" class="collapse navbar-collapse" aria-expanded="true">
 	                        <ul class="nav navbar-nav navbar-right">
-	                            <li><a href="#/login">Log in</a></li>
+	                            <li><a href="/Community/login.jsp">Log in</a></li>
 	                            <li><a href="/Community/Register.jsp">Sign up</a></li>
 	                            <li><a href="#/logout">Log out</a></li>  
 	                        </ul>
