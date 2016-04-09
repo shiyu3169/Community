@@ -165,7 +165,52 @@ SELECT create_forum(NULL,
 		"Forum_Description",
 		NOW(),
 		TRUE);
-
+SELECT create_forum(1,	
+		"Cats", 
+		"admin", 
+		"Forum_Catagory",
+		"Forum_Description",
+		NOW(),
+		TRUE);
+SELECT create_forum(1,	
+		"Hello Kitty", 
+		"admin", 
+		"Forum_Catagory",
+		"Forum_Description",
+		NOW(),
+		TRUE);
+SELECT create_forum(1,	
+		"Big Face Cat", 
+		"admin", 
+		"Forum_Catagory",
+		"Forum_Description",
+		NOW(),
+		TRUE);   
+SELECT create_forum(1,	
+		"Garfield", 
+		"admin", 
+		"Forum_Catagory",
+		"Forum_Description",
+		NOW(),
+		TRUE);
+SELECT create_forum(1,	
+		"Doraemon", 
+		"admin", 
+		"Forum_Catagory",
+		"Forum_Description",
+		NOW(),
+		TRUE);
+DELIMITER //
+DROP PROCEDURE IF EXISTS search_forum_by_name//
+CREATE PROCEDURE search_forum_by_name(
+	Given_ForumName VARCHAR(50)
+)
+BEGIN
+	SELECT * FROM Forums WHERE ForumName LIKE concat('%',Given_ForumName,'%');
+END//
+CALL search_forum_by_name('Cat')//
+CALL search_forum_by_name('Doraemon')//
+DELIMITER ;
 /* Thread Table */
 DROP TABLE IF EXISTS Threads;
 CREATE TABLE Threads (
@@ -234,3 +279,4 @@ CREATE TABLE FavoriteForums (
 		FOREIGN KEY (ForumID) REFERENCES Forums(ForumID)
 		ON UPDATE CASCADE ON DELETE CASCADE
 );
+

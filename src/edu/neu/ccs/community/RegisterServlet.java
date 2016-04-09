@@ -17,7 +17,7 @@ public class RegisterServlet extends HttpServlet {
 
 	protected void doGet(HttpServletRequest request, HttpServletResponse response)
 			throws IOException, ServletException {
-		
+
 		request.setAttribute("username", request.getParameter("username"));
 		request.setAttribute("password", request.getParameter("password"));
 		request.setAttribute("email", request.getParameter("email"));
@@ -31,12 +31,12 @@ public class RegisterServlet extends HttpServlet {
 		String username = request.getParameter("username");
 		String password = request.getParameter("password");
 		String email = request.getParameter("email");
-		Date now = new Date( System.currentTimeMillis());
+		Date now = new Date(System.currentTimeMillis());
 		request.setAttribute("username", username);
 		request.setAttribute("password", password);
 		request.setAttribute("email", email);
-		User user = new User(username, password, email, "127.0.0.1",  now, now, null, false, false);
-		
+		User user = new User(username, password, email, request.getRemoteAddr(), now, now, null, false, false);
+
 		DataAccessObject dao = new DataAccessObject();
 		try {
 			dao.create(user);
@@ -55,7 +55,6 @@ public class RegisterServlet extends HttpServlet {
 			request.getRequestDispatcher("/Register.jsp").forward(request, response);
 			e.printStackTrace();
 		}
-		
-		
+
 	}
 }
