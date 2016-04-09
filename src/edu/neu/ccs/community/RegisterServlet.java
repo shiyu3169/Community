@@ -17,10 +17,6 @@ public class RegisterServlet extends HttpServlet {
 	protected void doGet(HttpServletRequest request, HttpServletResponse response)
 			throws IOException, ServletException {
 
-		request.setAttribute("username", request.getParameter("username"));
-		request.setAttribute("password", request.getParameter("password"));
-		request.setAttribute("email", request.getParameter("email"));
-
 		request.getRequestDispatcher("/Register.jsp").forward(request, response);
 	}
 
