@@ -23,7 +23,7 @@ public class DataAccessObject {
 	private final String userName = "root";
 
 	/** The password for the MySQL account (or empty for anonymous) */
-	private final String password = "hpahzGSYCl05116";
+	private final String password = "cliff92711";
 
 	/** The name of the computer running MySQL */
 	private final String serverName = "localhost";
@@ -73,15 +73,11 @@ public class DataAccessObject {
 
 		return connection;
 	}
-<<<<<<< HEAD
+
 	
 	/** Create User*/
-	public void create(User user) throws SQLException, InstantiationException, IllegalAccessException, ClassNotFoundException {
-=======
-
 	public void create(User user)
 			throws SQLException, InstantiationException, IllegalAccessException, ClassNotFoundException {
->>>>>>> refs/remotes/wuzhenh/master
 		String sql = "SELECT create_user(?,?,?,?,?,?,?,?)";
 
 		try (Connection connection = this.getConnection();
@@ -99,14 +95,9 @@ public class DataAccessObject {
 		}
 		;
 	}
-<<<<<<< HEAD
 /*	*//** Delete User*//*
-	public void delete(User user) throws SQLException, InstantiationException, IllegalAccessException, ClassNotFoundException {
-=======
-
 	public void delete(User user)
 			throws SQLException, InstantiationException, IllegalAccessException, ClassNotFoundException {
->>>>>>> refs/remotes/wuzhenh/master
 		String sql = "CALL delete_user(?)";
 
 		try (Connection connection = this.getConnection();
@@ -117,17 +108,10 @@ public class DataAccessObject {
 
 		}
 		;
-
-<<<<<<< HEAD
 	}*/
 /*	*//** Delete user by name*//*
-	public void deleteUser(String username) throws SQLException, InstantiationException, IllegalAccessException, ClassNotFoundException {
-=======
-	}
-
 	public void deleteUser(String username)
 			throws SQLException, InstantiationException, IllegalAccessException, ClassNotFoundException {
->>>>>>> refs/remotes/wuzhenh/master
 		String sql = "CALL delete_user(?)";
 
 		try (Connection connection = this.getConnection();
@@ -136,17 +120,11 @@ public class DataAccessObject {
 
 			statement.execute();
 		}
-<<<<<<< HEAD
 	}*/
 	
 	/** Create forum*/
-	public void create(Forum forum) throws SQLException, InstantiationException, IllegalAccessException, ClassNotFoundException {
-=======
-	}
-
 	public void create(Forum forum)
 			throws SQLException, InstantiationException, IllegalAccessException, ClassNotFoundException {
->>>>>>> refs/remotes/wuzhenh/master
 		String sql = "SELECT create_forum(?,?,?,?,?,?,?)";
 
 		try (Connection connection = this.getConnection(); PreparedStatement statement = connection.prepareCall(sql)) {
