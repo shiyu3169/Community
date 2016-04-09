@@ -14,10 +14,11 @@
 	        <header>
 	            <nav class="navbar navbar-inverse navbar-fixed-top" ng-controller="NavController">
 	                <div class="container">
+	                	<a class="navbar-brand" href="#/profile" ng-show ="currentUser">Welcome! ${username}</a>
 	                    <div id="navbar" class="collapse navbar-collapse" aria-expanded="true">
 	                        <ul class="nav navbar-nav navbar-right">
-	                            <li><a href="/Community/login.jsp">Log in</a></li>
-	                            <li><a href="/Community/Register.jsp">Sign up</a></li>
+	                            <li><a href="/Community/login">Log in</a></li>
+	                            <li><a href="/Community/register">Sign up</a></li>
 	                            <li><a href="#/logout">Log out</a></li>  
 	                        </ul>
 	                    </div>
@@ -36,10 +37,9 @@
 	    <div class="text-center">
 	    	<img src="./image/title.png" alt="Mountain View">
 	    </div>
-	    
 	    <!-- Search -->
 	    <div class="container">
-	    	<form class="form" method="get">
+	    	<form class="form" method="get" action="home">
 		        <div class="col-lg-3"></div>
 		        <div class="col-lg-6">
 		           <div class="input-group">
@@ -60,24 +60,14 @@
 					    <table  id="fresh-table" class="table">
 					    	<tbody>
 						    	<%
-						    	if (request.getAttribute("search").equals("")) {
-						    		
-						    		return;
-						    	} else {
 						    		List<Forum> forums = (List<Forum>)request.getAttribute("result");
 						    		
-						    		if (forums.isEmpty()) {
-						    			%>
-						    			<p class="text-center">No one has created any related forums</p>
-						    			<p class="text-center"><strong><a href="#">Be the first One to Create it?</a></strong></p>
-						    			<%
-						    		} else {
 								    	 for (Forum forum: forums) {
 								    		 System.out.println(forum.getForumName());
 								    		 %><tr>
 								    		 	<td><%= forum.getForumName()%></td>
 								    		 <tr><%
-								    		 } } }%>
+								    		 }  %>
 						    </tbody>
 					    </table>
 				    </div>

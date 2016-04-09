@@ -50,7 +50,7 @@ public class RegisterServlet extends HttpServlet {
 			e.printStackTrace();
 		} catch (SQLException e) {
 			request.setAttribute("message", e.getMessage());
-			request.getRequestDispatcher("/Login.jsp").forward(request, response);
+			request.getRequestDispatcher("/Register.jsp").forward(request, response);
 			e.printStackTrace();
 		}
 
