@@ -9,8 +9,8 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import edu.neu.ccs.community.LoginManager;
 
-//@WebServlet(urlPatterns = "/login")
-@WebServlet("/login")
+
+@WebServlet(urlPatterns = "/login")
 public class LoginServlet extends HttpServlet {
 
 	@Override
@@ -42,7 +42,7 @@ public class LoginServlet extends HttpServlet {
 		String password = request.getParameter("password");
 
 		if (loginManager.logIn(username, password, 60*60)) {
-			request.getRequestDispatcher("/Home.jsp").forward(request, response);
+			request.getRequestDispatcher("/home").forward(request, response);
 		} else {
 			request.setAttribute("message", "User name or password is incorrect.");
 			request.getRequestDispatcher("/Login.jsp").forward(request, response);

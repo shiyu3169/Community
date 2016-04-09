@@ -1,8 +1,6 @@
 package edu.neu.ccs.community;
 
 import java.io.IOException;
-import java.io.PrintWriter;
-import java.sql.Connection;
 import java.sql.Date;
 import java.sql.SQLException;
 
@@ -24,7 +22,6 @@ public class RegisterServlet extends HttpServlet {
 		request.setAttribute("email", request.getParameter("email"));
 
 		request.getRequestDispatcher("/Register.jsp").forward(request, response);
-		PrintWriter out = response.getWriter();
 	}
 
 	protected void doPost(HttpServletRequest request, HttpServletResponse response)
