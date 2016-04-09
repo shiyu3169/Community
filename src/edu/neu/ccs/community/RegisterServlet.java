@@ -12,8 +12,8 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-//@WebServlet(urlPatterns = "/register")
-@WebServlet("/register")
+@WebServlet(urlPatterns = "/register")
+//@WebServlet("/register")
 public class RegisterServlet extends HttpServlet {
 
 	protected void doGet(HttpServletRequest request, HttpServletResponse response)
@@ -23,7 +23,7 @@ public class RegisterServlet extends HttpServlet {
 		request.setAttribute("password", request.getParameter("password"));
 		request.setAttribute("email", request.getParameter("email"));
 
-		request.getRequestDispatcher("/Login.jsp").forward(request, response);
+		request.getRequestDispatcher("/Register.jsp").forward(request, response);
 		PrintWriter out = response.getWriter();
 	}
 
