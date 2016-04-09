@@ -3,6 +3,7 @@
  */
 package edu.neu.ccs.community;
 
+import java.sql.CallableStatement;
 import java.sql.Connection;
 import java.sql.Date;
 import java.sql.DriverManager;
@@ -23,7 +24,7 @@ public class DataAccessObject {
 	private final String userName = "root";
 
 	/** The password for the MySQL account (or empty for anonymous) */
-	private final String password = "cliff92711";
+	private final String password = "hpahzGSYCl05116";
 
 	/** The name of the computer running MySQL */
 	private final String serverName = "localhost";
@@ -36,10 +37,13 @@ public class DataAccessObject {
 	 * with MySQL)
 	 */
 	private final String dbName = "community";
-	public static void main(String[] args){
+
+	public static void main(String[] args) {
 		DataAccessObject dao = new DataAccessObject();
 		try {
 			dao.searchForumByName("cat");
+			System.out.println(dao.userValidation("admin", "admin"));
+			System.out.println(dao.userValidation("admin", "123"));
 		} catch (InstantiationException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -74,8 +78,7 @@ public class DataAccessObject {
 		return connection;
 	}
 
-	
-	/** Create User*/
+	/** Create User */
 	public void create(User user)
 			throws SQLException, InstantiationException, IllegalAccessException, ClassNotFoundException {
 		String sql = "SELECT create_user(?,?,?,?,?,?,?,?)";
@@ -95,34 +98,38 @@ public class DataAccessObject {
 		}
 		;
 	}
-/*	*//** Delete User*//*
-	public void delete(User user)
-			throws SQLException, InstantiationException, IllegalAccessException, ClassNotFoundException {
-		String sql = "CALL delete_user(?)";
+	/*	*//** Delete User */
+	/*
+	 * public void delete(User user) throws SQLException,
+	 * InstantiationException, IllegalAccessException, ClassNotFoundException {
+	 * String sql = "CALL delete_user(?)";
+	 * 
+	 * try (Connection connection = this.getConnection(); PreparedStatement
+	 * statement = connection.prepareStatement(sql)) { statement.setString(1,
+	 * user.getUsername());
+	 * 
+	 * statement.execute();
+	 * 
+	 * } ; }
+	 */
+	/*	*//** Delete user by name *//*
+									 * public void deleteUser(String username)
+									 * throws SQLException,
+									 * InstantiationException,
+									 * IllegalAccessException,
+									 * ClassNotFoundException { String sql =
+									 * "CALL delete_user(?)";
+									 * 
+									 * try (Connection connection =
+									 * this.getConnection(); PreparedStatement
+									 * statement =
+									 * connection.prepareStatement(sql)) {
+									 * statement.setString(1, username);
+									 * 
+									 * statement.execute(); } }
+									 */
 
-		try (Connection connection = this.getConnection();
-				PreparedStatement statement = connection.prepareStatement(sql)) {
-			statement.setString(1, user.getUsername());
-
-			statement.execute();
-
-		}
-		;
-	}*/
-/*	*//** Delete user by name*//*
-	public void deleteUser(String username)
-			throws SQLException, InstantiationException, IllegalAccessException, ClassNotFoundException {
-		String sql = "CALL delete_user(?)";
-
-		try (Connection connection = this.getConnection();
-				PreparedStatement statement = connection.prepareStatement(sql)) {
-			statement.setString(1, username);
-
-			statement.execute();
-		}
-	}*/
-	
-	/** Create forum*/
+	/** Create forum */
 	public void create(Forum forum)
 			throws SQLException, InstantiationException, IllegalAccessException, ClassNotFoundException {
 		String sql = "SELECT create_forum(?,?,?,?,?,?,?)";
@@ -143,9 +150,11 @@ public class DataAccessObject {
 		}
 	};
 
-	public List<Forum> searchForumByName(String name) throws SQLException, InstantiationException, IllegalAccessException, ClassNotFoundException {
+	public List<Forum> searchForumByName(String name)
+			throws SQLException, InstantiationException, IllegalAccessException, ClassNotFoundException {
 		String sql = "CALL search_forum_by_name(?)";
 		ArrayList<Forum> result = new ArrayList<Forum>();
+<<<<<<< HEAD
 		try (
 				Connection connection = this.getConnection(); 
 				PreparedStatement statement = connection.prepareCall(sql))
@@ -165,9 +174,44 @@ public class DataAccessObject {
 					result.add(new Forum(forumID, parentID, forumName, owner, 
 							catagory, description, creationTime, lastPostTime, isVerified));	
 				}
+=======
+		try (Connection connection = this.getConnection(); PreparedStatement statement = connection.prepareCall(sql)) {
+			statement.setString(1, name);
+			ResultSet rs = statement.executeQuery();
+			while (rs.next()) {
+				int forumID = rs.getInt("ForumID");
+				Integer parentID = rs.getInt("ParentID");
+				String forumName = rs.getString("ForumName");
+				String owner = rs.getString("Forum_Owner");
+				String catagory = rs.getString("Forum_Catagory");
+				String description = rs.getString("Forum_Description");
+				Date creationTime = rs.getDate("Forum_CreationTime");
+				Date lastPostTime = rs.getDate("Forum_LastPostTime");
+				boolean isVerified = rs.getBoolean("Forum_IsVerified");
+				result.add(new Forum(forumID, parentID, forumName, owner, catagory, description, creationTime,
+						lastPostTime, isVerified));
+				System.out.println(forumName); // **TEST**
+>>>>>>> refs/remotes/wuzhenh/master
 			}
+		}
+
+		return result;
+	}
+
+	public boolean userValidation(String username, String password)
+			throws InstantiationException, IllegalAccessException, ClassNotFoundException, SQLException {
+		String sql = "{ ? = CALL user_login_validation(?,?) }";
+
+		try (Connection connection = this.getConnection(); CallableStatement statement = connection.prepareCall(sql)) {
+			statement.setString(2, username);
+			statement.setString(3, password);
+			statement.registerOutParameter(1, java.sql.Types.BOOLEAN);
 			
-		return result;		
+
+			statement.execute();
+			return statement.getBoolean(1);
+
+		}
 	}
 
 }

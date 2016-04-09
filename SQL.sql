@@ -74,8 +74,8 @@ CREATE PROCEDURE delete_user (
 BEGIN
 	DELETE FROM Users WHERE UserName = Given_UserName;
 END//
-DROP FUNCTION IF EXISTS user_login//
-CREATE FUNCTION user_login(
+DROP FUNCTION IF EXISTS user_login_validation//
+CREATE FUNCTION user_login_validation(
 	Given_UserName VARCHAR(50),
     Given_User_Password VARCHAR(512))
 RETURNS BOOLEAN
@@ -84,9 +84,9 @@ BEGIN
 		WHERE UserName = Given_UserName AND User_Password = Given_User_Password);
 END//
 DELIMITER ;
-SELECT user_login("admin","admin");
+SELECT user_login_validation("admin","admin");
 CALL delete_user("admin");
-SELECT user_login("admin","admin");
+SELECT user_login_validation("admin","admin");
 
 /* Forums Table */
 DROP TABLE IF EXISTS Forums;
