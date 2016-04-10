@@ -42,8 +42,9 @@ public class UpdateForumServlet extends HttpServlet {
 			request.getRequestDispatcher("/Login.jsp").forward(request, response);
 			return;
 		};
-		
-		
+		User currentUser = loginManager.getCurrentUser();
+
+		// TODO
 		Integer parentID;
 		String forumName;
 		String owner;
