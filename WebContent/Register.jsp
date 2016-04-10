@@ -10,13 +10,28 @@
 		<link href="./css/Register.css" rel="stylesheet">
 	</head>
 	<body background="./image/background.jpg">
+		<div>
+	        <header>
+	            <nav class="navbar navbar-inverse navbar-fixed-top" ng-controller="NavController">
+	                <div class="container">
+	                	<a class="navbar-brand" href="/Community/home" ng-show ="currentUser">Hi ${username}</a>
+	                    <div id="navbar" class="collapse navbar-collapse" aria-expanded="true">
+	                        <ul class="nav navbar-nav navbar-right">
+	                            <li><a href="/Community/home">Home</a></li>
+	                            <li><a href="login">Sign in</a></li>
+	                        </ul>
+	                    </div>
+	                </div>
+	            </nav>
+	        </header>
+	    </div>
 		<div class="container">
-	        <form  method="post" class="form-signin">
+	        <form  method="post" class="form-signin" action="register">
 	            <h2 class="form-signin-heading"> 
 	            	<font color="white">Please Register </font>
 	            </h2>
 	            <label for="inputUserName" class="sr-only">User Name</label>
-	            <input type="username" name="username" id="Username" class="form-control" placeholder="UserName" value="${username}" required autofocus>
+	            <input type="text" name="username" id="Username" class="form-control" placeholder="UserName" value="${username}" required>
 	            <label for="inputEmail" class="sr-only">Email</label>
 	            <input type="email" name="email" id="email" class="form-control" placeholder="Email@example.com" value="${email}" required>
 	            <label for="inputPassword" class="sr-only">Password</label>   

@@ -2,7 +2,7 @@
  * 
  */
 package edu.neu.ccs.community;
-import java.time.ZonedDateTime;
+import java.sql.Date;
 /**
  * @author Zhenhuan
  *
@@ -13,9 +13,9 @@ public class Thread {
     String title;
     User author;
     
-    ZonedDateTime lastUpdator;    
-    ZonedDateTime creationTime;
-    ZonedDateTime lastPostTime;
+    Date lastUpdator;    
+    Date creationTime;
+    Date lastPostTime;
     
     boolean isSticky;
     boolean isDeleted;
