@@ -19,7 +19,7 @@ public class Forum {
     private Date lastPostTime;
     
     private boolean isVerified;
-
+    
 	/**
 	 * @param forumID
 	 * @param parentID
@@ -138,6 +138,5 @@ public class Forum {
 	public void setVerified(boolean isVerified) {
 		this.isVerified = isVerified;
 	}
-    
     
 }

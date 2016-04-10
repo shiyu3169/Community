@@ -45,12 +45,17 @@ public class ForumServlet extends HttpServlet {
 			} else {
 				LoginManager loginManager = new LoginManager(new CookieAccessObject(request,response), dao);
 				request.setAttribute("username", loginManager.getSavedUsername());
+<<<<<<< HEAD
 				if (loginManager.hasLoggedIn())
 					request.setAttribute("isAdministrator", loginManager.getCurrentUser().isAdministrator());
 				else
 					request.setAttribute("isAdministrator", false);
+=======
+				request.setAttribute("isAdmin", loginManager.getCurrentUser().isAdministrator());
+>>>>>>> refs/remotes/origin/master
 				//request.setAttribute("forum", forum);
 				request.setAttribute("forumName", forum.getForumName());
+				request.setAttribute("category", forum.getCatagory());
 				request.setAttribute("description", forum.getDescription());
 				request.setAttribute("owner", forum.getOwner());
 				request.setAttribute("creationTime", forum.getCreationTime());
