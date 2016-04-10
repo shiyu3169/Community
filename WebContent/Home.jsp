@@ -14,12 +14,21 @@
 	        <header>
 	            <nav class="navbar navbar-inverse navbar-fixed-top" ng-controller="NavController">
 	                <div class="container">
-	                	<a class="navbar-brand" href="#/profile" ng-show ="currentUser">Welcome! ${username}</a>
 	                    <div id="navbar" class="collapse navbar-collapse" aria-expanded="true">
 	                        <ul class="nav navbar-nav navbar-right">
-	                            <li><a href="/Community/login">Log in</a></li>
-	                            <li><a href="/Community/register">Sign up</a></li>
-	                            <li><a href="#/logout">Log out</a></li>  
+	                        	<%if (request.getAttribute("username") == null) {
+	                        		%> 
+	                        			<li><a href="/Community/login">Log in</a></li>
+	                            		<li><a href="/Community/register">Sign up</a></li>
+	                            	<%
+	                        		}
+	                            	else {
+	                            		%>
+	                            		<li><a href="#">Hi ${username}</a></li>  
+	                            		<li><a href="/Community/login">Log out</a></li>  
+	                            		<%
+	                            	}
+	                        		%> 
 	                        </ul>
 	                    </div>
 	                </div>
@@ -60,14 +69,21 @@
 					    <table  id="fresh-table" class="table">
 					    	<tbody>
 						    	<%
-						    		List<Forum> forums = (List<Forum>)request.getAttribute("result");
+						    	
+						    	if (request.getAttribute("result") == null) { 
 						    		
+						    	} else {
+						    		List<Forum> forums = (List<Forum>)request.getAttribute("result");
 								    	 for (Forum forum: forums) {
 								    		 System.out.println(forum.getForumName());
 								    		 %><tr>
-								    		 	<td><%= forum.getForumName()%></td>
+								    		 	<td>
+								    		 		<a href="/Community/Forum?id=<%=forum.getForumID()%>">
+								    		 			<%= forum.getForumName()%>
+								    		 		</a>
+								    		 	</td>
 								    		 <tr><%
-								    		 }  %>
+								   } } %>
 						    </tbody>
 					    </table>
 				    </div>

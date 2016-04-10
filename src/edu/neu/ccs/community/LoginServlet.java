@@ -40,7 +40,7 @@ public class LoginServlet extends HttpServlet {
     	
 		String username = request.getParameter("username");
 		String password = request.getParameter("password");
-
+		request.setAttribute("username", username);
 		if (loginManager.logIn(username, password, 60*60)) {
 			//request.getRequestDispatcher("/home").forward(request, response);
 			response.sendRedirect("home");

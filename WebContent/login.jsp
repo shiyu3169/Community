@@ -10,12 +10,22 @@
 		<link href="./css/Register.css" rel="stylesheet">
 	</head>
 	<body background="./image/background.jpg">
+		<div>
+	        <header>
+	            <nav class="navbar navbar-inverse navbar-fixed-top" ng-controller="NavController">
+	                <div class="container">
+	                    <div id="navbar" class="collapse navbar-collapse" aria-expanded="true">
+	                        <ul class="nav navbar-nav navbar-right">
+	                            <li><a href="/Community/home">Home</a></li>
+	                            <li><a href="/Community/register">Sign up</a></li>
+	                        </ul>
+	                    </div>
+	                </div>
+	            </nav>
+	        </header>
+	    </div>
 		<div class="container">
-<<<<<<< HEAD
-	        <form action="login" method="post" class="form-signin">
-=======
 	        <form  method="post" class="form-signin" action="login">
->>>>>>> refs/remotes/origin/master
 	            <h2 class="form-signin-heading"> 
 	            	<font color="white">Please Login </font>
 	            </h2>
