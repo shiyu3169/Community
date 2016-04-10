@@ -45,7 +45,7 @@ public class ForumServlet extends HttpServlet {
 			} else {
 				LoginManager loginManager = new LoginManager(new CookieAccessObject(request,response), dao);
 				request.setAttribute("username", loginManager.getSavedUsername());
-				request.setAttribute("isAdministrator", loginManager.getCurrentUser().isAdministrator());
+				request.setAttribute("isAdmin", loginManager.getCurrentUser().isAdministrator());
 				//request.setAttribute("forum", forum);
 				request.setAttribute("forumName", forum.getForumName());
 				request.setAttribute("description", forum.getDescription());

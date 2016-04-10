@@ -58,7 +58,9 @@
 			                <button <%if(!request.getAttribute("owner").equals(request.getAttribute("username"))) {
 			                	%>style="visibility:hidden;" <%
 			                } %> class="btn btn-primary">Edit</button>
-			                <button class="btn btn-danger">Delete</button>
+			                <button <%if(!(boolean)request.getAttribute("isAdmin")) {
+			                	%>style="visibility:hidden;" <%
+			                }%> class="btn btn-danger">Delete</button>
 		                </div>
 	    		</div>
 		    	<div class="col-md-6">
