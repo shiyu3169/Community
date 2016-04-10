@@ -34,7 +34,8 @@ public class CreateForumServlet extends HttpServlet {
 		DataAccessObject dao = new DataAccessObject();
 		LoginManager loginManager = new LoginManager(new CookieAccessObject(request, response), dao);
 		if (!loginManager.hasLoggedIn()) {
-			response.getWriter().println("You need to log in before create a forum.");
+			request.setAttribute("message", "You need to sign in first");
+			request.getRequestDispatcher("/Login.jsp").forward(request, response);
 			return;
 		}
 
@@ -48,7 +49,8 @@ public class CreateForumServlet extends HttpServlet {
 			int forumID = dao.create(new Forum(parentID, forumName, owner, catagory, description, isVerified));
 			response.sendRedirect("forum?id=" + forumID);
 		} catch (InstantiationException | IllegalAccessException | ClassNotFoundException | SQLException e) {
-			response.getWriter().println(e.getLocalizedMessage());
+			request.setAttribute("message", e.getMessage());
+			request.getRequestDispatcher("/Home.jsp").forward(request, response);
 			return;
 		}
 
