@@ -46,6 +46,9 @@ public class ForumServlet extends HttpServlet {
 				//request.setAttribute("forum", forum);
 				request.setAttribute("forumName", forum.getForumName());
 				request.setAttribute("description", forum.getDescription());
+				request.setAttribute("owner", forum.getOwner());
+				request.setAttribute("creationTime", forum.getCreationTime());
+				request.setAttribute("lastPostTime", forum.getLastPostTime());
 				List<Thread> threadList = dao.getThreadsByForumID(forumID);
 				request.setAttribute("threadList", threadList);		
 				request.getRequestDispatcher("/Forum.jsp").forward(request, response);
