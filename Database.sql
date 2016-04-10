@@ -87,9 +87,19 @@ DELIMITER ;
 SELECT user_login_validation("admin","admin");
 CALL delete_user("admin");
 SELECT user_login_validation("admin","admin");
-
+DELIMITER //
+DROP PROCEDURE IF EXISTS get_user_by_name//
+CREATE PROCEDURE get_user_by_name (
+	Given_UserName VARCHAR(50)
+)
+BEGIN
+	SELECT * FROM Users WHERE UserName = Given_UserName;
+END//
+DELIMITER;
+CALL get_user_by_name("admin");
 /* Forums Table */
 DROP TABLE IF EXISTS Forums;
+DELIMITER //
 CREATE TABLE Forums (
 	ForumID	INT PRIMARY KEY AUTO_INCREMENT,
     ParentID	INT,	-- foreign key to ForumID
@@ -109,8 +119,8 @@ CREATE TABLE Forums (
     CONSTRAINT Forum_fk_User
 		FOREIGN KEY (Forum_Owner) REFERENCES Users(UserName)
         ON UPDATE CASCADE ON DELETE SET NULL
-);
-DROP FUNCTION IF EXISTS create_forum;
+)//
+DROP FUNCTION IF EXISTS create_forum//
 DELIMITER //
 CREATE FUNCTION create_forum (
 	-- ForumID	INT,
@@ -201,7 +211,52 @@ SELECT create_forum(1,
 		NOW(),
 		TRUE);
 DELIMITER //
-DROP PROCEDURE IF EXISTS search_forum_by_name//
+DROP PROCEDURE IF EXISTS forum//
+CREATE PROCEDURE update_forum (
+	Given_ForumID	INT,
+    Given_ParentID	INT,	-- foreign key to ForumID
+    Given_ForumName	VARCHAR(50), -- Forum can be identified by name
+    
+    Given_Forum_Owner	VARCHAR(50), -- foreign key to Users(Username) to speed up access
+    Given_Forum_Catagory	VARCHAR(63),
+    Given_Forum_Description VARCHAR(255),
+    
+    -- Given_Forum_CreationTime	DATETIME,
+    -- Given_Forum_LastPostTime	DATETIME,
+    
+    Given_Forum_IsVerified	BOOLEAN
+)
+BEGIN
+	UPDATE Forums SET
+			ForumID = Given_ForumID,
+			ParentID = Given_ParentID,	-- foreign key to ForumID
+			ForumName = Given_ForumName, -- Forum can be identified by name
+			
+			Forum_Owner = Given_Forum_Owner, -- foreign key to Users(Username) to speed up access
+			Forum_Catagory = Given_Forum_Catagory,
+			Forum_Description = Given_Forum_Description,
+			
+			-- Given_Forum_CreationTime	DATETIME,
+			-- Given_Forum_LastPostTime	DATETIME,
+			
+			Forum_IsVerified = Given_Forum_IsVerified
+		WHERE ForumID = Given_ForumID;
+		
+END//
+CALL update_forum(1,
+    NULL,	-- foreign key to ForumID
+    "Given_ForumName	VARCHAR(50)", -- Forum can be identified by name
+    
+    "admin", -- foreign key to Users(Username) to speed up access
+    "Given_Forum_Catagory	VARCHAR(63)",
+    "Given_Forum_Description VARCHAR(255)",
+    
+    -- Given_Forum_CreationTime	DATETIME,
+    -- Given_Forum_LastPostTime	DATETIME,
+    
+    TRUE)//
+
+DROP PROCEDURE IF EXISTS search_forum_by_name //
 CREATE PROCEDURE search_forum_by_name(
 	Given_ForumName VARCHAR(50)
 )
