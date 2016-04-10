@@ -41,10 +41,11 @@ public class ForumServlet extends HttpServlet {
 		try {
 			Forum forum = dao.getForumByID(forumID);
 			if (forum==null) {
-				response.getWriter().println("Forum not found");
+				response.getWriter().println("404~404~\nForum not found");
 			} else {
 				//request.setAttribute("forum", forum);
 				request.setAttribute("forumName", forum.getForumName());
+				request.setAttribute("description", forum.getDescription());
 				List<Thread> threadList = dao.getThreadsByForumID(forumID);
 				request.setAttribute("threadList", threadList);		
 				request.getRequestDispatcher("/Forum.jsp").forward(request, response);
