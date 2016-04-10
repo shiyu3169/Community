@@ -11,11 +11,7 @@
 	</head>
 	<body background="./image/background.jpg">
 		<div class="container">
-<<<<<<< HEAD
 	        <form action="login" method="post" class="form-signin">
-=======
-	        <form  method="post" class="form-signin" action="login">
->>>>>>> refs/remotes/origin/master
 	            <h2 class="form-signin-heading"> 
 	            	<font color="white">Please Login </font>
 	            </h2>
