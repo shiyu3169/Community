@@ -14,7 +14,7 @@ import edu.neu.ccs.community.DataAccessObject;
 /**
  * Servlet implementation class ForumServlet
  */
-@WebServlet(description = "The thread list of the given forum", urlPatterns = { "/forum" })
+@WebServlet(description = "The thread list of the given forum", urlPatterns = { "/forum","/Forum" })
 public class ForumServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
@@ -31,16 +31,23 @@ public class ForumServlet extends HttpServlet {
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		DataAccessObject dao = new DataAccessObject();
-		int forumID = Integer.valueOf(request.getParameter("id"));
+		int forumID;
+		try {
+			forumID = Integer.valueOf(request.getParameter("id"));}
+		catch (Exception e) {
+			throw new IllegalArgumentException();
+		}
 		
 		try {
 			Forum forum = dao.getForumByID(forumID);
 			if (forum==null) {
 				response.getWriter().println("Forum not found");
 			} else {
-				request.setAttribute("forum", forum);
+				//request.setAttribute("forum", forum);
+				request.setAttribute("forumName", forum.getForumName());
 				List<Thread> threadList = dao.getThreadsByForumID(forumID);
-				request.setAttribute("threadList", threadList);				
+				request.setAttribute("threadList", threadList);		
+				request.getRequestDispatcher("/Forum.jsp").forward(request, response);
 			}
 			
 		} catch (InstantiationException | IllegalAccessException | SQLException | ClassNotFoundException e) {

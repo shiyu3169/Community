@@ -229,7 +229,7 @@ CREATE TABLE Threads (
     Thread_LastUpdator	VARCHAR(50),	-- the last replier or administortor who update it, foreign key to Users(UserName) to speed up access
     
     Thread_CreationTime	DATETIME,
-    Thread_LastPostTime	DATETIME,
+    Thread_LastUpdateTime	DATETIME,
     
     Thread_IsSticky	BOOLEAN,
     Thread_IsDeleted	BOOLEAN,
@@ -253,7 +253,7 @@ CREATE FUNCTION create_thread(
     Given_Thread_LastUpdator	VARCHAR(50),	-- the last replier or administortor who update it, foreign key to Users(UserName) to speed up access
     
     Given_Thread_CreationTime	DATETIME,
-    Given_Thread_LastPostTime	DATETIME,
+    Given_Thread_LastUpdateTime	DATETIME,
     
     Given_Thread_IsSticky	BOOLEAN,
     Given_Thread_IsDeleted	BOOLEAN)
@@ -266,7 +266,7 @@ BEGIN
 		Thread_LastUpdator,
     
 		Thread_CreationTime,
-		Thread_LastPostTime,
+		Thread_LastUpdateTime,
     
 		Thread_IsSticky,
 		Thread_IsDeleted
@@ -277,7 +277,7 @@ BEGIN
 		Given_Thread_LastUpdator,
     
 		Given_Thread_CreationTime,
-		Given_Thread_LastPostTime,
+		Given_Thread_LastUpdateTime,
     
 		Given_Thread_IsSticky,
 		Given_Thread_IsDeleted
