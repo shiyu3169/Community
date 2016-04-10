@@ -100,6 +100,31 @@ public class DataAccessObject {
 		}
 		;
 	}
+	public User getUserByName(String username)
+			throws SQLException, InstantiationException, IllegalAccessException, ClassNotFoundException {
+		String sql = "CALL get_user_by_name(?)";
+
+		try (Connection connection = this.getConnection(); CallableStatement statement = connection.prepareCall(sql)) {
+			statement.setString(1, username);
+			ResultSet rs = statement.executeQuery();
+			if (rs.next()) {
+				//String username = rs.getString("UserName");
+				String password = rs.getString("User_Password");
+				String email = rs.getString("User_EMail");
+				String loginIpAddress = rs.getString("User_LoginIpAddress");
+				Timestamp registerationTime = rs.getTimestamp("User_RegisterationTime");
+				Timestamp lastLoginTime = rs.getTimestamp("User_LastLoginTime");
+				Timestamp lastPostTime = rs.getTimestamp("User_LastPostTime");
+				boolean isAdministrator = rs.getBoolean("User_IsAdministrator"); 
+				boolean isBanned = rs.getBoolean("User_IsBanned");
+				return new User(username, password, email, loginIpAddress, registerationTime,
+						lastLoginTime, lastPostTime, isAdministrator, isBanned);
+			} else {
+				return null;
+			}
+		}
+	}
+
 	/*	*//** Delete User */
 	/*
 	 * public void delete(User user) throws SQLException,
@@ -155,7 +180,24 @@ public class DataAccessObject {
 			return statement.getInt(1);
 		}
 	};
+	public void update(Forum forum) throws InstantiationException, IllegalAccessException, ClassNotFoundException, SQLException {
+		String sql = "CALL update_forum(?,?,?,?,?,?,?)";
+		
+		try (Connection connection = this.getConnection(); CallableStatement statement = connection.prepareCall(sql)) {
+			statement.setInt(1, forum.getForumID());
+			if (forum.getParentID() == null)
+				statement.setNull(2, Types.INTEGER);
+			else
+			statement.setString(3, forum.getForumName());
+			statement.setString(4, forum.getOwner());
+			statement.setString(5, forum.getCatagory());
+			statement.setString(6, forum.getDescription());
+			statement.setBoolean(7, forum.isVerified());
+			
+			statement.execute();
 
+		}
+	}
 	public List<Forum> searchForumByName(String name)
 			throws SQLException, InstantiationException, IllegalAccessException, ClassNotFoundException {
 		String sql = "CALL search_forum_by_name(?)";

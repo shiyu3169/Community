@@ -5,6 +5,7 @@ package edu.neu.ccs.community;
 
 import java.time.ZonedDateTime;
 import java.sql.Date;
+import java.sql.Timestamp;
 
 /**
  * @author Zhenhuan
@@ -18,16 +19,16 @@ public class User {
 	// String registerationIpAddress;
 	String loginIpAddress;
 
-	Date registerationTime;
-	Date lastLoginTime;
-	Date lastPostTime;
+	Timestamp registerationTime;
+	Timestamp lastLoginTime;
+	Timestamp lastPostTime;
 
 	boolean isAdministrator;
 	boolean isBanned;
 	
 	//Constructor
-	public User(String username, String password, String email, String loginIpAddress, Date registerationTime,
-			Date lastLoginTime, Date lastPostTime, boolean isAdministrator, boolean isBanned) {
+	public User(String username, String password, String email, String loginIpAddress, Timestamp registerationTime,
+			Timestamp lastLoginTime, Timestamp lastPostTime, boolean isAdministrator, boolean isBanned) {
 		super();
 		// this.userID = userID;
 		this.username = username;
@@ -51,8 +52,8 @@ public class User {
 		this.email = email;
 		// this.registerationIpAddress = registerationIpAddress;
 		this.loginIpAddress = loginIpAddress;
-		this.registerationTime = new Date(System.currentTimeMillis());
-		this.lastLoginTime = new Date(System.currentTimeMillis());
+		this.registerationTime = new Timestamp(System.currentTimeMillis());
+		this.lastLoginTime = new Timestamp(System.currentTimeMillis());
 		this.lastPostTime = null;
 		this.isAdministrator = isAdministrator;
 		this.isBanned = isBanned;
@@ -91,27 +92,27 @@ public class User {
 		this.loginIpAddress = loginIpAddress;
 	}
 
-	public Date getRegisterationTime() {
+	public Timestamp getRegisterationTime() {
 		return this.registerationTime;
 	}
 
-	public void setRegisterationTime(Date registerationTime) {
+	public void setRegisterationTime(Timestamp registerationTime) {
 		this.registerationTime = registerationTime;
 	}
 
-	public Date getLastLoginTime() {
+	public Timestamp getLastLoginTime() {
 		return this.lastLoginTime;
 	}
 
-	public void setLastLoginTime(Date lastLoginTime) {
+	public void setLastLoginTime(Timestamp lastLoginTime) {
 		this.lastLoginTime = lastLoginTime;
 	}
 
-	public Date getLastPostTime() {
+	public Timestamp getLastPostTime() {
 		return this.lastPostTime;
 	}
 
-	public void setLastPostTime(Date lastPostTime) {
+	public void setLastPostTime(Timestamp lastPostTime) {
 		this.lastPostTime = lastPostTime;
 	}
 

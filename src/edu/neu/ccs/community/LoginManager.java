@@ -53,4 +53,13 @@ public class LoginManager {
 	public String getSavedUsername() {
 		return this.cao.get("username");
 	}
+	public User getCurrentUser() {
+		if (!this.hasLoggedIn())
+			return null;
+		try {
+			return dao.getUserByName(this.getSavedUsername());
+		} catch (Exception e) {
+			return null;
+		}
+	}
 }
