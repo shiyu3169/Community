@@ -201,8 +201,8 @@ public class DataAccessObject {
 			statement.setString(3, thread.getTitle());
 			statement.setString(4, thread.getAuthor());
 			statement.setString(5, thread.getLastUpdator());
-			statement.setDate(6, thread.getCreationTime());
-			statement.setDate(7, thread.getLastPostTime());
+			statement.setTimestamp(6, thread.getCreationTime());
+			statement.setTimestamp(7, thread.getLastPostTime());
 			statement.setBoolean(8, thread.isSticky);
 			statement.setBoolean(9, thread.isDeleted);
 			statement.registerOutParameter(1, java.sql.Types.INTEGER);
