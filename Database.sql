@@ -369,6 +369,68 @@ CREATE TABLE Posts (
 		FOREIGN KEY (Post_LastModifier) REFERENCES Users(UserName)
         ON UPDATE CASCADE ON DELETE CASCADE
 );
+DELIMITER //
+DROP FUNCTION IF EXISTS create_post//
+CREATE FUNCTION create_post (
+    Given_ThreadID	INT, -- foreign key to Threads(ThreadID)
+    Given_ReplyToPost	INT, -- foreign key to Post(PostID)
+    
+    Given_Post_Author	VARCHAR(50),
+    Given_Post_LastModifier	VARCHAR(50),
+    
+    Given_Post_Content	LONGTEXT,
+    
+    Given_Post_CreationTime	DATETIME,
+    Given_Post_LastModificationTime	DATETIME,
+    
+    Given_Post_IsDeleted	BOOLEAN
+)
+RETURNS INT
+BEGIN
+		INSERT INTO Posts(
+			ThreadID, -- foreign key to Threads(ThreadID)
+			ReplyToPost, -- foreign key to Post(PostID)
+			
+			Post_Author,
+			Post_LastModifier,
+			
+			Post_Content,
+			
+			Post_CreationTime,
+			Post_LastModificationTime,
+			
+			Post_IsDeleted
+        ) VALUES (
+			Given_ThreadID, -- foreign key to Threads(ThreadID)
+			Given_ReplyToPost, -- foreign key to Post(PostID)
+			
+			Given_Post_Author,
+			Given_Post_LastModifier,
+			
+			Given_Post_Content,
+			
+			Given_Post_CreationTime,
+			Given_Post_LastModificationTime,
+			
+			Given_Post_IsDeleted
+        );
+        RETURN LAST_INSERT_ID();
+END//
+
+SELECT create_post(1, -- foreign key to Threads(ThreadID)
+			NULL, -- foreign key to Post(PostID)
+			
+			"admin",
+			"admin",
+			
+			"Yes!!!! It is!!!",
+			
+			NOW(),
+			NOW(),
+			
+			FALSE
+)//
+DELIMITER ;
 /* FavoriteForums Table */
 DROP TABLE IF EXISTS FavoriteForums;
 CREATE TABLE FavoriteForums (
