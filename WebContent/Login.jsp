@@ -5,8 +5,10 @@
 	<head>
 		<meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
 		<title>Login</title>
-		<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" 
-		integrity="sha384-1q8mTJOASx8j1Au+a5WDVnPi2lkFfwwEAa8hDDdjZlpLegxhjVME1fgjWPGmkzs7" crossorigin="anonymous">
+		<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css">
+		<script src="https://code.jquery.com/jquery-2.2.3.min.js"></script>
+		<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"></script>
+		<link rel="stylesheet" href="./css/fresh-bootstrap-table.css">
 		<link href="./css/Register.css" rel="stylesheet">
 	</head>
 	<body background="./image/background.jpg">
@@ -32,6 +34,7 @@
 	            </h2>
 	            <label for="inputUserName" class="sr-only">User Name</label>
 	            <input type="text" name="username" id="Username" class="form-control" placeholder="UserName" value="${username}" required>
+	            <br/>
 	            <label for="inputPassword" class="sr-only">Password</label>   
 	            <input type="password" name="password" id="Password" class="form-control" placeholder="Password" value="${password}"  required>
 	            <div class="checkbox">
