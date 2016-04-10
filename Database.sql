@@ -210,7 +210,15 @@ BEGIN
 END//
 CALL search_forum_by_name('Cat')//
 CALL search_forum_by_name('Doraemon')//
+DROP PROCEDURE IF EXISTS get_forum_by_id//
+CREATE PROCEDURE get_forum_by_id(
+	Given_ForumID VARCHAR(50)
+)
+BEGIN
+	SELECT * FROM Forums WHERE ForumID = Given_ForumID LIMIT 1;
+END// 
 DELIMITER ;
+CALL get_forum_by_id(3);
 /* Thread Table */
 DROP TABLE IF EXISTS Threads;
 CREATE TABLE Threads (

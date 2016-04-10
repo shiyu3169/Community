@@ -172,6 +172,29 @@ public class DataAccessObject {
 						lastPostTime, isVerified));
 			}
 		}
+		public Forum getForumByID(int forumID)
+				throws SQLException, InstantiationException, IllegalAccessException, ClassNotFoundException {
+			String sql = "CALL get_forum_by_id(?)";
+
+			try (Connection connection = this.getConnection(); CallableStatement statement = connection.prepareCall(sql)) {
+				statement.setInt(1, forumID);
+				ResultSet rs = statement.executeQuery();
+				if (rs.next()){
+					//int forumID = rs.getInt("ForumID");
+					Integer parentID = rs.getInt("ParentID");
+					String forumName = rs.getString("ForumName");
+					String owner = rs.getString("Forum_Owner");
+					String catagory = rs.getString("Forum_Catagory");
+					String description = rs.getString("Forum_Description");
+					Date creationTime = rs.getDate("Forum_CreationTime");
+					Date lastPostTime = rs.getDate("Forum_LastPostTime");
+					boolean isVerified = rs.getBoolean("Forum_IsVerified");
+					return new Forum(forumID, parentID, forumName, owner, catagory, description, creationTime,
+							lastPostTime, isVerified);
+				} else {
+					return null;
+				}
+			}
 
 		return result;
 	}
