@@ -321,7 +321,16 @@ SELECT create_thread(
     
 		FALSE,
 		FALSE);
-
+DELIMITER //
+DROP PROCEDURE IF EXISTS get_thread_list_by_forumID//
+CREATE PROCEDURE get_thread_list_by_forumID(
+	Given_ForumID INT
+)
+BEGIN
+	SELECT * FROM Threads WHERE ForumID = Given_ForumID;
+END//
+DELIMITER ;
+CALL get_thread_list_by_forumID(3);
 /* Posts Table */
 DROP TABLE IF EXISTS Posts;
 CREATE TABLE Posts (
@@ -355,10 +364,10 @@ CREATE TABLE Posts (
 /* FavoriteForums Table */
 DROP TABLE IF EXISTS FavoriteForums;
 CREATE TABLE FavoriteForums (
-	UserID	INT,
+	UserName VARCHAR(50),
     ForumID	INT,
     CONSTRAINT FavoriteForum_fk_User
-		FOREIGN KEY (UserID) REFERENCES Users(UserID)
+		FOREIGN KEY (UserName) REFERENCES Users(UserName)
         ON UPDATE CASCADE ON DELETE CASCADE,
 	CONSTRAINT FavoriteForum_fk_Fourm
 		FOREIGN KEY (ForumID) REFERENCES Forums(ForumID)
