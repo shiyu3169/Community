@@ -17,6 +17,10 @@ public class RegisterServlet extends HttpServlet {
 	protected void doGet(HttpServletRequest request, HttpServletResponse response)
 			throws IOException, ServletException {
 
+		request.setAttribute("username", request.getParameter("username"));
+		request.setAttribute("password", request.getParameter("password"));
+		request.setAttribute("email", request.getParameter("email"));
+
 		request.getRequestDispatcher("/Register.jsp").forward(request, response);
 	}
 
@@ -29,12 +33,15 @@ public class RegisterServlet extends HttpServlet {
 		request.setAttribute("username", username);
 		request.setAttribute("password", password);
 		request.setAttribute("email", email);
-		User user = new User(username, password, email, request.getRemoteAddr(), now, now, null, false, false);
-
+		//User user = new User(username, password, email, request.getRemoteAddr(), now, now, null, false, false);
+		User user = new User(username, password, 
+				email, request.getRemoteAddr(), false,
+				false);
 		DataAccessObject dao = new DataAccessObject();
 		try {
 			dao.create(user);
-			request.getRequestDispatcher("/login").forward(request, response);
+			request.setAttribute("message", null);
+			request.getRequestDispatcher("/Login.jsp").forward(request, response);
 		} catch (InstantiationException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
