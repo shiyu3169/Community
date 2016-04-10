@@ -51,7 +51,8 @@ public class UpdateForumServlet extends HttpServlet {
 		String catagory;
 		String description;
 		boolean isVerified;
-		
+		dao.update(new Forum(parentID, forumName, owner, catagory, description,
+				isVerified));
 	}
 
 }

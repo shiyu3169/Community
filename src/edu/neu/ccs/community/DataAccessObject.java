@@ -21,11 +21,12 @@ import java.util.Properties;
  *
  */
 public class DataAccessObject {
+
 	/** The name of the MySQL account to use (or empty for anonymous) */
 	private final String userName = "root";
 
 	/** The password for the MySQL account (or empty for anonymous) */
-	private final String password = "cliff92711";
+	private final String password = "hpahzGSYCl05116";
 
 	/** The name of the computer running MySQL */
 	private final String serverName = "localhost";
@@ -45,11 +46,11 @@ public class DataAccessObject {
 			// dao.create(new User("String username", "String password", "String
 			// email", "String loginIpAddress", false,
 			// false));
-			dao.searchForumByName("cat");
-			System.out.println(dao.userValidation("admin", "admin"));
-			System.out.println(dao.userValidation("admin", "123"));
-			dao.create(new Thread(2, "String title", "admin", true, false));
-			dao.getThreadsByForumID(2);
+
+			System.out.println("**********");
+			System.out.println(dao.getUserByName("admin").getUsername());
+			System.out.println(dao.getUserByName("admin").isAdministrator());
+
 		} catch (InstantiationException e) {
 			e.printStackTrace();
 		} catch (IllegalAccessException e) {
@@ -93,13 +94,14 @@ public class DataAccessObject {
 			statement.setString(4, user.getLoginIpAddress());
 			statement.setBoolean(5, user.isAdministrator());
 			statement.setBoolean(6, user.isBanned());
-			statement.setDate(7, user.getRegisterationTime());
-			statement.setDate(8, user.getLastLoginTime());
+			statement.setTimestamp(7, user.getRegisterationTime());
+			statement.setTimestamp(8, user.getLastLoginTime());
 			statement.execute();
 
 		}
 		;
 	}
+
 	public User getUserByName(String username)
 			throws SQLException, InstantiationException, IllegalAccessException, ClassNotFoundException {
 		String sql = "CALL get_user_by_name(?)";
@@ -108,17 +110,17 @@ public class DataAccessObject {
 			statement.setString(1, username);
 			ResultSet rs = statement.executeQuery();
 			if (rs.next()) {
-				//String username = rs.getString("UserName");
+				// String username = rs.getString("UserName");
 				String password = rs.getString("User_Password");
 				String email = rs.getString("User_EMail");
 				String loginIpAddress = rs.getString("User_LoginIpAddress");
 				Timestamp registerationTime = rs.getTimestamp("User_RegisterationTime");
 				Timestamp lastLoginTime = rs.getTimestamp("User_LastLoginTime");
 				Timestamp lastPostTime = rs.getTimestamp("User_LastPostTime");
-				boolean isAdministrator = rs.getBoolean("User_IsAdministrator"); 
+				boolean isAdministrator = rs.getBoolean("User_IsAdministrator");
 				boolean isBanned = rs.getBoolean("User_IsBanned");
-				return new User(username, password, email, loginIpAddress, registerationTime,
-						lastLoginTime, lastPostTime, isAdministrator, isBanned);
+				return new User(username, password, email, loginIpAddress, registerationTime, lastLoginTime,
+						lastPostTime, isAdministrator, isBanned);
 			} else {
 				return null;
 			}
@@ -156,8 +158,11 @@ public class DataAccessObject {
 									 * statement.execute(); } }
 									 */
 
-	/** Create forum 
-	 * @return */
+	/**
+	 * Create forum
+	 * 
+	 * @return
+	 */
 	public int create(Forum forum)
 			throws SQLException, InstantiationException, IllegalAccessException, ClassNotFoundException {
 		String sql = "{? = CALL create_forum(?,?,?,?,?,?,?)}";
@@ -166,38 +171,41 @@ public class DataAccessObject {
 			if (forum.getParentID() == null)
 				statement.setNull(2, Types.INTEGER);
 			else
-			statement.setInt(2, forum.getParentID());
+				statement.setInt(2, forum.getParentID());
 			statement.setString(3, forum.getForumName());
 			statement.setString(4, forum.getOwner());
 			statement.setString(5, forum.getCatagory());
 			statement.setString(6, forum.getDescription());
 			statement.setDate(7, forum.getCreationTime());
 			statement.setBoolean(8, forum.isVerified());
-			
+
 			statement.registerOutParameter(1, java.sql.Types.INTEGER);
 			statement.execute();
-			
+
 			return statement.getInt(1);
 		}
 	};
-	public void update(Forum forum) throws InstantiationException, IllegalAccessException, ClassNotFoundException, SQLException {
+
+	public void update(Forum forum)
+			throws InstantiationException, IllegalAccessException, ClassNotFoundException, SQLException {
 		String sql = "CALL update_forum(?,?,?,?,?,?,?)";
-		
+
 		try (Connection connection = this.getConnection(); CallableStatement statement = connection.prepareCall(sql)) {
 			statement.setInt(1, forum.getForumID());
 			if (forum.getParentID() == null)
 				statement.setNull(2, Types.INTEGER);
 			else
-			statement.setString(3, forum.getForumName());
+				statement.setString(3, forum.getForumName());
 			statement.setString(4, forum.getOwner());
 			statement.setString(5, forum.getCatagory());
 			statement.setString(6, forum.getDescription());
 			statement.setBoolean(7, forum.isVerified());
-			
+
 			statement.execute();
 
 		}
 	}
+
 	public List<Forum> searchForumByName(String name)
 			throws SQLException, InstantiationException, IllegalAccessException, ClassNotFoundException {
 		String sql = "CALL search_forum_by_name(?)";
