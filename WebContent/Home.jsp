@@ -14,12 +14,12 @@
 	        <header>
 	            <nav class="navbar navbar-inverse navbar-fixed-top" ng-controller="NavController">
 	                <div class="container">
-	                	<a class="navbar-brand" href="#/profile" ng-show ="currentUser">Welcome! ${username}</a>
+	                	<a class="navbar-brand" href="/Community/home" ng-show ="currentUser">Hi ${username}</a>
 	                    <div id="navbar" class="collapse navbar-collapse" aria-expanded="true">
 	                        <ul class="nav navbar-nav navbar-right">
 	                            <li><a href="/Community/login">Log in</a></li>
 	                            <li><a href="/Community/register">Sign up</a></li>
-	                            <li><a href="#/logout">Log out</a></li>  
+	                            <li><a href="/Community/home">Log out</a></li>  
 	                        </ul>
 	                    </div>
 	                </div>
@@ -65,9 +65,9 @@
 								    	 for (Forum forum: forums) {
 								    		 System.out.println(forum.getForumName());
 								    		 %><tr>
-								    		 	<td><%= forum.getForumName()%></td>
+								    		 	<td><a href="/Community/Forum?id=<%=forum.getForumID()%>"><%= forum.getForumName()%></a></td>
 								    		 <tr><%
-								    		 }  %>
+								   }  %>
 						    </tbody>
 					    </table>
 				    </div>

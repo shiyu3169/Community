@@ -10,6 +10,21 @@
 		<link href="./css/Register.css" rel="stylesheet">
 	</head>
 	<body background="./image/background.jpg">
+		<div>
+	        <header>
+	            <nav class="navbar navbar-inverse navbar-fixed-top" ng-controller="NavController">
+	                <div class="container">
+	                	<a class="navbar-brand" href="/Community/home" ng-show ="currentUser">Hi ${username}</a>
+	                    <div id="navbar" class="collapse navbar-collapse" aria-expanded="true">
+	                        <ul class="nav navbar-nav navbar-right">
+	                            <li><a href="/Community/home">Home</a></li>
+	                            <li><a href="login">Sign in</a></li>
+	                        </ul>
+	                    </div>
+	                </div>
+	            </nav>
+	        </header>
+	    </div>
 		<div class="container">
 	        <form  method="post" class="form-signin" action="register">
 	            <h2 class="form-signin-heading"> 
