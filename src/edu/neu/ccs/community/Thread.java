@@ -15,7 +15,7 @@ public class Thread {
     String lastUpdator;
     
     Timestamp creationTime;
-    Timestamp lastPostTime;
+    Timestamp lastUpdateTime;
     
     boolean isSticky;
     boolean isDeleted;
@@ -26,12 +26,12 @@ public class Thread {
 	 * @param author
 	 * @param lastUpdator
 	 * @param creationTime
-	 * @param lastPostTime
+	 * @param lastUpdateTime
 	 * @param isSticky
 	 * @param isDeleted
 	 */
 	public Thread(Integer threadID, int forumID, String title, String author, String lastUpdator,
-			Timestamp creationTime, Timestamp lastPostTime, boolean isSticky, boolean isDeleted) {
+			Timestamp creationTime, Timestamp lastUpdateTime, boolean isSticky, boolean isDeleted) {
 		super();
 		this.threadID = threadID;
 		this.forumID = forumID;
@@ -39,7 +39,7 @@ public class Thread {
 		this.author = author;
 		this.lastUpdator = lastUpdator;
 		this.creationTime = creationTime;
-		this.lastPostTime = lastPostTime;
+		this.lastUpdateTime = lastUpdateTime;
 		this.isSticky = isSticky;
 		this.isDeleted = isDeleted;
 	}
@@ -58,7 +58,7 @@ public class Thread {
 		this.author = author;
 		this.lastUpdator = author;
 		this.creationTime = new Timestamp(System.currentTimeMillis());
-		this.lastPostTime = new Timestamp(System.currentTimeMillis());
+		this.lastUpdateTime = new Timestamp(System.currentTimeMillis());
 		this.isSticky = isSticky;
 		this.isDeleted = isDeleted;
 	}
@@ -135,16 +135,16 @@ public class Thread {
 		this.creationTime = creationTime;
 	}
 	/**
-	 * @return the lastPostTime
+	 * @return the lastUpdateTime
 	 */
-	public Timestamp getLastPostTime() {
-		return lastPostTime;
+	public Timestamp getLastUpdateTime() {
+		return lastUpdateTime;
 	}
 	/**
-	 * @param lastPostTime the lastPostTime to set
+	 * @param lastUpdateTime the lastUpdateTime to set
 	 */
-	public void setLastPostTime(Timestamp lastPostTime) {
-		this.lastPostTime = lastPostTime;
+	public void setLastUpdateTime(Timestamp lastUpdateTime) {
+		this.lastUpdateTime = lastUpdateTime;
 	}
 	/**
 	 * @return the isSticky

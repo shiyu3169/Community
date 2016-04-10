@@ -210,7 +210,15 @@ BEGIN
 END//
 CALL search_forum_by_name('Cat')//
 CALL search_forum_by_name('Doraemon')//
+DROP PROCEDURE IF EXISTS get_forum_by_id//
+CREATE PROCEDURE get_forum_by_id(
+	Given_ForumID VARCHAR(50)
+)
+BEGIN
+	SELECT * FROM Forums WHERE ForumID = Given_ForumID LIMIT 1;
+END// 
 DELIMITER ;
+CALL get_forum_by_id(3);
 /* Thread Table */
 DROP TABLE IF EXISTS Threads;
 CREATE TABLE Threads (
@@ -221,7 +229,7 @@ CREATE TABLE Threads (
     Thread_LastUpdator	VARCHAR(50),	-- the last replier or administortor who update it, foreign key to Users(UserName) to speed up access
     
     Thread_CreationTime	DATETIME,
-    Thread_LastPostTime	DATETIME,
+    Thread_LastUpdateTime	DATETIME,
     
     Thread_IsSticky	BOOLEAN,
     Thread_IsDeleted	BOOLEAN,
@@ -245,7 +253,7 @@ CREATE FUNCTION create_thread(
     Given_Thread_LastUpdator	VARCHAR(50),	-- the last replier or administortor who update it, foreign key to Users(UserName) to speed up access
     
     Given_Thread_CreationTime	DATETIME,
-    Given_Thread_LastPostTime	DATETIME,
+    Given_Thread_LastUpdateTime	DATETIME,
     
     Given_Thread_IsSticky	BOOLEAN,
     Given_Thread_IsDeleted	BOOLEAN)
@@ -258,7 +266,7 @@ BEGIN
 		Thread_LastUpdator,
     
 		Thread_CreationTime,
-		Thread_LastPostTime,
+		Thread_LastUpdateTime,
     
 		Thread_IsSticky,
 		Thread_IsDeleted
@@ -269,7 +277,7 @@ BEGIN
 		Given_Thread_LastUpdator,
     
 		Given_Thread_CreationTime,
-		Given_Thread_LastPostTime,
+		Given_Thread_LastUpdateTime,
     
 		Given_Thread_IsSticky,
 		Given_Thread_IsDeleted
@@ -321,7 +329,16 @@ SELECT create_thread(
     
 		FALSE,
 		FALSE);
-
+DELIMITER //
+DROP PROCEDURE IF EXISTS get_thread_list_by_forumID//
+CREATE PROCEDURE get_thread_list_by_forumID(
+	Given_ForumID INT
+)
+BEGIN
+	SELECT * FROM Threads WHERE ForumID = Given_ForumID;
+END//
+DELIMITER ;
+CALL get_thread_list_by_forumID(3);
 /* Posts Table */
 DROP TABLE IF EXISTS Posts;
 CREATE TABLE Posts (
@@ -355,10 +372,10 @@ CREATE TABLE Posts (
 /* FavoriteForums Table */
 DROP TABLE IF EXISTS FavoriteForums;
 CREATE TABLE FavoriteForums (
-	UserID	INT,
+	UserName VARCHAR(50),
     ForumID	INT,
     CONSTRAINT FavoriteForum_fk_User
-		FOREIGN KEY (UserID) REFERENCES Users(UserID)
+		FOREIGN KEY (UserName) REFERENCES Users(UserName)
         ON UPDATE CASCADE ON DELETE CASCADE,
 	CONSTRAINT FavoriteForum_fk_Fourm
 		FOREIGN KEY (ForumID) REFERENCES Forums(ForumID)

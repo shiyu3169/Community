@@ -25,7 +25,11 @@
 	        </header>
 	    </div>
 		<div class="container">
+<<<<<<< HEAD:WebContent/Login.jsp
+	        <form action="login" method="post" class="form-signin">
+=======
 	        <form  method="post" class="form-signin" action="login">
+>>>>>>> refs/remotes/origin/master:WebContent/login.jsp
 	            <h2 class="form-signin-heading"> 
 	            	<font color="white">Please Login </font>
 	            </h2>
