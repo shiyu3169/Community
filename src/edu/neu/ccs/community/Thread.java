@@ -143,7 +143,7 @@ public class Thread {
 	/**
 	 * @param lastUpdateTime the lastUpdateTime to set
 	 */
-	public void setLastUpdateTime(Timestamp lastUpdateTime) {
+	public void getLastUpdateTime(Timestamp lastUpdateTime) {
 		this.lastUpdateTime = lastUpdateTime;
 	}
 	/**
