@@ -93,8 +93,8 @@ public class DataAccessObject {
 			statement.setString(4, user.getLoginIpAddress());
 			statement.setBoolean(5, user.isAdministrator());
 			statement.setBoolean(6, user.isBanned());
-			statement.setDate(7, user.getRegisterationTime());
-			statement.setDate(8, user.getLastLoginTime());
+			statement.setTimestamp(7, user.getRegisterationTime());
+			statement.setTimestamp(8, user.getLastLoginTime());
 			statement.execute();
 
 		}
