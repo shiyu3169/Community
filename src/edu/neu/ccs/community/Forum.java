@@ -12,7 +12,6 @@ public class Forum {
 	private Integer parentID;
 	private String forumName;
 	private String owner;
-    //private User owner;
     private String catagory;
     private String description;
     
