@@ -32,7 +32,7 @@
 	                            	else {
 	                            		%>
 	                            		<li><a href="#">Hi ${username}</a></li>  
-	                            		<li><a href="/Community/login">Log out</a></li>  
+	                            		<li><a href="/Community/login">Log out</a></li>
 	                            		<%
 	                            	}
 	                        		%> 
@@ -54,6 +54,12 @@
 		            	<h1 align="middle"><font color="white">${forumName }</font></h1>
 		            	<hr/>
 		                <p align="middle"><font color="white">${description }</font></p>
+		        		<div align="middle">
+			                <button <%if(!request.getAttribute("owner").equals(request.getAttribute("username"))) {
+			                	%>style="visibility:hidden;" <%
+			                } %> class="btn btn-primary">Edit</button>
+			                <button class="btn btn-danger">Delete</button>
+		                </div>
 	    		</div>
 		    	<div class="col-md-6">
 		    		<div class="fresh-table">
