@@ -14,12 +14,21 @@
 	        <header>
 	            <nav class="navbar navbar-inverse navbar-fixed-top" ng-controller="NavController">
 	                <div class="container">
-	                	<a class="navbar-brand" href="/Community/home" ng-show ="currentUser">Hi ${username}</a>
 	                    <div id="navbar" class="collapse navbar-collapse" aria-expanded="true">
 	                        <ul class="nav navbar-nav navbar-right">
-	                            <li><a href="/Community/login">Log in</a></li>
-	                            <li><a href="/Community/register">Sign up</a></li>
-	                            <li><a href="/Community/home">Log out</a></li>  
+	                        	<%if (request.getAttribute("username") == null) {
+	                        		%> 
+	                        			<li><a href="/Community/login">Log in</a></li>
+	                            		<li><a href="/Community/register">Sign up</a></li>
+	                            	<%
+	                        		}
+	                            	else {
+	                            		%>
+	                            		<li><a href="#">Hi ${username}</a></li>  
+	                            		<li><a href="/Community/login">Log out</a></li>  
+	                            		<%
+	                            	}
+	                        		%> 
 	                        </ul>
 	                    </div>
 	                </div>
