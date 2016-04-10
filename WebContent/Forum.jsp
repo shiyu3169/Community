@@ -55,10 +55,11 @@
 		            	<hr/>
 		                <p align="middle"><font color="white">${description }</font></p>
 		        		<div align="middle">
-			                <button <%if(!request.getAttribute("owner").equals(request.getAttribute("username"))) {
+			                <button data-toggle="modal" data-target="#edit" <%if(!request.getAttribute("owner").equals(request.getAttribute("username")) &&
+			                		!(boolean)request.getAttribute("isAdmin")) {
 			                	%>style="visibility:hidden;" <%
 			                } %> class="btn btn-primary">Edit</button>
-			                <button <%if(!(boolean)request.getAttribute("isAdmin")) {
+			                <button data-toggle="modal" data-target="#delete" <%if(!(boolean)request.getAttribute("isAdmin")  ) {
 			                	%>style="visibility:hidden;" <%
 			                }%> class="btn btn-danger">Delete</button>
 		                </div>
@@ -122,6 +123,63 @@
 	    			<hr/>
 	    		</div>
 			</div>
-	    </div>
+				<!-- Modal -->
+			<div class="modal fade" id="edit">
+				<div class="modal-dialog">
+					<div class="modal-content">
+						<div class="modal-header">
+							<h4 class="modal-title">Edit Forum</h4>
+						</div>
+						<div class="modal-body">
+							<form class="form form-horizontal" method="post" action="updateForum">
+								<div class="form-group">
+									<label class="col-sm-3 control-label">Forum Name</label>
+									<div class="col-sm-8">
+										<input id="name" name="name" type="text" class="form-control" value="${forumName}"
+											placeholder="Forum Name" required/>
+									</div>
+								</div>
+								<div class="form-group">
+									<label class="col-sm-3 control-label">Category</label>
+									<div class="col-sm-8">
+										<input id="catagory" name="catagory" type="input"
+											class="form-control" maxlength="10" value="${catagory}" placeholder="Category" required/>
+									</div>
+								</div>
+								<div class="form-group">
+									<label class="col-sm-3 control-label">Description</label>
+									<div class="col-sm-8">
+										<textarea id="description" name="description"
+											class="form-control" maxlength="400" value="${description }" placeholder="A short discription of this forum"></textarea>
+									</div>
+								</div>
+								<div class="modal-footer" >
+									<button type="submit" class="btn btn-success" id="ok">Confirm</button>
+									<button type="button" data-dismiss="modal" class="btn btn-danger" id="cancelAdd">Cancel</button>
+								</div>
+							</form>
+						</div>
+					</div>
+				</div>
+			</div>
+				<!-- Delete -->
+			<div class="modal fade" id="edit">
+				<div class="modal-dialog">
+					<div class="modal-content">
+						<div class="modal-header">
+							<h4 class="modal-title">Delete Forum</h4>
+						</div>
+						<div class="modal-body">
+							<form class="form form-horizontal" method="post" action="deleteForum">
+								<h3>Are you sure to delete this forum?</h3>
+								<div class="modal-footer" >
+									<button type="submit" class="btn btn-danger" id="ok">Delete</button>
+									<button type="button" data-dismiss="modal" class="btn btn-success" id="cancelAdd">Cancel</button>
+								</div>
+							</form>
+						</div>
+					</div>
+				</div>
+			</div>
 	</body>
 </html>

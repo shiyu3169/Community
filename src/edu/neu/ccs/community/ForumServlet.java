@@ -48,6 +48,7 @@ public class ForumServlet extends HttpServlet {
 				request.setAttribute("isAdmin", loginManager.getCurrentUser().isAdministrator());
 				//request.setAttribute("forum", forum);
 				request.setAttribute("forumName", forum.getForumName());
+				request.setAttribute("category", forum.getCatagory());
 				request.setAttribute("description", forum.getDescription());
 				request.setAttribute("owner", forum.getOwner());
 				request.setAttribute("creationTime", forum.getCreationTime());
