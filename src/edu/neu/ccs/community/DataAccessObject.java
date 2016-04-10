@@ -131,24 +131,28 @@ public class DataAccessObject {
 									 * statement.execute(); } }
 									 */
 
-	/** Create forum */
-	public void create(Forum forum)
+	/** Create forum 
+	 * @return */
+	public int create(Forum forum)
 			throws SQLException, InstantiationException, IllegalAccessException, ClassNotFoundException {
-		String sql = "SELECT create_forum(?,?,?,?,?,?,?)";
+		String sql = "{? = CALL create_forum(?,?,?,?,?,?,?)}";
 
-		try (Connection connection = this.getConnection(); PreparedStatement statement = connection.prepareCall(sql)) {
+		try (Connection connection = this.getConnection(); CallableStatement statement = connection.prepareCall(sql)) {
 			if (forum.getParentID() == null)
-				statement.setNull(1, Types.INTEGER);
+				statement.setNull(2, Types.INTEGER);
 			else
-				statement.setInt(1, forum.getParentID());
-			statement.setString(2, forum.getForumName());
-			statement.setString(3, forum.getOwner());
-			statement.setString(4, forum.getCatagory());
-			statement.setString(5, forum.getDescription());
-			statement.setDate(6, forum.getCreationTime());
-			statement.setBoolean(7, forum.isVerified());
-
+			statement.setInt(2, forum.getParentID());
+			statement.setString(3, forum.getForumName());
+			statement.setString(4, forum.getOwner());
+			statement.setString(5, forum.getCatagory());
+			statement.setString(6, forum.getDescription());
+			statement.setDate(7, forum.getCreationTime());
+			statement.setBoolean(8, forum.isVerified());
+			
+			statement.registerOutParameter(1, java.sql.Types.INTEGER);
 			statement.execute();
+			
+			return statement.getInt(1);
 		}
 	};
 

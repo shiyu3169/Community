@@ -120,18 +120,18 @@
 								<input id="name" name="name" type="text" class="form-control"
 									placeholder="Forum Name" />
 							</div>
-						</div>
+						</div><!-- 
 						<div class="form-group">
 							<label class="col-sm-3 control-label">Forum Name</label>
 							<div class="col-sm-8">
 								<input id="name" name="name" type="text" class="form-control"
 									placeholder="Forum Name" />
 							</div>
-						</div>
+						</div> -->
 						<div class="form-group">
 							<label class="col-sm-3 control-label">Category</label>
 							<div class="col-sm-8">
-								<input id="dateCreated" name="dateCreated" type="input"
+								<input id="catagory" name="catagory" type="input"
 									class="form-control" maxlength="10" placeholder="Category" />
 							</div>
 						</div>
@@ -143,7 +143,7 @@
 							</div>
 						</div>
 						<div class="modal-footer" >
-							<button type="button" data-dismiss="modal" class="btn btn-success" id="ok">Create</button>
+							<button type="submit" class="btn btn-success" id="ok">Create</button>
 							<button type="button" data-dismiss="modal" class="btn btn-danger" id="cancelAdd">Cancel</button>
 						</div>
 					</form>
