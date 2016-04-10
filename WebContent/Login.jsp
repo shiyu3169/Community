@@ -40,10 +40,10 @@
 	                    <font color="white">Remember me</font>
 	                </label>
             	</div>
-	            <h3>
-	            	<font color="white">${message }</font>
-	            </h3>
 	            <button class="btn btn-lg btn-primary btn-block" type="submit">Sign in</button>
+	             <h3>
+	            	<font color="red">${message }</font>
+	            </h3>
 	        </form>
 	    </div>
 	</body>

@@ -98,7 +98,11 @@
 												</td>
 											 <tr>
 									<%} } %>
-								
+							<tr>
+								<td>
+									<p align="middle"><font color="red">${message }</font></p>
+								</td>
+							</tr>
 						</tbody>
 					</table>
 				</div>
@@ -118,7 +122,7 @@
 							<label class="col-sm-3 control-label">Forum Name</label>
 							<div class="col-sm-8">
 								<input id="name" name="name" type="text" class="form-control"
-									placeholder="Forum Name" />
+									placeholder="Forum Name" required/>
 							</div>
 						</div><!-- 
 						<div class="form-group">
@@ -132,14 +136,14 @@
 							<label class="col-sm-3 control-label">Category</label>
 							<div class="col-sm-8">
 								<input id="catagory" name="catagory" type="input"
-									class="form-control" maxlength="10" placeholder="Category" />
+									class="form-control" maxlength="10" placeholder="Category" required/>
 							</div>
 						</div>
 						<div class="form-group">
 							<label class="col-sm-3 control-label">Description</label>
 							<div class="col-sm-8">
 								<textarea id="description" name="description"
-									class="form-control"></textarea>
+									class="form-control" maxlength="400" placeholder="A short discription of this forum"></textarea>
 							</div>
 						</div>
 						<div class="modal-footer" >
