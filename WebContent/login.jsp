@@ -14,7 +14,6 @@
 	        <header>
 	            <nav class="navbar navbar-inverse navbar-fixed-top" ng-controller="NavController">
 	                <div class="container">
-	                	<a class="navbar-brand" href="/Community/home" ng-show ="currentUser">Hi ${username}</a>
 	                    <div id="navbar" class="collapse navbar-collapse" aria-expanded="true">
 	                        <ul class="nav navbar-nav navbar-right">
 	                            <li><a href="/Community/home">Home</a></li>
