@@ -69,14 +69,21 @@
 					    <table  id="fresh-table" class="table">
 					    	<tbody>
 						    	<%
-						    		List<Forum> forums = (List<Forum>)request.getAttribute("result");
+						    	
+						    	if (request.getAttribute("result") == null) { 
 						    		
+						    	} else {
+						    		List<Forum> forums = (List<Forum>)request.getAttribute("result");
 								    	 for (Forum forum: forums) {
 								    		 System.out.println(forum.getForumName());
 								    		 %><tr>
-								    		 	<td><a href="/Community/Forum?id=<%=forum.getForumID()%>"><%= forum.getForumName()%></a></td>
+								    		 	<td>
+								    		 		<a href="/Community/Forum?id=<%=forum.getForumID()%>">
+								    		 			<%= forum.getForumName()%>
+								    		 		</a>
+								    		 	</td>
 								    		 <tr><%
-								   }  %>
+								   } } %>
 						    </tbody>
 					    </table>
 				    </div>

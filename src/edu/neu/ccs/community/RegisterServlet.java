@@ -41,7 +41,7 @@ public class RegisterServlet extends HttpServlet {
 		try {
 			dao.create(user);
 			request.setAttribute("message", null);
-			request.getRequestDispatcher("/Login.jsp").forward(request, response);
+			request.getRequestDispatcher("/login").forward(request, response);
 		} catch (InstantiationException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
