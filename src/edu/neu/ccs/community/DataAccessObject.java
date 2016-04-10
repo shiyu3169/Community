@@ -24,7 +24,7 @@ public class DataAccessObject {
 	private final String userName = "root";
 
 	/** The password for the MySQL account (or empty for anonymous) */
-	private final String password = "cliff92711";
+	private final String password = "hpahzGSYCl05116";
 
 	/** The name of the computer running MySQL */
 	private final String serverName = "localhost";
@@ -41,6 +41,9 @@ public class DataAccessObject {
 	public static void main(String[] args) {
 		DataAccessObject dao = new DataAccessObject();
 		try {
+			dao.create(new User("String username", "String password", 
+					"String email", "String loginIpAddress", false,
+					false));
 			dao.searchForumByName("cat");
 			System.out.println(dao.userValidation("admin", "admin"));
 			System.out.println(dao.userValidation("admin", "123"));
@@ -189,5 +192,28 @@ public class DataAccessObject {
 
 		}
 	}
+	public int create(Thread thread)
+			throws InstantiationException, IllegalAccessException, ClassNotFoundException, SQLException {
+		String sql = "{ ? = CALL create_thread(?,?,?,?,?,?,?,?) }";
+
+		try (Connection connection = this.getConnection(); CallableStatement statement = connection.prepareCall(sql)) {
+			statement.setInt(2, thread.getForumID());
+			statement.setString(3, thread.getTitle());
+			statement.setString(4, thread.getAuthor());
+			statement.setString(5, thread.getLastUpdator());
+			statement.setTimestamp(6, thread.getCreationTime());
+			statement.setTimestamp(7, thread.getLastPostTime());
+			statement.setBoolean(8, thread.isSticky);
+			statement.setBoolean(9, thread.isDeleted);
+			statement.registerOutParameter(1, java.sql.Types.INTEGER);
+			
+
+			statement.execute();
+			thread.setThreadID(statement.getInt(1));
+			return thread.getThreadID();
+
+		}
+	}
+
 
 }
