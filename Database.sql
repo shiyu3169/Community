@@ -80,6 +80,8 @@ CREATE FUNCTION user_login_validation(
     Given_User_Password VARCHAR(512))
 RETURNS BOOLEAN
 BEGIN
+	UPDATE Users SET User_LastLoginTime = NOW()
+		WHERE UserName = Given_UserName AND User_Password = Given_User_Password LIMIT 1;
 	RETURN EXISTS(SELECT * FROM Users 
 		WHERE UserName = Given_UserName AND User_Password = Given_User_Password);
 END//
@@ -211,7 +213,7 @@ SELECT create_forum(1,
 		NOW(),
 		TRUE);
 DELIMITER //
-DROP PROCEDURE IF EXISTS forum//
+DROP PROCEDURE IF EXISTS update_forum//
 CREATE PROCEDURE update_forum (
 	Given_ForumID	INT,
     Given_ParentID	INT,	-- foreign key to ForumID
@@ -299,6 +301,14 @@ CREATE TABLE Threads (
 		FOREIGN KEY (Thread_Author) REFERENCES Users(UserName)
         ON UPDATE CASCADE ON DELETE SET NULL        
 );
+DROP PROCEDURE IF EXISTS delete_forum;
+DELIMITER //
+CREATE PROCEDURE delete_forum (
+	Given_ForumID INT
+)
+BEGIN
+	DELETE FROM Forums WHERE ForumID = Given_ForumID;
+END//
 DELIMITER //
 DROP FUNCTION IF EXISTS create_thread//
 CREATE FUNCTION create_thread(

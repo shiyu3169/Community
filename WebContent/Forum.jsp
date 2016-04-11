@@ -132,6 +132,8 @@
 						</div>
 						<div class="modal-body">
 							<form class="form form-horizontal" method="post" action="updateForum">
+								<input type="hidden" id="owner" name="owner" value="${owner}" />
+								<input type="hidden" id="forumID" name="forumID" value="<%=request.getParameter("id")%>" />
 								<div class="form-group">
 									<label class="col-sm-3 control-label">Forum Name</label>
 									<div class="col-sm-8">
@@ -163,7 +165,7 @@
 				</div>
 			</div>
 				<!-- Delete -->
-			<div class="modal fade" id="edit">
+			<div class="modal fade" id="delete">
 				<div class="modal-dialog">
 					<div class="modal-content">
 						<div class="modal-header">
@@ -171,6 +173,7 @@
 						</div>
 						<div class="modal-body">
 							<form class="form form-horizontal" method="post" action="deleteForum">
+								<input type="hidden" name="forumID" value="<%=request.getParameter("id") %>" />
 								<h3>Are you sure to delete this forum?</h3>
 								<div class="modal-footer" >
 									<button type="submit" class="btn btn-danger" id="ok">Delete</button>
