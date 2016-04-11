@@ -31,7 +31,7 @@
 	                        		}
 	                            	else {
 	                            		%>
-	                            		<li><a href="#">Hi ${username}</a></li>  
+	                            		<li><a href="#">Hi ${username}></a></li> 
 	                            		<li><a href="/Community/login">Log out</a></li>
 	                            		<%
 	                            	}
