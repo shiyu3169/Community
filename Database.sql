@@ -510,7 +510,15 @@ BEGIN
 			Thread_LastUpdator = NEW.Post_Author
             WHERE Threads.ThreadID = NEW.ThreadID;
 END //
+DROP PROCEDURE IF EXISTS get_post_list_by_threadID//
+CREATE PROCEDURE get_post_list_by_threadID(
+	Given_ThreadID INT
+)
+BEGIN
+	SELECT * FROM Posts WHERE ThreadID = Given_ThreadID;
+END//
 DELIMITER ;
+CALL get_post_list_by_threadID(1);
 /* FavoriteForums Table */
 DROP TABLE IF EXISTS FavoriteForums;
 CREATE TABLE FavoriteForums (
