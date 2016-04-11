@@ -47,9 +47,7 @@ public class DataAccessObject {
 			// email", "String loginIpAddress", false,
 			// false));
 
-			System.out.println("**********");
-			System.out.println(dao.getUserByName("admin").getUsername());
-			System.out.println(dao.getUserByName("admin").isAdministrator());
+			dao.getPostsByThreadID(1);
 
 		} catch (InstantiationException e) {
 			e.printStackTrace();
@@ -320,11 +318,33 @@ public class DataAccessObject {
 				boolean isDeleted = rs.getBoolean("Thread_IsDeleted");
 				result.add(new Thread(threadID, forumID, title, author, lastUpdator, creationTime, lastUpdateTime,
 						isSticky, isDeleted));
-				System.out.println(title);
 			}
 		}
 
 		return result;
 	}
-	
+	public ArrayList<Post> getPostsByThreadID(int threadID)
+			throws SQLException, InstantiationException, IllegalAccessException, ClassNotFoundException {
+		String sql = "CALL get_post_list_by_threadID(?)";
+		ArrayList<Post> result = new ArrayList<Post>();
+		try (Connection connection = this.getConnection(); CallableStatement statement = connection.prepareCall(sql)) {
+			statement.setInt(1, threadID);
+			ResultSet rs = statement.executeQuery();
+			while (rs.next()) {
+				Integer postID = rs.getInt("PostID");
+				Integer replyToPost = rs.getInt("ReplyToPost");
+				String author = rs.getString("Post_Author");
+				String content = rs.getString("Post_Content");
+				Timestamp creationTime = rs.getTimestamp("Post_CreationTime");
+				Timestamp lastModificationTime = rs.getTimestamp("Post_LastModificationTime");
+				boolean isDeleted = rs.getBoolean("Post_IsDeleted");
+				result.add(new Post(postID, threadID, replyToPost, author, content,
+						creationTime, lastModificationTime, isDeleted));
+				System.out.println(content);
+			}
+		}
+
+		return result;
+	}
+
 }
