@@ -13,7 +13,7 @@
 	<body background="./image/forum.jpg">
 	    <div>
 	        <header>
-	            <nav class="navbar navbar-inverse navbar-fixed-top" ng-controller="NavController">
+	            <nav class="navbar navbar-inverse navbar-fixed-top">
 	                <div class="container">
 	                    <div id="navbar" class="collapse navbar-collapse" aria-expanded="true">
 						    <form class="navbar-form navbar-left" method="get" action="home">
@@ -31,7 +31,7 @@
 	                        		}
 	                            	else {
 	                            		%>
-	                            		<li><a href="#">Hi ${username}</a></li>  
+	                            		<li><a href="#">Hi ${username}></a></li> 
 	                            		<li><a href="/Community/login">Log out</a></li>
 	                            		<%
 	                            	}
