@@ -124,11 +124,14 @@
 	    		</div>
 			</div>
 			<form class="container" method="post" action="createThread">
-				<label class="col-sm-3 control-label"><font color="white">New Thread</font></label>
-				<div>
-					<textarea id="content" name="content"
-						class="form-control" maxlength="400" placeholder="The content of the first post"></textarea>
-				</div>
+				<h3><font color ="white">New Thread</font></h3>
+				<label class="col-sm-3 control-label"><font color="white">Topic</font></label>
+				<input id="title" name="title" type="text" class="form-control" placeholder="The topic of the thread" required/>
+				<label class="col-sm-3 control-label"><font color="white">Content</font></label>
+				<textarea id="content" name="content"
+						class="form-control" maxlength="400" placeholder="The content of the first post">
+				</textarea>
+				<br/>
 				<button class="btn btn-warning pull-right">Post</button>
 			</form>
 				<!-- Modal -->
