@@ -26,7 +26,7 @@ public class DataAccessObject {
 	private final String userName = "root";
 
 	/** The password for the MySQL account (or empty for anonymous) */
-	private final String password = "cliff92711";
+	private final String password = "hpahzGSYCl05116";
 
 	/** The name of the computer running MySQL */
 	private final String serverName = "localhost";
@@ -253,6 +253,7 @@ public class DataAccessObject {
 			}
 		}
 	}
+
 	public void deleteForumByID(int forumID)
 			throws SQLException, InstantiationException, IllegalAccessException, ClassNotFoundException {
 		String sql = "CALL delete_forum(?)";
@@ -262,6 +263,7 @@ public class DataAccessObject {
 			statement.execute();
 		}
 	}
+
 	public boolean userValidation(String username, String password)
 			throws InstantiationException, IllegalAccessException, ClassNotFoundException, SQLException {
 		String sql = "{ ? = CALL user_login_validation(?,?) }";
@@ -323,6 +325,7 @@ public class DataAccessObject {
 
 		return result;
 	}
+
 	public ArrayList<Post> getPostsByThreadID(int threadID)
 			throws SQLException, InstantiationException, IllegalAccessException, ClassNotFoundException {
 		String sql = "CALL get_post_list_by_threadID(?)";
@@ -338,8 +341,8 @@ public class DataAccessObject {
 				Timestamp creationTime = rs.getTimestamp("Post_CreationTime");
 				Timestamp lastModificationTime = rs.getTimestamp("Post_LastModificationTime");
 				boolean isDeleted = rs.getBoolean("Post_IsDeleted");
-				result.add(new Post(postID, threadID, replyToPost, author, content,
-						creationTime, lastModificationTime, isDeleted));
+				result.add(new Post(postID, threadID, replyToPost, author, content, creationTime, lastModificationTime,
+						isDeleted));
 				System.out.println(content);
 			}
 		}

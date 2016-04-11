@@ -1,5 +1,5 @@
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
-	pageEncoding="ISO-8859-1"%>
+	pageEncoding="ISO-8859-1" import="java.util.List, edu.neu.ccs.community.*"%>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
@@ -52,21 +52,22 @@
 				<tbody>
 				<%if (request.getAttribute("postList") == null) {
 					%>Error! You found the 2nd secreat place<%
-				} else { %>
+				} else {
+				for (Post post : (List<Post>)request.getAttribute("postList")) {%>
 					<tr>
-						<td>${ content}</td>
-						<td>Created at : ${cteationTime }</td>
-						<td>${ author}</td>
+						<td><%= post.getContent()%></td>
+						<td>Created at : <%= post.getCreationTime()  %></td>
+						<td><%= post.getAuthor()%></td>
 					</tr>
-					<tr <%if (request.getAttribute("lastModifytime") == null) {
+					<tr <%if (post.getLastModificationTime() == null) {
 						%>style="visibility:hidden;"<%
 					} %>>
-						<td>${lastModifyTime }</td>
+						<td><%=post.getLastModificationTime()%></td>
 					</tr> <%
-				} %>
+				 %>
 					<tr>
 						<td>
-							<button data-toggle="modal" data-target="#edit" <%if(!request.getAttribute("author").equals(request.getAttribute("username")) &&
+							<button data-toggle="modal" data-target="#edit" <%if(!post.getAuthor().equals(request.getAttribute("username")) &&
 			                		!(boolean)request.getAttribute("isAdmin")) {
 			                	%>style="visibility:hidden;" <%
 			                } %> class="btn btn-primary">Edit</button>
@@ -76,7 +77,7 @@
 			                	%>style="visibility:hidden;" <%
 			                }%> class="btn btn-danger">Delete</button>
 						</td>
-					</tr>
+					</tr><%}} %>
 				</tbody>
 			</table>
 		</div>
@@ -121,7 +122,7 @@
 				<div class="modal-body">
 					<form class="form form-horizontal" method="post"
 						action="deleteForum">
-						<input type="hidden" name="forumID"
+						<input type="hidden" name="postID"
 							value="<%=request.getParameter("id") %>" />
 						<h3>Are you sure to delete this post?</h3>
 						<div class="modal-footer">
