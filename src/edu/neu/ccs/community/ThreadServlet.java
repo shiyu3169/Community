@@ -40,12 +40,13 @@ public class ThreadServlet extends HttpServlet {
 		else {
 			request.setAttribute("isAdmin", false);
 		}
+
 		try {
 			threadID = Integer.valueOf(request.getParameter("id"));
 			List<Post> postList = dao.getPostsByThreadID(threadID);
 			request.setAttribute("postList", postList);
 		} catch (Exception e) {
-			throw new IllegalArgumentException();
+			e.printStackTrace();
 		}
 		request.setAttribute("username", loginManager.getSavedUsername());
 		request.getRequestDispatcher("/Thread.jsp").forward(request, response);
