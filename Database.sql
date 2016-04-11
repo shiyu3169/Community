@@ -495,6 +495,21 @@ SELECT create_post(1, -- foreign key to Threads(ThreadID)
 			
 			FALSE
 )//
+DROP TRIGGER IF EXISTS update_information_after_post_inserted //
+CREATE TRIGGER update_information_after_post_inserted
+	AFTER INSERT ON Posts
+    FOR EACH ROW
+BEGIN
+	UPDATE Users
+		SET User_LastPostTime = NOW() WHERE UserName = NEW.Post_Author;
+	UPDATE Forums
+		SET Forum_LastPostTime = NOW() WHERE ForumID = 
+			(SELECT ForumID FROM Threads WHERE Threads.ThreadID = NEW.ThreadID LIMIT 1);
+	UPDATE Threads
+		SET Thread_LastUpdateTime = NOW(),
+			Thread_LastUpdator = NEW.Post_Author
+            WHERE Threads.ThreadID = NEW.ThreadID;
+END //
 DELIMITER ;
 /* FavoriteForums Table */
 DROP TABLE IF EXISTS FavoriteForums;
