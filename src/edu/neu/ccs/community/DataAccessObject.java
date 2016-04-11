@@ -195,7 +195,8 @@ public class DataAccessObject {
 			if (forum.getParentID() == null)
 				statement.setNull(2, Types.INTEGER);
 			else
-				statement.setString(3, forum.getForumName());
+				statement.setInt(2, forum.getParentID());
+			statement.setString(3, forum.getForumName());
 			statement.setString(4, forum.getOwner());
 			statement.setString(5, forum.getCatagory());
 			statement.setString(6, forum.getDescription());
@@ -254,7 +255,15 @@ public class DataAccessObject {
 			}
 		}
 	}
+	public void deleteForumByID(int forumID)
+			throws SQLException, InstantiationException, IllegalAccessException, ClassNotFoundException {
+		String sql = "CALL delete_forum(?)";
 
+		try (Connection connection = this.getConnection(); CallableStatement statement = connection.prepareCall(sql)) {
+			statement.setInt(1, forumID);
+			statement.execute();
+		}
+	}
 	public boolean userValidation(String username, String password)
 			throws InstantiationException, IllegalAccessException, ClassNotFoundException, SQLException {
 		String sql = "{ ? = CALL user_login_validation(?,?) }";
@@ -317,5 +326,5 @@ public class DataAccessObject {
 
 		return result;
 	}
-
+	
 }
