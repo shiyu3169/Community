@@ -301,6 +301,43 @@ public class DataAccessObject {
 		}
 	}
 
+	public int create(Post post)
+			throws InstantiationException, IllegalAccessException, ClassNotFoundException, SQLException {
+		String sql = "{ ? = CALL create_thread(?,?,?,?,?,?,?,?) }";
+		/*
+		 * 
+		 * Given_ThreadID INT, -- foreign key to Threads(ThreadID)
+		 * Given_ReplyToPost INT, -- foreign key to Post(PostID)
+		 * 
+		 * Given_Post_Author VARCHAR(50), Given_Post_LastModifier VARCHAR(50),
+		 * 
+		 * Given_Post_Content LONGTEXT,
+		 * 
+		 * Given_Post_CreationTime DATETIME, Given_Post_LastModificationTime
+		 * DATETIME,
+		 * 
+		 * Given_Post_IsDeleted BOOLEAN
+		 */
+		try (Connection connection = this.getConnection(); CallableStatement statement = connection.prepareCall(sql)) {
+			statement.setInt(2, post.getThreadID());
+			if (post.getReplyToPost() == null)
+				statement.setNull(3, Types.INTEGER);
+			else
+				statement.setInt(3, post.getReplyToPost());
+			statement.setString(4, post.getAuthor());
+			statement.setNull(5, Types.VARCHAR);
+			statement.setString(6, post.getContent());
+			statement.setTimestamp(7, post.getCreationTime());
+			statement.setTimestamp(8, post.getLastModificationTime());
+			statement.setBoolean(9, post.isDeleted());
+			statement.registerOutParameter(1, java.sql.Types.INTEGER);
+			statement.execute();
+			post.setPostID(statement.getInt(1));
+			return post.getPostID();
+
+		}
+	}
+
 	public ArrayList<Thread> getThreadsByForumID(int forumID)
 			throws SQLException, InstantiationException, IllegalAccessException, ClassNotFoundException {
 		String sql = "CALL get_thread_list_by_forumID(?)";
