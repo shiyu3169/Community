@@ -31,7 +31,7 @@
 	                        		}
 	                            	else {
 	                            		%>
-	                            		<li><a href="#">Hi ${username}></a></li> 
+	                            		<li><a href="#">Hi ${username}</a></li> 
 	                            		<li><a href="/Community/login">Log out</a></li>
 	                            		<%
 	                            	}
@@ -123,6 +123,14 @@
 	    			<hr/>
 	    		</div>
 			</div>
+			<form class="container" method="post" action="forum">
+				<label class="col-sm-3 control-label"><font color="white">New Thread</font></label>
+				<div>
+					<textarea id="content" name="content"
+						class="form-control" maxlength="400" value="${description }" placeholder="The content of first post"></textarea>
+				</div>
+				<button class="btn btn-warning pull-right">Post</button>
+			</form>
 				<!-- Modal -->
 			<div class="modal fade" id="edit">
 				<div class="modal-dialog">
