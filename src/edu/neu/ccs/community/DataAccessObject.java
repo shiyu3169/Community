@@ -26,7 +26,7 @@ public class DataAccessObject {
 	private final String userName = "root";
 
 	/** The password for the MySQL account (or empty for anonymous) */
-	private final String password = "cliff92711";
+	private final String password = "hpahzGSYCl05116";
 
 	/** The name of the computer running MySQL */
 	private final String serverName = "localhost";
@@ -303,7 +303,7 @@ public class DataAccessObject {
 
 	public int create(Post post)
 			throws InstantiationException, IllegalAccessException, ClassNotFoundException, SQLException {
-		String sql = "{ ? = CALL create_thread(?,?,?,?,?,?,?,?) }";
+		String sql = "{ ? = CALL create_post(?,?,?,?,?,?,?,?) }";
 		/*
 		 * 
 		 * Given_ThreadID INT, -- foreign key to Threads(ThreadID)

@@ -43,7 +43,7 @@ public class CreateThreadServlet extends HttpServlet {
 		String author = loginManager.getSavedUsername();
 		boolean isSticky = false;
 		boolean isDeleted = false;
-		
+		int threadID;
 		String content;
 		try {
 			forumID = Integer.valueOf(request.getParameter("forumID"));
@@ -53,7 +53,7 @@ public class CreateThreadServlet extends HttpServlet {
 			throw new IllegalArgumentException();
 		}
 		try {
-			int threadID = dao.create(new Thread(forumID, title, author, isSticky, isDeleted));
+			threadID = dao.create(new Thread(forumID, title, author, isSticky, isDeleted));
 			dao.create(new Post(threadID, author, content, isDeleted));
 			
 		} catch (InstantiationException | IllegalAccessException | ClassNotFoundException | SQLException e) {
