@@ -123,11 +123,11 @@
 	    			<hr/>
 	    		</div>
 			</div>
-			<form class="container" method="post" action="forum">
+			<form class="container" method="post" action="createThread">
 				<label class="col-sm-3 control-label"><font color="white">New Thread</font></label>
 				<div>
 					<textarea id="content" name="content"
-						class="form-control" maxlength="400" value="${description }" placeholder="The content of first post"></textarea>
+						class="form-control" maxlength="400" placeholder="The content of the first post"></textarea>
 				</div>
 				<button class="btn btn-warning pull-right">Post</button>
 			</form>
