@@ -99,9 +99,7 @@
 											 <tr>
 									<%} } %>
 							<tr>
-								<td>
-									<p align="middle"><font color="red">${message }</font></p>
-								</td>
+								<p align="middle"><font color="red">${message }</font></p>
 							</tr>
 						</tbody>
 					</table>
