@@ -38,22 +38,30 @@ public class CreateThreadServlet extends HttpServlet {
 			request.getRequestDispatcher("/Login.jsp").forward(request, response);
 			return;
 		}
-
-		Integer parentID = null;
-		String forumName = request.getParameter("name");
-		String owner = loginManager.getSavedUsername();
-		String catagory = request.getParameter("catagory");
-		String description = request.getParameter("description");
-		boolean isVerified = false;
+		int forumID;
+		String title;
+		String author = loginManager.getSavedUsername();
+		boolean isSticky = false;
+		boolean isDeleted = false;
+		int threadID;
+		String content;
 		try {
-			int forumID = dao.create(new Forum(parentID, forumName, owner, catagory, description, isVerified));
-			response.sendRedirect("forum?id=" + forumID);
+			forumID = Integer.valueOf(request.getParameter("forumID"));
+			title = request.getParameter("title");
+			content = request.getParameter("content");
+		} catch (Exception e) {
+			throw new IllegalArgumentException();
+		}
+		try {
+			threadID = dao.create(new Thread(forumID, title, author, isSticky, isDeleted));
+			dao.create(new Post(threadID, author, content, isDeleted));
+			
 		} catch (InstantiationException | IllegalAccessException | ClassNotFoundException | SQLException e) {
 			request.setAttribute("message", e.getMessage());
 			request.getRequestDispatcher("/Home.jsp").forward(request, response);
 			return;
 		}
-
+		response.sendRedirect("thread?id=" + threadID);
 	}
 
 }

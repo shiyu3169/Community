@@ -26,7 +26,7 @@ public class DataAccessObject {
 	private final String userName = "root";
 
 	/** The password for the MySQL account (or empty for anonymous) */
-	private final String password = "cliff92711";
+	private final String password = "hpahzGSYCl05116";
 
 	/** The name of the computer running MySQL */
 	private final String serverName = "localhost";
@@ -82,7 +82,7 @@ public class DataAccessObject {
 	/** Create User */
 	public void create(User user)
 			throws SQLException, InstantiationException, IllegalAccessException, ClassNotFoundException {
-		String sql = "SELECT create_user(?,?,?,?,?,?,?,?)";
+		String sql = "SELECT create_user(?,?,?,?,?,?,?,?,?)"; // No need for the function result
 
 		try (Connection connection = this.getConnection();
 				PreparedStatement statement = connection.prepareStatement(sql)) {
@@ -94,6 +94,7 @@ public class DataAccessObject {
 			statement.setBoolean(6, user.isBanned());
 			statement.setTimestamp(7, user.getRegisterationTime());
 			statement.setTimestamp(8, user.getLastLoginTime());
+			statement.setInt(9, user.getNewMessages());
 			statement.execute();
 
 		}
@@ -297,6 +298,43 @@ public class DataAccessObject {
 			statement.execute();
 			thread.setThreadID(statement.getInt(1));
 			return thread.getThreadID();
+
+		}
+	}
+
+	public int create(Post post)
+			throws InstantiationException, IllegalAccessException, ClassNotFoundException, SQLException {
+		String sql = "{ ? = CALL create_post(?,?,?,?,?,?,?,?) }";
+		/*
+		 * 
+		 * Given_ThreadID INT, -- foreign key to Threads(ThreadID)
+		 * Given_ReplyToPost INT, -- foreign key to Post(PostID)
+		 * 
+		 * Given_Post_Author VARCHAR(50), Given_Post_LastModifier VARCHAR(50),
+		 * 
+		 * Given_Post_Content LONGTEXT,
+		 * 
+		 * Given_Post_CreationTime DATETIME, Given_Post_LastModificationTime
+		 * DATETIME,
+		 * 
+		 * Given_Post_IsDeleted BOOLEAN
+		 */
+		try (Connection connection = this.getConnection(); CallableStatement statement = connection.prepareCall(sql)) {
+			statement.setInt(2, post.getThreadID());
+			if (post.getReplyToPost() == null)
+				statement.setNull(3, Types.INTEGER);
+			else
+				statement.setInt(3, post.getReplyToPost());
+			statement.setString(4, post.getAuthor());
+			statement.setNull(5, Types.VARCHAR);
+			statement.setString(6, post.getContent());
+			statement.setTimestamp(7, post.getCreationTime());
+			statement.setTimestamp(8, post.getLastModificationTime());
+			statement.setBoolean(9, post.isDeleted());
+			statement.registerOutParameter(1, java.sql.Types.INTEGER);
+			statement.execute();
+			post.setPostID(statement.getInt(1));
+			return post.getPostID();
 
 		}
 	}

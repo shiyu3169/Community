@@ -6,8 +6,8 @@ USE Community;
 /* User Table */
 DROP TABLE IF EXISTS Users;
 CREATE TABLE Users(
-	UserID	INT PRIMARY KEY AUTO_INCREMENT,
-    UserName 	VARCHAR(50) NOT NULL UNIQUE,
+	-- UserID	INT PRIMARY KEY AUTO_INCREMENT,
+    UserName 	VARCHAR(50) PRIMARY KEY,
     
     User_Password	VARCHAR(512) NOT NULL, -- in SHA3-512
     User_EMail	VARCHAR(63) NOT NULL UNIQUE,
@@ -20,7 +20,8 @@ CREATE TABLE Users(
     User_LastPostTime	DATETIME,
     
     User_IsAdministrator	BOOLEAN NOT NULL,
-    User_IsBanned	BOOLEAN NOT NULL    
+    User_IsBanned	BOOLEAN NOT NULL,
+    User_NumberOfNewMessages INT NOT NULL
 );
 DROP FUNCTION IF EXISTS create_user;
 DELIMITER //
@@ -32,12 +33,12 @@ CREATE FUNCTION create_user (
     Given_User_IsAdministrator	BOOLEAN,
     Given_User_IsBanned	BOOLEAN,
     Given_User_RegisterationTime	DATETIME,
-	Given_User_LastLoginTime	DATETIME
-    
+	Given_User_LastLoginTime	DATETIME,
+    Given_User_NumberOfNewMessages INT
     -- OUT Out_RegisterationTime DATE,
     -- OUT Out_RegisterationTime DATE,
 )
-RETURNS INT
+RETURNS VARCHAR(50)
 BEGIN
 	DECLARE result INT;
 	INSERT INTO Users(
@@ -48,8 +49,8 @@ BEGIN
         User_IsAdministrator,
         User_IsBanned,
 		User_RegisterationTime,
-		User_LastLoginTime
-
+		User_LastLoginTime,
+		User_NumberOfNewMessages
     ) VALUES (
 		Given_UserName,
         Given_User_Password,
@@ -58,12 +59,13 @@ BEGIN
         Given_User_IsAdministrator,
         Given_User_IsBanned,
 		Given_User_RegisterationTime,
-		Given_User_LastLoginTime
+		Given_User_LastLoginTime,
+        Given_User_NumberOfNewMessages
 	);
-    RETURN LAST_INSERT_ID();
+    RETURN Given_UserName;
 
 END //
-SELECT (create_user("admin", "admin", "admin@admin.org", "127.0.0.1", TRUE, FALSE, NOW(), NOW())) //
+SELECT (create_user("admin", "admin", "admin@admin.org", "127.0.0.1", TRUE, FALSE, NOW(), NOW(), 0)) //
 -- SELECT (create_forums("admin", "admin", "admin@admin.org", "127.0.0.1", TRUE, FALSE, NOW(), NOW())) //
 DELIMITER ;
 DROP PROCEDURE IF EXISTS delete_user;
@@ -73,6 +75,11 @@ CREATE PROCEDURE delete_user (
 )
 BEGIN
 	DELETE FROM Users WHERE UserName = Given_UserName;
+END//
+DROP PROCEDURE IF EXISTS update_user //
+CREATE PROCEDURE update_user (
+)
+BEGIN
 END//
 DROP FUNCTION IF EXISTS user_login_validation//
 CREATE FUNCTION user_login_validation(
@@ -169,7 +176,7 @@ BEGIN
     RETURN LAST_INSERT_ID();
 END//
 DELIMITER ;
-SELECT create_user("admin", "admin", "admin@admin.org", "127.0.0.1", TRUE, FALSE, NOW(), NOW());
+SELECT create_user("admin", "admin", "admin@admin.org", "127.0.0.1", TRUE, FALSE, NOW(), NOW(),0);
 SELECT create_forum(NULL,	
 		"Root", 
 		"admin", 
@@ -276,7 +283,16 @@ BEGIN
 END// 
 DELIMITER ;
 CALL get_forum_by_id(3);
+DROP PROCEDURE IF EXISTS delete_forum;
+DELIMITER //
+CREATE PROCEDURE delete_forum (
+	Given_ForumID INT
+)
+BEGIN
+	DELETE FROM Forums WHERE ForumID = Given_ForumID;
+END//
 /* Thread Table */
+DELIMITER ;
 DROP TABLE IF EXISTS Threads;
 CREATE TABLE Threads (
 	ThreadID	INT PRIMARY KEY AUTO_INCREMENT,
@@ -290,6 +306,7 @@ CREATE TABLE Threads (
     
     Thread_IsSticky	BOOLEAN,
     Thread_IsDeleted	BOOLEAN,
+    Thread_NumberOfViews	INT NOT NULL,
     
     CONSTRAINT Thread_fk_Forum
 		FOREIGN KEY (ForumID) REFERENCES Forums(ForumID)
@@ -301,14 +318,7 @@ CREATE TABLE Threads (
 		FOREIGN KEY (Thread_Author) REFERENCES Users(UserName)
         ON UPDATE CASCADE ON DELETE SET NULL        
 );
-DROP PROCEDURE IF EXISTS delete_forum;
-DELIMITER //
-CREATE PROCEDURE delete_forum (
-	Given_ForumID INT
-)
-BEGIN
-	DELETE FROM Forums WHERE ForumID = Given_ForumID;
-END//
+
 DELIMITER //
 DROP FUNCTION IF EXISTS create_thread//
 CREATE FUNCTION create_thread(
@@ -321,7 +331,9 @@ CREATE FUNCTION create_thread(
     Given_Thread_LastUpdateTime	DATETIME,
     
     Given_Thread_IsSticky	BOOLEAN,
-    Given_Thread_IsDeleted	BOOLEAN)
+    Given_Thread_IsDeleted	BOOLEAN
+    -- Given_Thread_NumberOfViews	INT
+)
 RETURNS INT
 BEGIN
 	INSERT INTO Threads(
@@ -334,7 +346,8 @@ BEGIN
 		Thread_LastUpdateTime,
     
 		Thread_IsSticky,
-		Thread_IsDeleted
+		Thread_IsDeleted,
+        Thread_NumberOfViews
     ) VALUES (
 		Given_ForumID,
 		Given_Thread_Title,
@@ -345,7 +358,8 @@ BEGIN
 		Given_Thread_LastUpdateTime,
     
 		Given_Thread_IsSticky,
-		Given_Thread_IsDeleted
+		Given_Thread_IsDeleted,
+        0
 	);
     RETURN LAST_INSERT_ID();
 END//
@@ -530,4 +544,24 @@ CREATE TABLE FavoriteForums (
 	CONSTRAINT FavoriteForum_fk_Fourm
 		FOREIGN KEY (ForumID) REFERENCES Forums(ForumID)
 		ON UPDATE CASCADE ON DELETE CASCADE
+);
+DROP TABLE IF EXISTS User_Friends;
+CREATE TABLE User_Friends (
+	UserName VARCHAR(50),
+    Friend_UserName VARCHAR(50),
+    CONSTRAINT User_Friends_UserName_fk_Users
+		FOREIGN KEY (UserName) REFERENCES Users(UserName),
+    CONSTRAINT User_Friends_Friend_UserName_fk_Users
+		FOREIGN KEY (Friend_UserName) REFERENCES Users(UserName)
+);
+DROP TABLE IF EXISTS User_Messages;
+CREATE TABLE User_Messages (
+	Sender VARCHAR(50),
+    Recipient VARCHAR(50),
+    Message_Title VARCHAR(255),
+    Message_Content LONGTEXT,
+    CONSTRAINT User_Messages_Sender_fk_Users
+		FOREIGN KEY (Sender) REFERENCES Users(UserName),
+    CONSTRAINT User_Messages_Recipient_fk_Users
+		FOREIGN KEY (Recipient) REFERENCES Users(UserName)
 );

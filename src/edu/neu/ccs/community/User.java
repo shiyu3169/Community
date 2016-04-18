@@ -25,7 +25,7 @@ public class User {
 
 	boolean isAdministrator;
 	boolean isBanned;
-	
+	int newMessages;
 	//Constructor
 	public User(String username, String password, String email, String loginIpAddress, Timestamp registerationTime,
 			Timestamp lastLoginTime, Timestamp lastPostTime, boolean isAdministrator, boolean isBanned) {
@@ -41,10 +41,11 @@ public class User {
 		this.lastPostTime = lastPostTime;
 		this.isAdministrator = isAdministrator;
 		this.isBanned = isBanned;
+		this.newMessages = 0;
 	}
 	//Constructor without time
 	public User(String username, String password, String email, String loginIpAddress, boolean isAdministrator,
-			boolean isBanned) {
+			boolean isBanned, int newMessages) {
 		super();
 		// this.userID = null;
 		this.username = username;
@@ -57,6 +58,7 @@ public class User {
 		this.lastPostTime = null;
 		this.isAdministrator = isAdministrator;
 		this.isBanned = isBanned;
+		this.newMessages = newMessages;
 	}
 	
 	//getter and setter
@@ -130,6 +132,24 @@ public class User {
 
 	public void setBanned(boolean isBanned) {
 		this.isBanned = isBanned;
+	}
+	/**
+	 * @return the newMessages
+	 */
+	public int getNewMessages() {
+		return newMessages;
+	}
+	/**
+	 * @param newMessages the newMessages to set
+	 */
+	public void setNewMessages(int newMessages) {
+		this.newMessages = newMessages;
+	}
+	/**
+	 * @param username the username to set
+	 */
+	public void setUsername(String username) {
+		this.username = username;
 	}
 
 }
