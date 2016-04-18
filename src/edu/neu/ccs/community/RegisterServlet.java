@@ -36,7 +36,7 @@ public class RegisterServlet extends HttpServlet {
 		//User user = new User(username, password, email, request.getRemoteAddr(), now, now, null, false, false);
 		User user = new User(username, password, 
 				email, request.getRemoteAddr(), false,
-				false);
+				false, 0);
 		DataAccessObject dao = new DataAccessObject();
 		try {
 			dao.create(user);
