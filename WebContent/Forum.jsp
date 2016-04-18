@@ -124,6 +124,7 @@
 	    		</div>
 			</div>
 			<form class="container" method="post" action="createThread">
+				<input type="hidden" name="forumID" value="<%=request.getParameter("id") %>"/>				
 				<h3><font color ="white">New Thread</font></h3>
 				<label class="col-sm-3 control-label"><font color="white">Topic</font></label>
 				<input id="title" name="title" type="text" class="form-control" placeholder="The topic of the thread" required/>
