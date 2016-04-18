@@ -82,7 +82,7 @@ public class DataAccessObject {
 	/** Create User */
 	public void create(User user)
 			throws SQLException, InstantiationException, IllegalAccessException, ClassNotFoundException {
-		String sql = "SELECT create_user(?,?,?,?,?,?,?,?)";
+		String sql = "SELECT create_user(?,?,?,?,?,?,?,?,?)"; // No need for the function result
 
 		try (Connection connection = this.getConnection();
 				PreparedStatement statement = connection.prepareStatement(sql)) {
@@ -94,6 +94,7 @@ public class DataAccessObject {
 			statement.setBoolean(6, user.isBanned());
 			statement.setTimestamp(7, user.getRegisterationTime());
 			statement.setTimestamp(8, user.getLastLoginTime());
+			statement.setInt(9, user.getNewMessages());
 			statement.execute();
 
 		}
