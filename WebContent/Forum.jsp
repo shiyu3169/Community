@@ -134,7 +134,7 @@
 				<br/>
 				<button class="btn btn-warning pull-right">Post</button>
 			</form>
-				<!-- Modal -->
+			<!-- Edit Modal -->
 			<div class="modal fade" id="edit">
 				<div class="modal-dialog">
 					<div class="modal-content">
@@ -175,7 +175,7 @@
 					</div>
 				</div>
 			</div>
-				<!-- Delete -->
+			<!-- Delete Modal-->
 			<div class="modal fade" id="delete">
 				<div class="modal-dialog">
 					<div class="modal-content">
