@@ -54,55 +54,67 @@
 		<font color="white">${ title }</font>
 	</h1>
 	<div class="row">
-		<div class="col-md-3">
-		</div>
-		<div class="col-md-6">
-			<div class="fresh-table">
-				<table  class="table class">
-					<tbody>
+		<div class="col-md-1"></div>
+		<div class="col-md-8">
+			<div>
+				<div>
+					<div>
 						<%
 							if (request.getAttribute("postList") == null) {
-						%>Error! You found the 2nd secreat place<%
+						%><h3>Error! You found the 2nd secret place</h3>
+						<%
 							} else {
 								for (Post post : (List<Post>) request.getAttribute("postList")) {
 						%>
-						<tr>
-							<td><strong><%=post.getContent()%></strong></td>
-						</tr>
-						<tr align="right">
-							<td><%=post.getAuthor()%></td>
-						</tr>
-						<tr align="right">
-							<td>Created at : <%=post.getCreationTime()%></td>
-						</tr>
-						<tr <%if (post.getLastModificationTime() == null) {%>
-							style="visibility: hidden;" <%}%>>
-							<td ><%=post.getLastModificationTime()%></td>
-						</tr>
-						<%
-							
-						%>
-						<!-- buttons  -->
-						<tr>
-							<td>
+						<div class="panel">
+							<p>
+								<strong><%=post.getContent()%></strong>
+							</p>
+							<div align="right">
+								<%=post.getAuthor()%>
+							</div>
+							<div align="right">
+
+								Created at :
+								<%=post.getCreationTime()%>
+							</div>
+							<div <%if (post.getLastModificationTime() == null) {%>
+								style="visibility: hidden;" <%}%>>
+								<%=post.getLastModificationTime()%>
+							</div>
+							<!-- buttons  -->
+							<div>
 								<button data-toggle="modal" data-target="#edit"
 									<%if (!post.getAuthor().equals(request.getAttribute("username"))
 							&& !(boolean) request.getAttribute("isAdmin")) {%>
-									style="visibility: hidden;" <%}%>
-									class="btn btn-primary">Edit</button>
+									style="visibility: hidden;" <%}%> class="btn btn-primary">Edit</button>
 								<button data-toggle="modal" data-target="#delete"
 									<%if (!(boolean) request.getAttribute("isAdmin")) {%>
-									style="visibility: hidden;" <%}%>
-									class="btn btn-danger">Delete</button>
-							</td>
-						</tr>
+									style="visibility: hidden;" <%}%> class="btn btn-danger">Delete</button>
+							</div>
+						</div>
 						<%
 							}
 							}
 						%>
-					</tbody>
-				</table>
+					</div>
+				</div>
 			</div>
+		</div>
+		<div class="col-md-2"></div>
+	</div>
+	<div class="row">
+		<div class="col-md-1"></div>
+		<div class="col-md-8">
+			<form class="form form-horizontal" method="post" action="createPost">
+				<div class="form-group">
+					<label class="control-label">Content</label>
+					<textarea id="newPost" name="newPost" class="form-control" placeholder="Submiting a new post" required></textarea>
+				</div>
+				<div class="pull-right">
+					<button type="submit" class="btn btn-success" id="Submit">Submit</button>
+				</div>
+			</form>
 		</div>
 	</div>
 	<!-- Modal -->
