@@ -130,12 +130,11 @@
 				<input id="title" name="title" type="text" class="form-control" placeholder="The topic of the thread" required/>
 				<label class="col-sm-3 control-label"><font color="white">Content</font></label>
 				<textarea id="content" name="content"
-						class="form-control" maxlength="400" placeholder="The content of the first post">
-				</textarea>
+						class="form-control" maxlength="400" placeholder="The content of the first post"></textarea>
 				<br/>
 				<button class="btn btn-warning pull-right">Post</button>
 			</form>
-				<!-- Modal -->
+			<!-- Edit Modal -->
 			<div class="modal fade" id="edit">
 				<div class="modal-dialog">
 					<div class="modal-content">
@@ -176,7 +175,7 @@
 					</div>
 				</div>
 			</div>
-				<!-- Delete -->
+			<!-- Delete Modal-->
 			<div class="modal fade" id="delete">
 				<div class="modal-dialog">
 					<div class="modal-content">

@@ -134,14 +134,14 @@
 							<label class="col-sm-3 control-label">Category</label>
 							<div class="col-sm-8">
 								<input id="catagory" name="catagory" type="input"
-									class="form-control" maxlength="10" placeholder="Category" required/>
+									class="form-control" maxlength="20" placeholder="Category" required/>
 							</div>
 						</div>
 						<div class="form-group">
 							<label class="col-sm-3 control-label">Description</label>
 							<div class="col-sm-8">
-								<textarea id="description" name="description"
-									class="form-control" maxlength="400" placeholder="A short discription of this forum"></textarea>
+								<textarea  id="description" name="description"
+									class="form-control" maxlength="400" placeholder="A short discription of this forum" required></textarea>
 							</div>
 						</div>
 						<div class="modal-footer" >
