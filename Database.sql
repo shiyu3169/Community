@@ -542,6 +542,13 @@ BEGIN
 		WHERE PostID = Given_PostID;
 		
 END//
+DROP PROCEDURE IF EXISTS get_thread_by_id//
+CREATE PROCEDURE get_thread_by_id(
+	Given_ThreadID INT
+)
+BEGIN
+	SELECT * FROM Threads WHERE ThreadID = Given_ThreadID LIMIT 1;
+END//
 DROP PROCEDURE IF EXISTS get_post_list_by_threadID//
 CREATE PROCEDURE get_post_list_by_threadID(
 	Given_ThreadID INT

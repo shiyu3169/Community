@@ -408,7 +408,29 @@ public class DataAccessObject {
 
 		return result;
 	}
+	public Thread getThreadByID(int threadID)
+			throws SQLException, InstantiationException, IllegalAccessException, ClassNotFoundException {
+		String sql = "CALL get_thread_by_id(?)";
 
+		try (Connection connection = this.getConnection(); CallableStatement statement = connection.prepareCall(sql)) {
+			statement.setInt(1, threadID);
+			ResultSet rs = statement.executeQuery();
+			if (rs.next()) {
+				//int threadID = rs.getInt("ThreadID");
+				Integer forumID = rs.getInt("ForumID");
+				String title = rs.getString("Thread_Title");
+				String author = rs.getString("Thread_Author");
+				String lastUpdator = rs.getString("Thread_LastUpdator");
+				Timestamp creationTime = rs.getTimestamp("Thread_CreationTime");
+				Timestamp lastUpdateTime = rs.getTimestamp("Thread_LastUpdateTime");
+				boolean isSticky = rs.getBoolean("Thread_IsSticky");
+				boolean isDeleted = rs.getBoolean("Thread_IsDeleted");
+				return new Thread(threadID, forumID, title, author, lastUpdator, creationTime, lastUpdateTime,
+						isSticky, isDeleted);
+			}
+			throw new NoSuchElementException();
+		}
+	}
 	public Post getPostByID(int postID)
 			throws SQLException, InstantiationException, IllegalAccessException, ClassNotFoundException {
 		String sql = "CALL get_post_by_id(?)";
