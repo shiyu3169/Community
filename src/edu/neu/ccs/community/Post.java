@@ -29,19 +29,19 @@ public class Post {
 		this.lastModificationTime = null;
 		this.isDeleted = isDeleted;
 	}
-	Integer postID;
-    int ThreadID;
-    Integer ReplyToPost;
+	private Integer postID;
+	private int ThreadID;
+	private Integer ReplyToPost;
     
-    String author;
+	private String author;
     //String LastModifier;
     
-    String content;
+	private String content;
     
-    Timestamp CreationTime;
-    Timestamp lastModificationTime;
+	private Timestamp CreationTime;
+	private Timestamp lastModificationTime;
     
-    boolean isDeleted;
+	private boolean isDeleted;
 
 	/**
 	 * @return the postID

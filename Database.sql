@@ -426,7 +426,7 @@ CREATE TABLE Posts (
     ReplyToPost	INT, -- foreign key to Post(PostID)
     
     Post_Author	VARCHAR(50),
-    Post_LastModifier	VARCHAR(50),
+    -- Post_LastModifier	VARCHAR(50),
     
     Post_Content	LONGTEXT,
     
@@ -443,10 +443,10 @@ CREATE TABLE Posts (
 		ON UPDATE CASCADE ON DELETE CASCADE,
 	CONSTRAINT Post_Author_fk_User
 		FOREIGN KEY (Post_Author) REFERENCES Users(UserName)
-        ON UPDATE CASCADE ON DELETE CASCADE,
-	CONSTRAINT Post_LastModifier_fk_User
-		FOREIGN KEY (Post_LastModifier) REFERENCES Users(UserName)
         ON UPDATE CASCADE ON DELETE CASCADE
+	-- CONSTRAINT Post_LastModifier_fk_User
+		-- FOREIGN KEY (Post_LastModifier) REFERENCES Users(UserName)
+        -- ON UPDATE CASCADE ON DELETE CASCADE
 );
 DELIMITER //
 DROP FUNCTION IF EXISTS create_post//
@@ -455,7 +455,7 @@ CREATE FUNCTION create_post (
     Given_ReplyToPost	INT, -- foreign key to Post(PostID)
     
     Given_Post_Author	VARCHAR(50),
-    Given_Post_LastModifier	VARCHAR(50),
+    -- Given_Post_LastModifier	VARCHAR(50),
     
     Given_Post_Content	LONGTEXT,
     
@@ -471,7 +471,7 @@ BEGIN
 			ReplyToPost, -- foreign key to Post(PostID)
 			
 			Post_Author,
-			Post_LastModifier,
+			-- Post_LastModifier,
 			
 			Post_Content,
 			
@@ -484,7 +484,7 @@ BEGIN
 			Given_ReplyToPost, -- foreign key to Post(PostID)
 			
 			Given_Post_Author,
-			Given_Post_LastModifier,
+			-- Given_Post_LastModifier,
 			
 			Given_Post_Content,
 			
@@ -500,7 +500,7 @@ SELECT create_post(1, -- foreign key to Threads(ThreadID)
 			NULL, -- foreign key to Post(PostID)
 			
 			"admin",
-			"admin",
+			-- "admin",
 			
 			"Yes!!!! It is!!!",
 			
@@ -508,7 +508,8 @@ SELECT create_post(1, -- foreign key to Threads(ThreadID)
 			NOW(),
 			
 			FALSE
-)//
+)
+//
 DROP TRIGGER IF EXISTS update_information_after_post_inserted //
 CREATE TRIGGER update_information_after_post_inserted
 	AFTER INSERT ON Posts
@@ -524,15 +525,41 @@ BEGIN
 			Thread_LastUpdator = NEW.Post_Author
             WHERE Threads.ThreadID = NEW.ThreadID;
 END //
+DROP PROCEDURE IF EXISTS update_post//
+CREATE PROCEDURE update_post (
+	Given_PostID	INT,
+    -- Given_Post_LastModifier	VARCHAR(50),    
+    Given_Post_Content	LONGTEXT,    
+    Given_Post_LastModificationTime	DATETIME,    
+    Given_Post_IsDeleted	BOOLEAN
+)
+BEGIN
+	UPDATE Posts SET
+		-- Post_LastModifier = Given_Post_LastModifier,    
+		Post_Content = Given_Post_Content,    
+		Post_LastModificationTime = Given_Post_LastModificationTime,    
+		Post_IsDeleted = Given_Post_IsDeleted
+		WHERE PostID = Given_PostID;
+		
+END//
 DROP PROCEDURE IF EXISTS get_post_list_by_threadID//
 CREATE PROCEDURE get_post_list_by_threadID(
 	Given_ThreadID INT
 )
 BEGIN
-	SELECT * FROM Posts WHERE ThreadID = Given_ThreadID;
+	SELECT * FROM Posts WHERE ThreadID = Given_ThreadID AND Post_IsDeleted = FALSE;
 END//
 DELIMITER ;
 CALL get_post_list_by_threadID(1);
+DELIMITER //
+DROP PROCEDURE IF EXISTS get_post_by_id//
+CREATE PROCEDURE get_post_by_id(
+	Given_PostID INT
+)
+BEGIN
+	SELECT * FROM Posts WHERE PostID = Given_PostID LIMIT 1;
+END//
+DELIMITER ;
 /* FavoriteForums Table */
 DROP TABLE IF EXISTS FavoriteForums;
 CREATE TABLE FavoriteForums (

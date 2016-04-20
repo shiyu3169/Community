@@ -107,9 +107,10 @@
 		<div class="col-md-1"></div>
 		<div class="col-md-8">
 			<form class="form form-horizontal" method="post" action="createPost">
+				<input name="threadID" type="hidden" value="<%=request.getParameter("id") %>" />
 				<div class="form-group">
 					<label class="control-label">Content</label>
-					<textarea id="newPost" name="newPost" class="form-control" placeholder="Submiting a new post" required></textarea>
+					<textarea id="contentt" name="content" class="form-control" placeholder="Submiting a new post" required></textarea>
 				</div>
 				<div class="pull-right">
 					<button type="submit" class="btn btn-success" id="Submit">Submit</button>
@@ -126,17 +127,14 @@
 				</div>
 				<div class="modal-body">
 					<form class="form form-horizontal" method="post"
-						action="updateForum">
-						<input type="hidden" id="owner" name="owner" value="${author}" />
+						action="updatePost">
 						<input type="hidden" id="postID" name="postID"
 							value="<%=request.getParameter("id")%>" />
 						<div class="form-group">
 							<label class="col-sm-3 control-label">Content</label>
 							<div class="col-sm-8">
 								<textarea id="content" name="content" class="form-control"
-									maxlength="400" value="${content }"
-									placeholder="The content of the post">
-								</textarea>
+									maxlength="400" placeholder="The content of the post"></textarea>
 							</div>
 						</div>
 						<div class="modal-footer">
@@ -158,7 +156,7 @@
 				</div>
 				<div class="modal-body">
 					<form class="form form-horizontal" method="post"
-						action="deleteForum">
+						action="deletePost">
 						<input type="hidden" name="postID"
 							value="<%=request.getParameter("id")%>" />
 						<h3>Are you sure to delete this post?</h3>
