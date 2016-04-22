@@ -5,7 +5,7 @@
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
-<title>Insert title here</title>
+<title>Thread</title>
 <link rel="stylesheet"
 	href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css">
 <script src="https://code.jquery.com/jquery-2.2.3.min.js"></script>
@@ -13,6 +13,17 @@
 	src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"></script>
 <link rel="stylesheet" href="./css/fresh-bootstrap-table.css">
 </head>
+<%!
+    int postid = 0;
+    int getPostid()
+    {
+        return postid;
+    }
+    void updatePostid(int input)
+    {
+        postid = input;
+    }
+%>
 <body background="./image/thread.jpg">
 	<div>
 		<header> <nav class="navbar navbar-inverse navbar-fixed-top">
@@ -50,9 +61,7 @@
 	<br />
 	<br />
 	<br />
-	<h1>
-		<font color="white">${ title }</font>
-	</h1>
+	<h1 class="container"><font color="white">${ title }</font></h1>
 	<div class="row">
 		<div class="col-md-1"></div>
 		<div class="col-md-8">
@@ -76,21 +85,22 @@
 							<div align="right">
 
 								Created at :
-								<%=post.getCreationTime()%>
+								<%=post.getCreationTime().toLocaleString()%>
 							</div>
-							<div <%if (post.getLastModificationTime() == null) {%>
-								style="visibility: hidden;" <%}%>>
-								<%=post.getLastModificationTime()%>
+					<%if (post.getLastModificationTime() != null) { %>
+							<div class="pull-right">
+								Updated at: <%=post.getLastModificationTime().toLocaleString()%>
 							</div>
+							<%}%>
 							<!-- buttons  -->
 							<div>
 								<button data-toggle="modal" data-target="#edit"
 									<%if (!post.getAuthor().equals(request.getAttribute("username"))
 							&& !(boolean) request.getAttribute("isAdmin")) {%>
-									style="visibility: hidden;" <%}%> class="btn btn-primary">Edit</button>
+									style="visibility: hidden;" onclick="" <%} else {updatePostid(post.getPostID());}%> class="btn btn-primary">Edit</button>
 								<button data-toggle="modal" data-target="#delete"
 									<%if (!(boolean) request.getAttribute("isAdmin")) {%>
-									style="visibility: hidden;" <%}%> class="btn btn-danger">Delete</button>
+									style="visibility: hidden;" <%} else {updatePostid(post.getPostID());}%> class="btn btn-danger">Delete</button>
 							</div>
 						</div>
 						<%
@@ -118,7 +128,7 @@
 			</form>
 		</div>
 	</div>
-	<!-- Modal -->
+	<!-- Edit -->
 	<div class="modal fade" id="edit">
 		<div class="modal-dialog">
 			<div class="modal-content">
@@ -129,7 +139,7 @@
 					<form class="form form-horizontal" method="post"
 						action="updatePost">
 						<input type="hidden" id="postID" name="postID"
-							value="<%=request.getParameter("id")%>" />
+							value="<%=getPostid()%>" />
 						<div class="form-group">
 							<label class="col-sm-3 control-label">Content</label>
 							<div class="col-sm-8">
@@ -158,7 +168,7 @@
 					<form class="form form-horizontal" method="post"
 						action="deletePost">
 						<input type="hidden" name="postID"
-							value="<%=request.getParameter("id")%>" />
+							value="<%=getPostid()%>"/>
 						<h3>Are you sure to delete this post?</h3>
 						<div class="modal-footer">
 							<button type="submit" class="btn btn-danger" id="ok">Delete</button>
