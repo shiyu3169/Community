@@ -39,7 +39,7 @@
 	            <input type="password" name="password" id="Password" class="form-control" placeholder="Password" value="${password}"  required>
 	            <div class="checkbox">
 	                <label>
-	                    <input type="checkbox" value="remember-me" id="remember" checked="true" >
+	                    <input type="checkbox" name="remember-me" id="remember" checked="true" >
 	                    <font color="white">Remember me</font>
 	                </label>
             	</div>
