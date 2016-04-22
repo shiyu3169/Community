@@ -34,6 +34,8 @@ public class ThreadServlet extends HttpServlet {
 		
 		
 		int threadID;
+		Thread thread;
+		Forum forum;
 		if (loginManager.hasLoggedIn()) {
 			request.setAttribute("isAdmin", loginManager.getCurrentUser().isAdministrator());
 		}
@@ -43,12 +45,17 @@ public class ThreadServlet extends HttpServlet {
 
 		try {
 			threadID = Integer.valueOf(request.getParameter("id"));
+			thread = dao.getThreadByID(threadID);
+			forum = dao.getForumByID(thread.getForumID());
 			List<Post> postList = dao.getPostsByThreadID(threadID);
 			request.setAttribute("postList", postList);
 		} catch (Exception e) {
 			e.printStackTrace();
+			throw new IllegalArgumentException();
 		}
 		request.setAttribute("username", loginManager.getSavedUsername());
+		request.setAttribute("title", thread.getTitle());
+		request.setAttribute("forumName", forum.getForumName());
 		request.getRequestDispatcher("/Thread.jsp").forward(request, response);
 	}
 

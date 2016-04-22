@@ -14,6 +14,7 @@ import java.sql.Timestamp;
 import java.sql.Types;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.NoSuchElementException;
 import java.util.Properties;
 
 /**
@@ -26,7 +27,7 @@ public class DataAccessObject {
 	private final String userName = "root";
 
 	/** The password for the MySQL account (or empty for anonymous) */
-	private final String password = "cliff92711";
+	private final String password = "hpahzGSYCl05116";
 
 	/** The name of the computer running MySQL */
 	private final String serverName = "localhost";
@@ -82,7 +83,9 @@ public class DataAccessObject {
 	/** Create User */
 	public void create(User user)
 			throws SQLException, InstantiationException, IllegalAccessException, ClassNotFoundException {
-		String sql = "SELECT create_user(?,?,?,?,?,?,?,?,?)"; // No need for the function result
+		String sql = "SELECT create_user(?,?,?,?,?,?,?,?,?)"; // No need for the
+																// function
+																// result
 
 		try (Connection connection = this.getConnection();
 				PreparedStatement statement = connection.prepareStatement(sql)) {
@@ -206,6 +209,20 @@ public class DataAccessObject {
 		}
 	}
 
+	public void update(Post post)
+			throws InstantiationException, IllegalAccessException, ClassNotFoundException, SQLException {
+		String sql = "CALL update_post(?,?,?,?)";
+
+		try (Connection connection = this.getConnection(); CallableStatement statement = connection.prepareCall(sql)) {
+			statement.setInt(1, post.getPostID());
+			statement.setString(2, post.getContent());
+			statement.setTimestamp(3, post.getLastModificationTime());
+			statement.setBoolean(4, post.isDeleted());
+			statement.execute();
+
+		}
+	}
+
 	public List<Forum> searchForumByName(String name)
 			throws SQLException, InstantiationException, IllegalAccessException, ClassNotFoundException {
 		String sql = "CALL search_forum_by_name(?)";
@@ -304,7 +321,7 @@ public class DataAccessObject {
 
 	public int create(Post post)
 			throws InstantiationException, IllegalAccessException, ClassNotFoundException, SQLException {
-		String sql = "{ ? = CALL create_post(?,?,?,?,?,?,?,?) }";
+		String sql = "{ ? = CALL create_post(?,?,?,?,?,?,?) }";
 		/*
 		 * 
 		 * Given_ThreadID INT, -- foreign key to Threads(ThreadID)
@@ -326,11 +343,15 @@ public class DataAccessObject {
 			else
 				statement.setInt(3, post.getReplyToPost());
 			statement.setString(4, post.getAuthor());
-			statement.setNull(5, Types.VARCHAR);
-			statement.setString(6, post.getContent());
-			statement.setTimestamp(7, post.getCreationTime());
-			statement.setTimestamp(8, post.getLastModificationTime());
-			statement.setBoolean(9, post.isDeleted());
+			// statement.setNull(5, Types.VARCHAR);
+			statement.setString(5, post.getContent());
+			statement.setTimestamp(6, post.getCreationTime());
+			if (post.getLastModificationTime() == null) {
+				statement.setNull(7, Types.TIMESTAMP);
+			} else {
+				statement.setTimestamp(7, post.getLastModificationTime());
+			}
+			statement.setBoolean(8, post.isDeleted());
 			statement.registerOutParameter(1, java.sql.Types.INTEGER);
 			statement.execute();
 			post.setPostID(statement.getInt(1));
@@ -386,6 +407,51 @@ public class DataAccessObject {
 		}
 
 		return result;
+	}
+	public Thread getThreadByID(int threadID)
+			throws SQLException, InstantiationException, IllegalAccessException, ClassNotFoundException {
+		String sql = "CALL get_thread_by_id(?)";
+
+		try (Connection connection = this.getConnection(); CallableStatement statement = connection.prepareCall(sql)) {
+			statement.setInt(1, threadID);
+			ResultSet rs = statement.executeQuery();
+			if (rs.next()) {
+				//int threadID = rs.getInt("ThreadID");
+				Integer forumID = rs.getInt("ForumID");
+				String title = rs.getString("Thread_Title");
+				String author = rs.getString("Thread_Author");
+				String lastUpdator = rs.getString("Thread_LastUpdator");
+				Timestamp creationTime = rs.getTimestamp("Thread_CreationTime");
+				Timestamp lastUpdateTime = rs.getTimestamp("Thread_LastUpdateTime");
+				boolean isSticky = rs.getBoolean("Thread_IsSticky");
+				boolean isDeleted = rs.getBoolean("Thread_IsDeleted");
+				return new Thread(threadID, forumID, title, author, lastUpdator, creationTime, lastUpdateTime,
+						isSticky, isDeleted);
+			}
+			throw new NoSuchElementException();
+		}
+	}
+	public Post getPostByID(int postID)
+			throws SQLException, InstantiationException, IllegalAccessException, ClassNotFoundException {
+		String sql = "CALL get_post_by_id(?)";
+
+		try (Connection connection = this.getConnection(); CallableStatement statement = connection.prepareCall(sql)) {
+			statement.setInt(1, postID);
+			ResultSet rs = statement.executeQuery();
+			if (rs.next()) {
+				postID = rs.getInt("PostID");
+				int threadID = rs.getInt("ThreadID");
+				Integer replyToPost = rs.getInt("ReplyToPost");
+				String author = rs.getString("Post_Author");
+				String content = rs.getString("Post_Content");
+				Timestamp creationTime = rs.getTimestamp("Post_CreationTime");
+				Timestamp lastModificationTime = rs.getTimestamp("Post_LastModificationTime");
+				boolean isDeleted = rs.getBoolean("Post_IsDeleted");
+				return new Post(postID, threadID, replyToPost, author, content, creationTime, lastModificationTime,
+						isDeleted);
+			}
+			throw new NoSuchElementException();
+		}
 	}
 
 }
