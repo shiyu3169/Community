@@ -47,8 +47,8 @@ public class ThreadServlet extends HttpServlet {
 			threadID = Integer.valueOf(request.getParameter("id"));
 			thread = dao.getThreadByID(threadID);
 			if (thread.isDeleted) {
-				response.getWriter().println("This thread has been deleted. <a herf=\"forum?id=" + thread.getForumID()
-						+ "\">Back to forum</a>");
+				request.setAttribute("message", "This thread has been deleted.");
+				request.getRequestDispatcher("/forum").forward(request, response);
 				return;
 			}
 			forum = dao.getForumByID(thread.getForumID());
