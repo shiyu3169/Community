@@ -2,7 +2,7 @@
  * 
  */
 package edu.neu.ccs.community;
-import java.sql.Date;
+import java.sql.Timestamp;
 /**
  * @author Zhenhuan
  *
@@ -15,8 +15,8 @@ public class Forum {
     private String catagory;
     private String description;
     
-    private Date creationTime;
-    private Date lastPostTime;
+    private Timestamp creationTime;
+    private Timestamp lastPostTime;
     
     private boolean isVerified;
     
@@ -32,7 +32,7 @@ public class Forum {
 	 * @param isVerified
 	 */
 	public Forum(int forumID, Integer parentID, String forumName, String owner, String catagory, String description,
-			Date creationTime, Date lastPostTime, boolean isVerified) {
+			Timestamp creationTime, Timestamp lastPostTime, boolean isVerified) {
 		super();
 		this.forumID = forumID;
 		this.parentID = parentID;
@@ -63,7 +63,7 @@ public class Forum {
 		this.catagory = catagory;
 		this.description = description;
 		this.isVerified = isVerified;
-		this.creationTime = new Date(System.currentTimeMillis());
+		this.creationTime = new Timestamp(System.currentTimeMillis());
 	}
 
 
@@ -115,19 +115,19 @@ public class Forum {
 		this.description = description;
 	}
 
-	public Date getCreationTime() {
+	public Timestamp getCreationTime() {
 		return creationTime;
 	}
 
-	public void setCreationTime(Date creationTime) {
+	public void setCreationTime(Timestamp creationTime) {
 		this.creationTime = creationTime;
 	}
 
-	public Date getLastPostTime() {
+	public Timestamp getLastPostTime() {
 		return lastPostTime;
 	}
 
-	public void setLastPostTime(Date lastPostTime) {
+	public void setLastPostTime(Timestamp lastPostTime) {
 		this.lastPostTime = lastPostTime;
 	}
 

@@ -25,14 +25,14 @@
 	                        <ul class="nav navbar-nav navbar-right">
 	                        	<%if (request.getAttribute("username") == null) {
 	                        		%> 
-	                        			<li><a href="/Community/login">Log in</a></li>
-	                            		<li><a href="/Community/register">Sign up</a></li>
+	                        			<li><a href="<%=request.getContextPath()%>/login">Log in</a></li>
+	                            		<li><a href="<%=request.getContextPath()%>/register">Sign up</a></li>
 	                            	<%
 	                        		}
 	                            	else {
 	                            		%>
 	                            		<li><a href="#">Hi ${username}</a></li> 
-	                            		<li><a href="/Community/login">Log out</a></li>
+	                            		<li><a href="<%=request.getContextPath()%>/login">Log out</a></li>
 	                            		<%
 	                            	}
 	                        		%> 
@@ -87,7 +87,7 @@
 								    		 <tr>
 								    		 	<td>
 								    		 		<strong>
-								    		 			<a href="/Community/thread?id=<%=thread.getThreadID()%>"><%= thread.getTitle()%></a>
+								    		 			<a href="<%=request.getContextPath()%>/thread?id=<%=thread.getThreadID()%>"><%= thread.getTitle()%></a>
 								    		 		</strong>
 								    		 	</td>
 								    		 	<td>
