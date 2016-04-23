@@ -59,7 +59,7 @@
 			</h1>
 			<hr />
 			<p align="middle">
-				<font color="white">${description }</font>
+				<font color="white">${description}</font>
 			</p>
 			<div align="middle">
 				<button data-toggle="modal" data-target="#edit"
@@ -70,6 +70,7 @@
 					<%if (!(boolean) request.getAttribute("isAdmin")) {%>
 					style="visibility: hidden;" <%}%> class="btn btn-danger">Delete</button>
 			</div>
+			<br />
 			<div class="col-md-1"></div>
 			<div class="col-md-10">
 				<div class="panel panel-warning">
@@ -77,19 +78,26 @@
 						<h3 class="text-center panel-title">Related Sub Forums</h3>
 					</div>
 					<div class="panel-body">
-						<%if (request.getAttribute("subforums") == null) {
+						<%
+							if (request.getAttribute("subforums") == null) {
 						%>
 						<p>No related sub forum is found</p>
 						<%
-					} else {
-						List<Forum> forums = (List<Forum>) request
-								.getAttribute("subforums");
-						for (Forum forum : forums) {
-				 %>
+							} else {
+								List<Forum> forums = (List<Forum>) request.getAttribute("subforums");
+								for (Forum forum : forums) {
+						%>
 						<a href="forum?id=<%=forum.getForumID()%>"><%=forum.getForumName()%></a>
 						<hr />
-						<%} } %>
+						<%
+							}
+							}
+						%>
 					</div>
+				</div>
+				<div align="middle">
+				<button type="button" class="btn btn-warning"
+					data-toggle="modal" data-target="#create">Create Sub Forum</button>
 				</div>
 			</div>
 		</div>
@@ -198,7 +206,7 @@
 							<label class="col-sm-3 control-label">Category</label>
 							<div class="col-sm-8">
 								<input id="catagory" name="catagory" type="input"
-									class="form-control" maxlength="10" value="${catagory}"
+									class="form-control" maxlength="10" value="${category}"
 									placeholder="Category" required />
 							</div>
 						</div>
@@ -206,8 +214,8 @@
 							<label class="col-sm-3 control-label">Description</label>
 							<div class="col-sm-8">
 								<textarea id="description" name="description"
-									class="form-control" maxlength="400" value="${description }"
-									placeholder="A short discription of this forum"></textarea>
+									class="form-control" maxlength="400"
+									placeholder="A short discription of this forum">${description}</textarea>
 							</div>
 						</div>
 						<div class="modal-footer">
@@ -237,6 +245,49 @@
 							<button type="submit" class="btn btn-danger" id="ok">Delete</button>
 							<button type="button" data-dismiss="modal"
 								class="btn btn-success" id="cancelAdd">Cancel</button>
+						</div>
+					</form>
+				</div>
+			</div>
+		</div>
+	</div>
+	<!-- Create -->
+	<div class="modal fade" id="create">
+		<div class="modal-dialog">
+			<div class="modal-content">
+				<div class="modal-header">
+					<h4 class="modal-title">Create New Forum</h4>
+				</div>
+				<div class="modal-body">
+					<form class="form form-horizontal" method="post"
+						action="createForum">
+						<div class="form-group">
+							<label class="col-sm-3 control-label">Forum Name</label>
+							<div class="col-sm-8">
+								<input id="name" name="name" type="text" class="form-control"
+									placeholder="Forum Name" required />
+							</div>
+						</div>
+						<div class="form-group">
+							<label class="col-sm-3 control-label">Category</label>
+							<div class="col-sm-8">
+								<input id="catagory" name="catagory" type="input"
+									class="form-control" maxlength="20" placeholder="Category"
+									value="${category}" required />
+							</div>
+						</div>
+						<div class="form-group">
+							<label class="col-sm-3 control-label">Description</label>
+							<div class="col-sm-8">
+								<textarea id="description" name="description"
+									class="form-control" maxlength="400"
+									placeholder="A short discription of this forum" required></textarea>
+							</div>
+						</div>
+						<div class="modal-footer">
+							<button type="submit" class="btn btn-success" id="ok">Create</button>
+							<button type="button" data-dismiss="modal" class="btn btn-danger"
+								id="cancelAdd">Cancel</button>
 						</div>
 					</form>
 				</div>

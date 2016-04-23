@@ -33,7 +33,7 @@
 	            	<font color="white">Please Login </font>
 	            </h2>
 	            <label for="inputUserName" class="sr-only">User Name</label>
-	            <input type="text" name="username" id="Username" class="form-control" placeholder="UserName" value="${username}" required>
+	            <input type="text" name="username" id="Username" class="form-control" placeholder="UserName" value="${username}" required autofocus>
 	            <br/>
 	            <label for="inputPassword" class="sr-only">Password</label>   
 	            <input type="password" name="password" id="Password" class="form-control" placeholder="Password" value="${password}"  required>
