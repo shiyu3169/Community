@@ -82,7 +82,7 @@ public class DataAccessObject {
 	/** Create User */
 	public void create(User user)
 			throws SQLException, InstantiationException, IllegalAccessException, ClassNotFoundException {
-		String sql = "SELECT create_user(?,?,?,?,?,?,?,?,?)"; // No need for the
+		String sql = "SELECT create_user(?,?,?,?,?,?,?,?,?,?,?)"; // No need for the
 																// function
 																// result
 
@@ -96,7 +96,17 @@ public class DataAccessObject {
 			statement.setBoolean(6, user.isBanned());
 			statement.setTimestamp(7, user.getRegisterationTime());
 			statement.setTimestamp(8, user.getLastLoginTime());
-			statement.setInt(9, user.getNewMessages());
+			if (user.getGender() == null) {
+				statement.setNull(9, Types.CHAR);
+			} else {
+				statement.setString(9, user.getAutobiography());
+			}
+			if (user.getAutobiography() == null) {
+				statement.setNull(10, java.sql.Types.LONGVARCHAR);
+			} else {
+				statement.setString(10, user.getAutobiography());
+			}
+			statement.setInt(11, user.getNewMessages());
 			statement.execute();
 
 		}
@@ -120,8 +130,10 @@ public class DataAccessObject {
 				Timestamp lastPostTime = rs.getTimestamp("User_LastPostTime");
 				boolean isAdministrator = rs.getBoolean("User_IsAdministrator");
 				boolean isBanned = rs.getBoolean("User_IsBanned");
+				Character gender = rs.getString("User_Gender").charAt(0);
+				String autobiography = rs.getString("User_Autobiography");
 				return new User(username, password, email, loginIpAddress, registerationTime, lastLoginTime,
-						lastPostTime, isAdministrator, isBanned);
+						lastPostTime, isAdministrator, isBanned,gender,autobiography);
 			} else {
 				return null;
 			}
@@ -498,6 +510,20 @@ public class DataAccessObject {
 			}
 			throw new NoSuchElementException();
 		}
+	}
+	public List<Forum> getFavoriteForumsByUsername(String username) throws InstantiationException, IllegalAccessException, ClassNotFoundException, SQLException {
+		ArrayList<Forum> result = new ArrayList<>();
+		String sql = "CALL get_FavoriteForums_by_UserName(?)";
+		try (Connection connection = this.getConnection(); CallableStatement statement = connection.prepareCall(sql)){
+			statement.setString(1, username);
+			ResultSet rs = statement.executeQuery();
+			while (rs.next()) {
+				int forumID = rs.getInt("ForumID");
+				Forum forum = this.getForumByID(forumID);
+				result.add(forum);				
+			}
+		}
+		return result;
 	}
 
 }

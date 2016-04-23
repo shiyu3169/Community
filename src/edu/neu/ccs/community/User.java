@@ -13,22 +13,26 @@ import java.sql.Timestamp;
  */
 public class User {
 	// Integer userID;
-	String username;
-	String password;
-	String email;
+	private String username;
+	private String password;
+	private String email;
 	// String registerationIpAddress;
-	String loginIpAddress;
+	private  String loginIpAddress;
 
-	Timestamp registerationTime;
-	Timestamp lastLoginTime;
-	Timestamp lastPostTime;
+	private Timestamp registerationTime;
+	private Timestamp lastLoginTime;
+	private Timestamp lastPostTime;
 
-	boolean isAdministrator;
-	boolean isBanned;
-	int newMessages;
+	private boolean isAdministrator;
+	private boolean isBanned;
+	
+	private Character gender;
+	private String autobiography;
+	
+	private int newMessages;
 	//Constructor
 	public User(String username, String password, String email, String loginIpAddress, Timestamp registerationTime,
-			Timestamp lastLoginTime, Timestamp lastPostTime, boolean isAdministrator, boolean isBanned) {
+			Timestamp lastLoginTime, Timestamp lastPostTime, boolean isAdministrator, boolean isBanned, Character gender, String autobiography) {
 		super();
 		// this.userID = userID;
 		this.username = username;
@@ -41,11 +45,13 @@ public class User {
 		this.lastPostTime = lastPostTime;
 		this.isAdministrator = isAdministrator;
 		this.isBanned = isBanned;
+		this.gender = gender;
+		this.autobiography = autobiography;
 		this.newMessages = 0;
 	}
 	//Constructor without time
 	public User(String username, String password, String email, String loginIpAddress, boolean isAdministrator,
-			boolean isBanned, int newMessages) {
+			boolean isBanned, Character gender, String autobiography, int newMessages) {
 		super();
 		// this.userID = null;
 		this.username = username;
@@ -58,6 +64,8 @@ public class User {
 		this.lastPostTime = null;
 		this.isAdministrator = isAdministrator;
 		this.isBanned = isBanned;
+		this.gender = gender;
+		this.autobiography = autobiography;
 		this.newMessages = newMessages;
 	}
 	
@@ -151,5 +159,29 @@ public class User {
 	public void setUsername(String username) {
 		this.username = username;
 	}
-
+	/**
+	 * @return the gender
+	 */
+	public Character getGender() {
+		return gender;
+	}
+	/**
+	 * @param gender the gender to set
+	 */
+	public void setGender(Character gender) {
+		this.gender = gender;
+	}
+	/**
+	 * @return the autobiography
+	 */
+	public String getAutobiography() {
+		return autobiography;
+	}
+	/**
+	 * @param autobiography the autobiography to set
+	 */
+	public void setAutobiography(String autobiography) {
+		this.autobiography = autobiography;
+	}
+	
 }
