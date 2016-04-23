@@ -579,14 +579,19 @@ CREATE PROCEDURE get_post_by_id(
 BEGIN
 	SELECT * FROM Posts WHERE PostID = Given_PostID LIMIT 1;
 END//
-/*
+
 DROP TRIGGER IF EXISTS delete_thread_after_all_its_posts_have_been_deleted//
 CREATE TRIGGER delete_thread_after_all_its_posts_have_been_deleted
-	AFTER DELETE ON Posts
+	AFTER UPDATE ON Posts
     FOR EACH ROW
 BEGIN
-	IF NOT EXISTS (SELECT OLD.
-END//*/
+	IF NOT EXISTS (SELECT * FROM Posts WHERE ThreadID = NEW.ThreadID AND Post_IsDeleted = FALSE) THEN
+    BEGIN
+		UPDATE Threads SET Thread_IsDeleted = TRUE
+			 WHERE ThreadID = NEW.ThreadID;
+    END;
+    END IF;
+END//
 DELIMITER ;
 /* FavoriteForums Table */
 DROP TABLE IF EXISTS FavoriteForums;
