@@ -1,6 +1,7 @@
 package edu.neu.ccs.community;
 
 import java.io.IOException;
+import java.util.Enumeration;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -40,8 +41,12 @@ public class LoginServlet extends HttpServlet {
     	
 		String username = request.getParameter("username");
 		String password = request.getParameter("password");
+
+		int loginTime = request.getParameter("remember-me") == null ? 0 : 7*24*60*60; 
+
+		System.out.println(loginTime);
 		request.setAttribute("username", username);
-		if (loginManager.logIn(username, password, 60*60)) {
+		if (loginManager.logIn(username, password, loginTime)) {
 			//request.getRequestDispatcher("/home").forward(request, response);
 			response.sendRedirect("./home");
 		} else {

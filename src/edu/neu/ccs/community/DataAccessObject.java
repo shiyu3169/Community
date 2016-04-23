@@ -5,7 +5,6 @@ package edu.neu.ccs.community;
 
 import java.sql.CallableStatement;
 import java.sql.Connection;
-import java.sql.Date;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -27,7 +26,7 @@ public class DataAccessObject {
 	private final String userName = "root";
 
 	/** The password for the MySQL account (or empty for anonymous) */
-	private final String password = "cliff92711";
+	private final String password = "hpahzGSYCl05116";
 
 	/** The name of the computer running MySQL */
 	private final String serverName = "localhost";
@@ -178,7 +177,7 @@ public class DataAccessObject {
 			statement.setString(4, forum.getOwner());
 			statement.setString(5, forum.getCatagory());
 			statement.setString(6, forum.getDescription());
-			statement.setDate(7, forum.getCreationTime());
+			statement.setTimestamp(7, forum.getCreationTime());
 			statement.setBoolean(8, forum.isVerified());
 
 			statement.registerOutParameter(1, java.sql.Types.INTEGER);
@@ -227,7 +226,7 @@ public class DataAccessObject {
 			throws SQLException, InstantiationException, IllegalAccessException, ClassNotFoundException {
 		String sql = "CALL search_forum_by_name(?)";
 		ArrayList<Forum> result = new ArrayList<Forum>();
-		try (Connection connection = this.getConnection(); PreparedStatement statement = connection.prepareCall(sql)) {
+		try (Connection connection = this.getConnection(); CallableStatement statement = connection.prepareCall(sql)) {
 			statement.setString(1, name);
 			ResultSet rs = statement.executeQuery();
 			while (rs.next()) {
@@ -237,8 +236,8 @@ public class DataAccessObject {
 				String owner = rs.getString("Forum_Owner");
 				String catagory = rs.getString("Forum_Catagory");
 				String description = rs.getString("Forum_Description");
-				Date creationTime = rs.getDate("Forum_CreationTime");
-				Date lastPostTime = rs.getDate("Forum_LastPostTime");
+				Timestamp creationTime = rs.getTimestamp("Forum_CreationTime");
+				Timestamp lastPostTime = rs.getTimestamp("Forum_LastPostTime");
 				boolean isVerified = rs.getBoolean("Forum_IsVerified");
 				result.add(new Forum(forumID, parentID, forumName, owner, catagory, description, creationTime,
 						lastPostTime, isVerified));
@@ -246,7 +245,52 @@ public class DataAccessObject {
 		}
 		return result;
 	}
-
+	public List<Forum> getAllForums()
+			throws SQLException, InstantiationException, IllegalAccessException, ClassNotFoundException {
+		String sql = "CALL get_all_forums()";
+		ArrayList<Forum> result = new ArrayList<Forum>();
+		try (Connection connection = this.getConnection(); CallableStatement statement = connection.prepareCall(sql)) {
+			ResultSet rs = statement.executeQuery();
+			while (rs.next()) {
+				int forumID = rs.getInt("ForumID");
+				Integer parentID = rs.getInt("ParentID");
+				String forumName = rs.getString("ForumName");
+				String owner = rs.getString("Forum_Owner");
+				String catagory = rs.getString("Forum_Catagory");
+				String description = rs.getString("Forum_Description");
+				Timestamp creationTime = rs.getTimestamp("Forum_CreationTime");
+				Timestamp lastPostTime = rs.getTimestamp("Forum_LastPostTime");
+				boolean isVerified = rs.getBoolean("Forum_IsVerified");
+				result.add(new Forum(forumID, parentID, forumName, owner, catagory, description, creationTime,
+						lastPostTime, isVerified));
+			}
+		}
+		return result;
+	}
+	public List<Forum> getChildForums(Integer parentID)
+			throws SQLException, InstantiationException, IllegalAccessException, ClassNotFoundException {
+		String sql = "CALL get_child_forums(?)";
+		ArrayList<Forum> result = new ArrayList<Forum>();
+		try (Connection connection = this.getConnection(); CallableStatement statement = connection.prepareCall(sql)) {
+			statement.setInt(1, parentID);
+			ResultSet rs = statement.executeQuery();
+			while (rs.next()) {
+				int forumID = rs.getInt("ForumID");
+				//Integer parentID = rs.getInt("ParentID");
+				String forumName = rs.getString("ForumName");
+				String owner = rs.getString("Forum_Owner");
+				String catagory = rs.getString("Forum_Catagory");
+				String description = rs.getString("Forum_Description");
+				Timestamp creationTime = rs.getTimestamp("Forum_CreationTime");
+				Timestamp lastPostTime = rs.getTimestamp("Forum_LastPostTime");
+				boolean isVerified = rs.getBoolean("Forum_IsVerified");
+				result.add(new Forum(forumID, parentID, forumName, owner, catagory, description, creationTime,
+						lastPostTime, isVerified));
+				System.out.println(forumName);
+			}
+		}
+		return result;
+	}
 	public Forum getForumByID(int forumID)
 			throws SQLException, InstantiationException, IllegalAccessException, ClassNotFoundException {
 		String sql = "CALL get_forum_by_id(?)";
@@ -261,8 +305,8 @@ public class DataAccessObject {
 				String owner = rs.getString("Forum_Owner");
 				String catagory = rs.getString("Forum_Catagory");
 				String description = rs.getString("Forum_Description");
-				Date creationTime = rs.getDate("Forum_CreationTime");
-				Date lastPostTime = rs.getDate("Forum_LastPostTime");
+				Timestamp creationTime = rs.getTimestamp("Forum_CreationTime");
+				Timestamp lastPostTime = rs.getTimestamp("Forum_LastPostTime");
 				boolean isVerified = rs.getBoolean("Forum_IsVerified");
 				return new Forum(forumID, parentID, forumName, owner, catagory, description, creationTime, lastPostTime,
 						isVerified);
