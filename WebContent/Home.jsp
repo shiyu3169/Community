@@ -18,11 +18,11 @@
 					<div id="navbar" class="collapse navbar-collapse" aria-expanded="true">
 						<ul class="nav navbar-nav navbar-right">
 						<%if (request.getAttribute("username") == null) {%>
-							<li><a href="/Community/login">Log in</a></li>
-							<li><a href="/Community/register">Sign up</a></li>
+							<li><a href="<%=request.getContextPath()%>/login">Log in</a></li>
+							<li><a href="<%=request.getContextPath()%>/register">Sign up</a></li>
 						<%} else {%>
 							<li><a href="#">Hi ${username}</a></li>
-							<li><a href="/Community/login">Log out</a></li>
+							<li><a href="<%=request.getContextPath()%>/login">Log out</a></li>
 					<%}%>
 						</ul>
 					</div>
@@ -91,7 +91,7 @@
 								    		 System.out.println(forum.getForumName());%>
 								    		 <tr>
 												<td class="text-center">
-													<strong><a href="/Community/Forum?id=<%=forum.getForumID()%>"><%= forum.getForumName()%></a></strong>
+													<strong><a href="<%=request.getContextPath()%>/Forum?id=<%=forum.getForumID()%>"><%= forum.getForumName()%></a></strong>
 												</td>
 												<td>
 													<%= forum.getDescription()%>

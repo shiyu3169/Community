@@ -38,12 +38,23 @@ public class CreateForumServlet extends HttpServlet {
 			request.getRequestDispatcher("/Login.jsp").forward(request, response);
 			return;
 		}
-
-		Integer parentID = null;
-		String forumName = request.getParameter("name");
-		String owner = loginManager.getSavedUsername();
-		String catagory = request.getParameter("catagory");
-		String description = request.getParameter("description");
+		Integer parentID;
+		String forumName;
+		String owner;
+		String catagory;
+		String description;
+		try {
+			parentID = request.getParameter("parentID") == null ? null
+					: Integer.valueOf(String.valueOf(request.getAttribute("parentID")));
+			forumName = request.getParameter("name");
+			owner = loginManager.getSavedUsername();
+			catagory = request.getParameter("catagory");
+			description = request.getParameter("description");
+		} catch (Exception e) {
+			request.setAttribute("message", "Illegal parameter received.");
+			request.getRequestDispatcher("/Login.jsp").forward(request, response);
+			return;
+		}
 		boolean isVerified = false;
 		try {
 			int forumID = dao.create(new Forum(parentID, forumName, owner, catagory, description, isVerified));

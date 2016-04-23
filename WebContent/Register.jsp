@@ -18,8 +18,8 @@
 	                <div class="container">
 	                    <div id="navbar" class="collapse navbar-collapse" aria-expanded="true">
 	                        <ul class="nav navbar-nav navbar-right">
-	                            <li><a href="/Community/home">Home</a></li>
-	                            <li><a href="login">Sign in</a></li>
+	                            <li><a href="<%=request.getContextPath()%>/home">Home</a></li>
+	                            <li><a href="<%=request.getContextPath()%>/login">Sign in</a></li>
 	                        </ul>
 	                    </div>
 	                </div>

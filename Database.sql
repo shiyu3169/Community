@@ -283,6 +283,19 @@ BEGIN
 END// 
 DELIMITER ;
 CALL get_forum_by_id(3);
+DELIMITER //
+DROP PROCEDURE IF EXISTS get_all_forums//
+CREATE PROCEDURE get_all_forums()
+BEGIN
+	SELECT * FROM Forums;
+END//
+DROP PROCEDURE IF EXISTS get_child_forums//
+CREATE PROCEDURE get_child_forums(
+	Given_ParentID INT)
+BEGIN
+	SELECT * FROM Forums WHERE ParentID = Given_ParentID;
+END//
+DELIMITER ;
 DROP PROCEDURE IF EXISTS delete_forum;
 DELIMITER //
 CREATE PROCEDURE delete_forum (
@@ -566,6 +579,14 @@ CREATE PROCEDURE get_post_by_id(
 BEGIN
 	SELECT * FROM Posts WHERE PostID = Given_PostID LIMIT 1;
 END//
+/*
+DROP TRIGGER IF EXISTS delete_thread_after_all_its_posts_have_been_deleted//
+CREATE TRIGGER delete_thread_after_all_its_posts_have_been_deleted
+	AFTER DELETE ON Posts
+    FOR EACH ROW
+BEGIN
+	IF NOT EXISTS (SELECT OLD.
+END//*/
 DELIMITER ;
 /* FavoriteForums Table */
 DROP TABLE IF EXISTS FavoriteForums;
