@@ -427,7 +427,7 @@ CREATE PROCEDURE get_thread_list_by_forumID(
 	Given_ForumID INT
 )
 BEGIN
-	SELECT * FROM Threads WHERE ForumID = Given_ForumID;
+	SELECT * FROM Threads WHERE ForumID = Given_ForumID AND Thread_IsDeleted = FALSE ORDER BY Thread_IsSticky;
 END//
 DELIMITER ;
 CALL get_thread_list_by_forumID(3);
