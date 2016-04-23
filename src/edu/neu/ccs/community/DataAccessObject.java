@@ -234,12 +234,12 @@ public class DataAccessObject {
 				Integer parentID = rs.getInt("ParentID");
 				String forumName = rs.getString("ForumName");
 				String owner = rs.getString("Forum_Owner");
-				String catagory = rs.getString("Forum_Catagory");
+				String category = rs.getString("Forum_Category");
 				String description = rs.getString("Forum_Description");
 				Timestamp creationTime = rs.getTimestamp("Forum_CreationTime");
 				Timestamp lastPostTime = rs.getTimestamp("Forum_LastPostTime");
 				boolean isVerified = rs.getBoolean("Forum_IsVerified");
-				result.add(new Forum(forumID, parentID, forumName, owner, catagory, description, creationTime,
+				result.add(new Forum(forumID, parentID, forumName, owner, category, description, creationTime,
 						lastPostTime, isVerified));
 			}
 		}
@@ -256,7 +256,7 @@ public class DataAccessObject {
 				Integer parentID = rs.getInt("ParentID");
 				String forumName = rs.getString("ForumName");
 				String owner = rs.getString("Forum_Owner");
-				String catagory = rs.getString("Forum_Catagory");
+				String catagory = rs.getString("Forum_Category");
 				String description = rs.getString("Forum_Description");
 				Timestamp creationTime = rs.getTimestamp("Forum_CreationTime");
 				Timestamp lastPostTime = rs.getTimestamp("Forum_LastPostTime");
@@ -279,7 +279,7 @@ public class DataAccessObject {
 				//Integer parentID = rs.getInt("ParentID");
 				String forumName = rs.getString("ForumName");
 				String owner = rs.getString("Forum_Owner");
-				String catagory = rs.getString("Forum_Catagory");
+				String catagory = rs.getString("Forum_Category");
 				String description = rs.getString("Forum_Description");
 				Timestamp creationTime = rs.getTimestamp("Forum_CreationTime");
 				Timestamp lastPostTime = rs.getTimestamp("Forum_LastPostTime");
@@ -303,7 +303,7 @@ public class DataAccessObject {
 				Integer parentID = rs.getInt("ParentID");
 				String forumName = rs.getString("ForumName");
 				String owner = rs.getString("Forum_Owner");
-				String catagory = rs.getString("Forum_Catagory");
+				String catagory = rs.getString("Forum_Category");
 				String description = rs.getString("Forum_Description");
 				Timestamp creationTime = rs.getTimestamp("Forum_CreationTime");
 				Timestamp lastPostTime = rs.getTimestamp("Forum_LastPostTime");

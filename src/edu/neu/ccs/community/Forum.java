@@ -12,7 +12,7 @@ public class Forum {
 	private Integer parentID;
 	private String forumName;
 	private String owner;
-    private String catagory;
+    private String category;
     private String description;
     
     private Timestamp creationTime;
@@ -25,20 +25,20 @@ public class Forum {
 	 * @param parentID
 	 * @param forumName
 	 * @param owner
-	 * @param catagory
+	 * @param category
 	 * @param description
 	 * @param creationTime
 	 * @param lastPostTime
 	 * @param isVerified
 	 */
-	public Forum(int forumID, Integer parentID, String forumName, String owner, String catagory, String description,
+	public Forum(int forumID, Integer parentID, String forumName, String owner, String category, String description,
 			Timestamp creationTime, Timestamp lastPostTime, boolean isVerified) {
 		super();
 		this.forumID = forumID;
 		this.parentID = parentID;
 		this.forumName = forumName;
 		this.owner = owner;
-		this.catagory = catagory;
+		this.category = category;
 		this.description = description;
 		this.creationTime = creationTime;
 		this.lastPostTime = lastPostTime;
@@ -50,17 +50,17 @@ public class Forum {
 	 * @param parentID
 	 * @param forumName
 	 * @param owner
-	 * @param catagory
+	 * @param category
 	 * @param description
 	 * @param isVerified
 	 */
-	public Forum(Integer parentID, String forumName, String owner, String catagory, String description,
+	public Forum(Integer parentID, String forumName, String owner, String category, String description,
 			boolean isVerified) {
 		super();
 		this.parentID = parentID;
 		this.forumName = forumName;
 		this.owner = owner;
-		this.catagory = catagory;
+		this.category = category;
 		this.description = description;
 		this.isVerified = isVerified;
 		this.creationTime = new Timestamp(System.currentTimeMillis());
@@ -99,12 +99,12 @@ public class Forum {
 		this.owner = owner;
 	}
 
-	public String getCatagory() {
-		return catagory;
+	public String getCategory() {
+		return category;
 	}
 
-	public void setCatagory(String catagory) {
-		this.catagory = catagory;
+	public void setCategory(String category) {
+		this.category = category;
 	}
 
 	public String getDescription() {
