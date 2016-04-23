@@ -15,37 +15,42 @@ import javax.servlet.http.HttpServletResponse;
 @WebServlet("/thread")
 public class ThreadServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
-       
-    /**
-     * @see HttpServlet#HttpServlet()
-     */
-    public ThreadServlet() {
-        super();
-        // TODO Auto-generated constructor stub
-    }
 
 	/**
-	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
+	 * @see HttpServlet#HttpServlet()
 	 */
-	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+	public ThreadServlet() {
+		super();
+		// TODO Auto-generated constructor stub
+	}
+
+	/**
+	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse
+	 *      response)
+	 */
+	protected void doGet(HttpServletRequest request, HttpServletResponse response)
+			throws ServletException, IOException {
 		// TODO Auto-generated method stub
 		DataAccessObject dao = new DataAccessObject();
 		LoginManager loginManager = new LoginManager(new CookieAccessObject(request, response), dao);
-		
-		
+
 		int threadID;
 		Thread thread;
 		Forum forum;
 		if (loginManager.hasLoggedIn()) {
 			request.setAttribute("isAdmin", loginManager.getCurrentUser().isAdministrator());
-		}
-		else {
+		} else {
 			request.setAttribute("isAdmin", false);
 		}
 
 		try {
 			threadID = Integer.valueOf(request.getParameter("id"));
 			thread = dao.getThreadByID(threadID);
+			if (thread.isDeleted) {
+				request.setAttribute("message", "This thread has been deleted.");
+				request.getRequestDispatcher("/forum").forward(request, response);
+				return;
+			}
 			forum = dao.getForumByID(thread.getForumID());
 			List<Post> postList = dao.getPostsByThreadID(threadID);
 			request.setAttribute("postList", postList);
@@ -60,9 +65,11 @@ public class ThreadServlet extends HttpServlet {
 	}
 
 	/**
-	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
+	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse
+	 *      response)
 	 */
-	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+	protected void doPost(HttpServletRequest request, HttpServletResponse response)
+			throws ServletException, IOException {
 		// TODO Auto-generated method stub
 		doGet(request, response);
 	}
