@@ -42,9 +42,9 @@ public class LoginServlet extends HttpServlet {
 		String username = request.getParameter("username");
 		String password = request.getParameter("password");
 
-		int loginTime = request.getParameter("remember-me") == null ? 0 : 7*24*60*60; 
+		int loginTime = request.getParameter("remember-me") == null ? -1 : 7*24*60*60; 
 
-		System.out.println(loginTime);
+		System.out.println("time: " + loginTime);
 		request.setAttribute("username", username);
 		if (loginManager.logIn(username, password, loginTime)) {
 			//request.getRequestDispatcher("/home").forward(request, response);

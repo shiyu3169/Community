@@ -11,7 +11,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 @WebServlet(urlPatterns = "/register")
-//@WebServlet("/register")
+// @WebServlet("/register")
 public class RegisterServlet extends HttpServlet {
 
 	protected void doGet(HttpServletRequest request, HttpServletResponse response)
@@ -29,14 +29,16 @@ public class RegisterServlet extends HttpServlet {
 		String username = request.getParameter("username");
 		String password = request.getParameter("password");
 		String email = request.getParameter("email");
+		Character gender = request.getParameter("gender") == null ? null : request.getParameter("gender").charAt(0);
+		String autobiography = request.getParameter("autobiography");
 		Date now = new Date(System.currentTimeMillis());
 		request.setAttribute("username", username);
 		request.setAttribute("password", password);
 		request.setAttribute("email", email);
-		//User user = new User(username, password, email, request.getRemoteAddr(), now, now, null, false, false);
-		User user = new User(username, password, 
-				email, request.getRemoteAddr(), false,
-				false, 0);
+		// User user = new User(username, password, email,
+		// request.getRemoteAddr(), now, now, null, false, false);
+		User user = new User(username, password, email, request.getRemoteAddr(), false, false, gender, autobiography,
+				0);
 		DataAccessObject dao = new DataAccessObject();
 		try {
 			dao.create(user);

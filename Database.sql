@@ -21,6 +21,10 @@ CREATE TABLE Users(
     
     User_IsAdministrator	BOOLEAN NOT NULL,
     User_IsBanned	BOOLEAN NOT NULL,
+    
+    User_Gender CHAR(1),
+    User_Autobiography LONGTEXT,
+    
     User_NumberOfNewMessages INT NOT NULL
 );
 DROP FUNCTION IF EXISTS create_user;
@@ -34,6 +38,10 @@ CREATE FUNCTION create_user (
     Given_User_IsBanned	BOOLEAN,
     Given_User_RegisterationTime	DATETIME,
 	Given_User_LastLoginTime	DATETIME,
+
+    Given_User_Gender CHAR(1),
+    Given_User_Autobiography LONGTEXT,
+    
     Given_User_NumberOfNewMessages INT
     -- OUT Out_RegisterationTime DATE,
     -- OUT Out_RegisterationTime DATE,
@@ -50,6 +58,8 @@ BEGIN
         User_IsBanned,
 		User_RegisterationTime,
 		User_LastLoginTime,
+		User_Gender,
+		User_Autobiography,
 		User_NumberOfNewMessages
     ) VALUES (
 		Given_UserName,
@@ -60,12 +70,14 @@ BEGIN
         Given_User_IsBanned,
 		Given_User_RegisterationTime,
 		Given_User_LastLoginTime,
+		Given_User_Gender,
+		Given_User_Autobiography,
         Given_User_NumberOfNewMessages
 	);
     RETURN Given_UserName;
 
 END //
-SELECT (create_user("admin", "admin", "admin@admin.org", "127.0.0.1", TRUE, FALSE, NOW(), NOW(), 0)) //
+SELECT (create_user("admin", "admin", "admin@admin.org", "127.0.0.1", TRUE, FALSE, NOW(), NOW(), null, null, 0)) //
 -- SELECT (create_forums("admin", "admin", "admin@admin.org", "127.0.0.1", TRUE, FALSE, NOW(), NOW())) //
 DELIMITER ;
 DROP PROCEDURE IF EXISTS delete_user;
@@ -176,7 +188,7 @@ BEGIN
     RETURN LAST_INSERT_ID();
 END//
 DELIMITER ;
-SELECT create_user("admin", "admin", "admin@admin.org", "127.0.0.1", TRUE, FALSE, NOW(), NOW(),0);
+SELECT create_user("admin", "admin", "admin@admin.org", "127.0.0.1", TRUE, FALSE, NOW(), NOW(), NULL, NULL, 0);
 SELECT create_forum(NULL,	
 		"Root", 
 		"admin", 
@@ -606,6 +618,14 @@ CREATE TABLE FavoriteForums (
 		FOREIGN KEY (ForumID) REFERENCES Forums(ForumID)
 		ON UPDATE CASCADE ON DELETE CASCADE
 );
+DROP PROCEDURE IF EXISTS get_FavoriteForums_by_UserName;
+DELIMITER //
+CREATE PROCEDURE get_FavoriteForums_by_UserName (
+	Given_UserName VARCHAR(50))
+BEGIN
+	SELECT * FROM FavoriteForums WHERE UserName = Given_UserName;
+END//
+DELIMITER ;
 DROP TABLE IF EXISTS User_Friends;
 CREATE TABLE User_Friends (
 	UserName VARCHAR(50),
