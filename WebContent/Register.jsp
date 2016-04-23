@@ -32,7 +32,7 @@
 	            	<font color="white">Please Register </font>
 	            </h2>
 	            <label for="inputUserName" class="sr-only">User Name</label>
-	            <input type="text" name="username" id="Username" class="form-control" placeholder="UserName" value="${username}" required>
+	            <input type="text" name="username" id="Username" class="form-control" placeholder="UserName" value="${username}" required autofocus>
 	            <br/>
 	            <label for="inputEmail" class="sr-only">Email</label>
 	            <input type="email" name="email" id="email" class="form-control" placeholder="Email@example.com" value="${email}" required>
