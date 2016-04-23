@@ -175,7 +175,7 @@ public class DataAccessObject {
 				statement.setInt(2, forum.getParentID());
 			statement.setString(3, forum.getForumName());
 			statement.setString(4, forum.getOwner());
-			statement.setString(5, forum.getCatagory());
+			statement.setString(5, forum.getCategory());
 			statement.setString(6, forum.getDescription());
 			statement.setTimestamp(7, forum.getCreationTime());
 			statement.setBoolean(8, forum.isVerified());
@@ -199,7 +199,7 @@ public class DataAccessObject {
 				statement.setInt(2, forum.getParentID());
 			statement.setString(3, forum.getForumName());
 			statement.setString(4, forum.getOwner());
-			statement.setString(5, forum.getCatagory());
+			statement.setString(5, forum.getCategory());
 			statement.setString(6, forum.getDescription());
 			statement.setBoolean(7, forum.isVerified());
 

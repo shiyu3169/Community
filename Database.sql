@@ -115,7 +115,7 @@ CREATE TABLE Forums (
     ForumName	VARCHAR(50) UNIQUE, -- Forum can be identified by name
     
     Forum_Owner	VARCHAR(50), -- foreign key to Users(Username) to speed up access
-    Forum_Catagory	VARCHAR(63),
+    Forum_Category	VARCHAR(63),
     Forum_Description VARCHAR(255),
     
     Forum_CreationTime	DATETIME NOT NULL,
@@ -137,7 +137,7 @@ CREATE FUNCTION create_forum (
     Given_ForumName	VARCHAR(50), -- Forum can be identified by name
     
     Given_Forum_Owner	VARCHAR(50), -- foreign key to Users(Username) to speed up access
-    Given_Forum_Catagory	VARCHAR(63),
+    Given_Forum_Category	VARCHAR(63),
     Given_Forum_Description VARCHAR(255),
     
     Given_Forum_CreationTime	DATETIME,
@@ -152,7 +152,7 @@ BEGIN
 		ForumName, -- Forum can be identified by name
     
 		Forum_Owner, -- foreign key to Users(Username) to speed up access
-		Forum_Catagory,
+		Forum_Category,
 		Forum_Description,
     
 		Forum_CreationTime,
@@ -165,7 +165,7 @@ BEGIN
 		Given_ForumName, -- Forum can be identified by name
     
 		Given_Forum_Owner, -- foreign key to Users(Username) to speed up access
-		Given_Forum_Catagory,
+		Given_Forum_Category,
 		Given_Forum_Description,
     
 		Given_Forum_CreationTime,
@@ -180,42 +180,42 @@ SELECT create_user("admin", "admin", "admin@admin.org", "127.0.0.1", TRUE, FALSE
 SELECT create_forum(NULL,	
 		"Root", 
 		"admin", 
-		"Forum_Catagory",
+		"Forum_Category",
 		"Forum_Description",
 		NOW(),
 		TRUE);
 SELECT create_forum(1,	
 		"Cats", 
 		"admin", 
-		"Forum_Catagory",
+		"Forum_Category",
 		"Forum_Description",
 		NOW(),
 		TRUE);
 SELECT create_forum(1,	
 		"Hello Kitty", 
 		"admin", 
-		"Forum_Catagory",
+		"Forum_Category",
 		"Forum_Description",
 		NOW(),
 		TRUE);
 SELECT create_forum(1,	
 		"Big Face Cat", 
 		"admin", 
-		"Forum_Catagory",
+		"Forum_Category",
 		"Forum_Description",
 		NOW(),
 		TRUE);   
 SELECT create_forum(1,	
 		"Garfield", 
 		"admin", 
-		"Forum_Catagory",
+		"Forum_Category",
 		"Forum_Description",
 		NOW(),
 		TRUE);
 SELECT create_forum(1,	
 		"Doraemon", 
 		"admin", 
-		"Forum_Catagory",
+		"Forum_Category",
 		"Forum_Description",
 		NOW(),
 		TRUE);
@@ -227,7 +227,7 @@ CREATE PROCEDURE update_forum (
     Given_ForumName	VARCHAR(50), -- Forum can be identified by name
     
     Given_Forum_Owner	VARCHAR(50), -- foreign key to Users(Username) to speed up access
-    Given_Forum_Catagory	VARCHAR(63),
+    Given_Forum_Category	VARCHAR(63),
     Given_Forum_Description VARCHAR(255),
     
     -- Given_Forum_CreationTime	DATETIME,
@@ -242,7 +242,7 @@ BEGIN
 			ForumName = Given_ForumName, -- Forum can be identified by name
 			
 			Forum_Owner = Given_Forum_Owner, -- foreign key to Users(Username) to speed up access
-			Forum_Catagory = Given_Forum_Catagory,
+			Forum_Category = Given_Forum_Category,
 			Forum_Description = Given_Forum_Description,
 			
 			-- Given_Forum_CreationTime	DATETIME,
@@ -257,7 +257,7 @@ CALL update_forum(1,
     "Given_ForumName	VARCHAR(50)", -- Forum can be identified by name
     
     "admin", -- foreign key to Users(Username) to speed up access
-    "Given_Forum_Catagory	VARCHAR(63)",
+    "Given_Forum_Category	VARCHAR(63)",
     "Given_Forum_Description VARCHAR(255)",
     
     -- Given_Forum_CreationTime	DATETIME,
