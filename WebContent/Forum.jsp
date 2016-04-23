@@ -262,6 +262,7 @@
 				<div class="modal-body">
 					<form class="form form-horizontal" method="post"
 						action="createForum">
+						<input type="hidden" name="parentID" value="<%=request.getParameter("id")%>">
 						<div class="form-group">
 							<label class="col-sm-3 control-label">Forum Name</label>
 							<div class="col-sm-8">

@@ -19,6 +19,8 @@ public class Thread {
     
     boolean isSticky;
     boolean isDeleted;
+    
+    int numberOfViews;
 	/**
 	 * @param threadID
 	 * @param forumID
@@ -31,7 +33,7 @@ public class Thread {
 	 * @param isDeleted
 	 */
 	public Thread(Integer threadID, int forumID, String title, String author, String lastUpdator,
-			Timestamp creationTime, Timestamp lastUpdateTime, boolean isSticky, boolean isDeleted) {
+			Timestamp creationTime, Timestamp lastUpdateTime, boolean isSticky, boolean isDeleted, int numberOfViews) {
 		super();
 		this.threadID = threadID;
 		this.forumID = forumID;
@@ -42,6 +44,7 @@ public class Thread {
 		this.lastUpdateTime = lastUpdateTime;
 		this.isSticky = isSticky;
 		this.isDeleted = isDeleted;
+		this.numberOfViews = numberOfViews;
 	}
 	/**
 	 * @param forumID
@@ -169,6 +172,24 @@ public class Thread {
 	 */
 	public void setDeleted(boolean isDeleted) {
 		this.isDeleted = isDeleted;
+	}
+	/**
+	 * @return the numberOfViews
+	 */
+	public int getNumberOfViews() {
+		return numberOfViews;
+	}
+	/**
+	 * @param numberOfViews the numberOfViews to set
+	 */
+	public void setNumberOfViews(int numberOfViews) {
+		this.numberOfViews = numberOfViews;
+	}
+	/**
+	 * @param lastUpdateTime the lastUpdateTime to set
+	 */
+	public void setLastUpdateTime(Timestamp lastUpdateTime) {
+		this.lastUpdateTime = lastUpdateTime;
 	}
     
 }

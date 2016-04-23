@@ -175,7 +175,7 @@ public class DataAccessObject {
 				statement.setInt(2, forum.getParentID());
 			statement.setString(3, forum.getForumName());
 			statement.setString(4, forum.getOwner());
-			statement.setString(5, forum.getCatagory());
+			statement.setString(5, forum.getCategory());
 			statement.setString(6, forum.getDescription());
 			statement.setTimestamp(7, forum.getCreationTime());
 			statement.setBoolean(8, forum.isVerified());
@@ -199,7 +199,7 @@ public class DataAccessObject {
 				statement.setInt(2, forum.getParentID());
 			statement.setString(3, forum.getForumName());
 			statement.setString(4, forum.getOwner());
-			statement.setString(5, forum.getCatagory());
+			statement.setString(5, forum.getCategory());
 			statement.setString(6, forum.getDescription());
 			statement.setBoolean(7, forum.isVerified());
 
@@ -234,12 +234,12 @@ public class DataAccessObject {
 				Integer parentID = rs.getInt("ParentID");
 				String forumName = rs.getString("ForumName");
 				String owner = rs.getString("Forum_Owner");
-				String catagory = rs.getString("Forum_Catagory");
+				String category = rs.getString("Forum_Category");
 				String description = rs.getString("Forum_Description");
 				Timestamp creationTime = rs.getTimestamp("Forum_CreationTime");
 				Timestamp lastPostTime = rs.getTimestamp("Forum_LastPostTime");
 				boolean isVerified = rs.getBoolean("Forum_IsVerified");
-				result.add(new Forum(forumID, parentID, forumName, owner, catagory, description, creationTime,
+				result.add(new Forum(forumID, parentID, forumName, owner, category, description, creationTime,
 						lastPostTime, isVerified));
 			}
 		}
@@ -256,7 +256,7 @@ public class DataAccessObject {
 				Integer parentID = rs.getInt("ParentID");
 				String forumName = rs.getString("ForumName");
 				String owner = rs.getString("Forum_Owner");
-				String catagory = rs.getString("Forum_Catagory");
+				String catagory = rs.getString("Forum_Category");
 				String description = rs.getString("Forum_Description");
 				Timestamp creationTime = rs.getTimestamp("Forum_CreationTime");
 				Timestamp lastPostTime = rs.getTimestamp("Forum_LastPostTime");
@@ -279,7 +279,7 @@ public class DataAccessObject {
 				//Integer parentID = rs.getInt("ParentID");
 				String forumName = rs.getString("ForumName");
 				String owner = rs.getString("Forum_Owner");
-				String catagory = rs.getString("Forum_Catagory");
+				String catagory = rs.getString("Forum_Category");
 				String description = rs.getString("Forum_Description");
 				Timestamp creationTime = rs.getTimestamp("Forum_CreationTime");
 				Timestamp lastPostTime = rs.getTimestamp("Forum_LastPostTime");
@@ -303,7 +303,7 @@ public class DataAccessObject {
 				Integer parentID = rs.getInt("ParentID");
 				String forumName = rs.getString("ForumName");
 				String owner = rs.getString("Forum_Owner");
-				String catagory = rs.getString("Forum_Catagory");
+				String catagory = rs.getString("Forum_Category");
 				String description = rs.getString("Forum_Description");
 				Timestamp creationTime = rs.getTimestamp("Forum_CreationTime");
 				Timestamp lastPostTime = rs.getTimestamp("Forum_LastPostTime");
@@ -421,8 +421,9 @@ public class DataAccessObject {
 				Timestamp lastUpdateTime = rs.getTimestamp("Thread_LastUpdateTime");
 				boolean isSticky = rs.getBoolean("Thread_IsSticky");
 				boolean isDeleted = rs.getBoolean("Thread_IsDeleted");
+				int numberOfViews = rs.getInt("Thread_NumberOfViews");
 				result.add(new Thread(threadID, forumID, title, author, lastUpdator, creationTime, lastUpdateTime,
-						isSticky, isDeleted));
+						isSticky, isDeleted, numberOfViews));
 			}
 		}
 
@@ -469,8 +470,9 @@ public class DataAccessObject {
 				Timestamp lastUpdateTime = rs.getTimestamp("Thread_LastUpdateTime");
 				boolean isSticky = rs.getBoolean("Thread_IsSticky");
 				boolean isDeleted = rs.getBoolean("Thread_IsDeleted");
+				int numberOfViews = rs.getInt("Thread_NumberOfViews");
 				return new Thread(threadID, forumID, title, author, lastUpdator, creationTime, lastUpdateTime,
-						isSticky, isDeleted);
+						isSticky, isDeleted, numberOfViews);
 			}
 			throw new NoSuchElementException();
 		}

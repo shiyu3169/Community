@@ -48,7 +48,7 @@ public class ForumServlet extends HttpServlet {
 				LoginManager loginManager = new LoginManager(new CookieAccessObject(request, response), dao);
 				request.setAttribute("username", loginManager.getSavedUsername());
 				request.setAttribute("forumName", forum.getForumName());
-				request.setAttribute("category", forum.getCatagory());
+				request.setAttribute("category", forum.getCategory());
 				request.setAttribute("description", forum.getDescription());
 				request.setAttribute("owner", forum.getOwner());
 				request.setAttribute("creationTime", forum.getCreationTime());
