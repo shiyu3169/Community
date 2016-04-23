@@ -44,13 +44,14 @@ public class CreateForumServlet extends HttpServlet {
 		String catagory;
 		String description;
 		try {
-			parentID = request.getParameter("parentID") == null ? null
-					: Integer.valueOf(String.valueOf(request.getAttribute("parentID")));
+			parentID = (request.getParameter("parentID") == null || request.getParameter("parentID").equals("null"))
+					? null : Integer.valueOf(String.valueOf(request.getParameter("parentID")));
 			forumName = request.getParameter("name");
 			owner = loginManager.getSavedUsername();
 			catagory = request.getParameter("catagory");
 			description = request.getParameter("description");
 		} catch (Exception e) {
+			e.printStackTrace();
 			request.setAttribute("message", "Illegal parameter received.");
 			request.getRequestDispatcher("/Login.jsp").forward(request, response);
 			return;
