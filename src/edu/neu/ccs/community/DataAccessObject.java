@@ -421,8 +421,9 @@ public class DataAccessObject {
 				Timestamp lastUpdateTime = rs.getTimestamp("Thread_LastUpdateTime");
 				boolean isSticky = rs.getBoolean("Thread_IsSticky");
 				boolean isDeleted = rs.getBoolean("Thread_IsDeleted");
+				int numberOfViews = rs.getInt("Thread_NumberOfViews");
 				result.add(new Thread(threadID, forumID, title, author, lastUpdator, creationTime, lastUpdateTime,
-						isSticky, isDeleted));
+						isSticky, isDeleted, numberOfViews));
 			}
 		}
 
@@ -469,8 +470,9 @@ public class DataAccessObject {
 				Timestamp lastUpdateTime = rs.getTimestamp("Thread_LastUpdateTime");
 				boolean isSticky = rs.getBoolean("Thread_IsSticky");
 				boolean isDeleted = rs.getBoolean("Thread_IsDeleted");
+				int numberOfViews = rs.getInt("Thread_NumberOfViews");
 				return new Thread(threadID, forumID, title, author, lastUpdator, creationTime, lastUpdateTime,
-						isSticky, isDeleted);
+						isSticky, isDeleted, numberOfViews);
 			}
 			throw new NoSuchElementException();
 		}

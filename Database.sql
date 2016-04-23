@@ -560,6 +560,7 @@ CREATE PROCEDURE get_thread_by_id(
 	Given_ThreadID INT
 )
 BEGIN
+	UPDATE Thread SET Thread_NumberOFViews = Thread_NumberOFViews + 1;
 	SELECT * FROM Threads WHERE ThreadID = Given_ThreadID LIMIT 1;
 END//
 DROP PROCEDURE IF EXISTS get_post_list_by_threadID//
