@@ -5,6 +5,7 @@ package edu.neu.ccs.community;
 
 import java.sql.CallableStatement;
 import java.sql.Connection;
+import java.sql.Date;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -26,7 +27,7 @@ public class DataAccessObject {
 	private final String userName = "root";
 
 	/** The password for the MySQL account (or empty for anonymous) */
-	private final String password = "cliff92711";
+	private final String password = "hpahzGSYCl05116";
 
 	/** The name of the computer running MySQL */
 	private final String serverName = "localhost";
@@ -82,7 +83,7 @@ public class DataAccessObject {
 	/** Create User */
 	public void create(User user)
 			throws SQLException, InstantiationException, IllegalAccessException, ClassNotFoundException {
-		String sql = "SELECT create_user(?,?,?,?,?,?,?,?,?,?,?)"; // No need for
+		String sql = "SELECT create_user(?,?,?,?,?,?,?,?,?,?,?,?)"; // No need for
 																	// the
 																	// function
 																	// result
@@ -107,7 +108,12 @@ public class DataAccessObject {
 			} else {
 				statement.setString(10, user.getAutobiography());
 			}
-			statement.setInt(11, user.getNewMessages());
+			if (user.getDateOfBirth() == null) {
+				statement.setNull(11, java.sql.Types.DATE);
+			} else {
+				statement.setDate(11, user.getDateOfBirth());
+			}
+			statement.setInt(12, user.getNewMessages());
 			statement.execute();
 
 		}
@@ -134,8 +140,10 @@ public class DataAccessObject {
 				String genderString = rs.getString("User_Gender");
 				Character gender = genderString == null? null:genderString.charAt(0);
 				String autobiography = rs.getString("User_Autobiography");
-				return new User(username, password, email, loginIpAddress, registerationTime, lastLoginTime,
-						lastPostTime, isAdministrator, isBanned,gender,autobiography);
+				Date dateOfBirth = rs.getDate("User_DateOfBirth");
+				int newMessages = rs.getInt("User_NumberOfNewMessages");
+				return new User(username, password, email, loginIpAddress, isAdministrator,
+						isBanned, gender, autobiography, dateOfBirth, newMessages);
 			} else {
 				return null;
 			}
