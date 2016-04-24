@@ -62,8 +62,6 @@ public class ForumServlet extends HttpServlet {
 					request.setAttribute("subforums", dao.getChildForums(forum.getForumID()));
 				}
 				if (loginManager.hasLoggedIn()) {
-					System.out.println(loginManager.getSavedUsername());
-					System.out.println(loginManager.getCurrentUser());
 					request.setAttribute("isAdmin", loginManager.getCurrentUser().isAdministrator());
 					request.getRequestDispatcher("/Forum.jsp").forward(request, response);
 				} else {

@@ -16,7 +16,6 @@ public class HomeServlet extends HttpServlet {
 	protected void doGet(HttpServletRequest request, HttpServletResponse response)
 			throws IOException, ServletException {
 		LoginManager loginManager = new LoginManager(new CookieAccessObject(request, response), new DataAccessObject());
-		System.out.println(loginManager.getSavedUsername());
 		request.setAttribute("username", loginManager.getSavedUsername());
 		String search = request.getParameter("search");
 		request.setAttribute("search", search);
