@@ -54,7 +54,7 @@ public class DeletePostServlet extends HttpServlet {
 		try {
 			// threadID = dao.create(new Thread(forumID, title, author,
 			// isSticky, isDeleted));
-
+			post.setLastModificationTime(new Timestamp(System.currentTimeMillis()));
 			post.setDeleted(true);
 			dao.update(post);
 

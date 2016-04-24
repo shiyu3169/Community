@@ -24,6 +24,7 @@ CREATE TABLE Users(
     
     User_Gender CHAR(1),
     User_Autobiography LONGTEXT,
+    User_DateOfBirth	DATE,
     
     User_NumberOfNewMessages INT NOT NULL
 );
@@ -41,6 +42,7 @@ CREATE FUNCTION create_user (
 
     Given_User_Gender CHAR(1),
     Given_User_Autobiography LONGTEXT,
+	Given_User_DateOfBirth	DATE,
     
     Given_User_NumberOfNewMessages INT
     -- OUT Out_RegisterationTime DATE,
@@ -60,6 +62,7 @@ BEGIN
 		User_LastLoginTime,
 		User_Gender,
 		User_Autobiography,
+		User_DateOfBirth,
 		User_NumberOfNewMessages
     ) VALUES (
 		Given_UserName,
@@ -72,12 +75,13 @@ BEGIN
 		Given_User_LastLoginTime,
 		Given_User_Gender,
 		Given_User_Autobiography,
+        Given_User_DateOfBirth,
         Given_User_NumberOfNewMessages
 	);
     RETURN Given_UserName;
 
 END //
-SELECT (create_user("admin", "admin", "admin@admin.org", "127.0.0.1", TRUE, FALSE, NOW(), NOW(), null, null, 0)) //
+SELECT (create_user("admin", "admin", "admin@admin.org", "127.0.0.1", TRUE, FALSE, NOW(), NOW(), null, null, null, 0)) //
 -- SELECT (create_forums("admin", "admin", "admin@admin.org", "127.0.0.1", TRUE, FALSE, NOW(), NOW())) //
 DELIMITER ;
 DROP PROCEDURE IF EXISTS delete_user;
@@ -188,7 +192,7 @@ BEGIN
     RETURN LAST_INSERT_ID();
 END//
 DELIMITER ;
-SELECT create_user("admin", "admin", "admin@admin.org", "127.0.0.1", TRUE, FALSE, NOW(), NOW(), NULL, NULL, 0);
+SELECT create_user("admin", "admin", "admin@admin.org", "127.0.0.1", TRUE, FALSE, NOW(), NOW(), NULL, NULL,NULL, 0);
 SELECT create_forum(NULL,	
 		"Root", 
 		"admin", 

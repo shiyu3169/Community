@@ -5,6 +5,7 @@ package edu.neu.ccs.community;
 
 import java.sql.CallableStatement;
 import java.sql.Connection;
+import java.sql.Date;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -26,7 +27,7 @@ public class DataAccessObject {
 	private final String userName = "root";
 
 	/** The password for the MySQL account (or empty for anonymous) */
-	private final String password = "cliff92711";
+	private final String password = "hpahzGSYCl05116";
 
 	/** The name of the computer running MySQL */
 	private final String serverName = "localhost";
@@ -82,9 +83,10 @@ public class DataAccessObject {
 	/** Create User */
 	public void create(User user)
 			throws SQLException, InstantiationException, IllegalAccessException, ClassNotFoundException {
-		String sql = "SELECT create_user(?,?,?,?,?,?,?,?,?,?,?)"; // No need for the
-																// function
-																// result
+		String sql = "SELECT create_user(?,?,?,?,?,?,?,?,?,?,?,?)"; // No need for
+																	// the
+																	// function
+																	// result
 
 		try (Connection connection = this.getConnection();
 				PreparedStatement statement = connection.prepareStatement(sql)) {
@@ -106,7 +108,12 @@ public class DataAccessObject {
 			} else {
 				statement.setString(10, user.getAutobiography());
 			}
-			statement.setInt(11, user.getNewMessages());
+			if (user.getDateOfBirth() == null) {
+				statement.setNull(11, java.sql.Types.DATE);
+			} else {
+				statement.setDate(11, user.getDateOfBirth());
+			}
+			statement.setInt(12, user.getNewMessages());
 			statement.execute();
 
 		}
@@ -130,10 +137,13 @@ public class DataAccessObject {
 				Timestamp lastPostTime = rs.getTimestamp("User_LastPostTime");
 				boolean isAdministrator = rs.getBoolean("User_IsAdministrator");
 				boolean isBanned = rs.getBoolean("User_IsBanned");
-				Character gender = rs.getString("User_Gender").charAt(0);
+				String genderString = rs.getString("User_Gender");
+				Character gender = genderString == null? null:genderString.charAt(0);
 				String autobiography = rs.getString("User_Autobiography");
-				return new User(username, password, email, loginIpAddress, registerationTime, lastLoginTime,
-						lastPostTime, isAdministrator, isBanned,gender,autobiography);
+				Date dateOfBirth = rs.getDate("User_DateOfBirth");
+				int newMessages = rs.getInt("User_NumberOfNewMessages");
+				return new User(username, password, email, loginIpAddress, isAdministrator,
+						isBanned, gender, autobiography, dateOfBirth, newMessages);
 			} else {
 				return null;
 			}
@@ -257,6 +267,7 @@ public class DataAccessObject {
 		}
 		return result;
 	}
+
 	public List<Forum> getAllForums()
 			throws SQLException, InstantiationException, IllegalAccessException, ClassNotFoundException {
 		String sql = "CALL get_all_forums()";
@@ -279,6 +290,7 @@ public class DataAccessObject {
 		}
 		return result;
 	}
+
 	public List<Forum> getChildForums(Integer parentID)
 			throws SQLException, InstantiationException, IllegalAccessException, ClassNotFoundException {
 		String sql = "CALL get_child_forums(?)";
@@ -288,7 +300,7 @@ public class DataAccessObject {
 			ResultSet rs = statement.executeQuery();
 			while (rs.next()) {
 				int forumID = rs.getInt("ForumID");
-				//Integer parentID = rs.getInt("ParentID");
+				// Integer parentID = rs.getInt("ParentID");
 				String forumName = rs.getString("ForumName");
 				String owner = rs.getString("Forum_Owner");
 				String catagory = rs.getString("Forum_Category");
@@ -303,6 +315,7 @@ public class DataAccessObject {
 		}
 		return result;
 	}
+
 	public Forum getForumByID(int forumID)
 			throws SQLException, InstantiationException, IllegalAccessException, ClassNotFoundException {
 		String sql = "CALL get_forum_by_id(?)";
@@ -465,6 +478,7 @@ public class DataAccessObject {
 
 		return result;
 	}
+
 	public Thread getThreadByID(int threadID)
 			throws SQLException, InstantiationException, IllegalAccessException, ClassNotFoundException {
 		String sql = "CALL get_thread_by_id(?)";
@@ -473,7 +487,7 @@ public class DataAccessObject {
 			statement.setInt(1, threadID);
 			ResultSet rs = statement.executeQuery();
 			if (rs.next()) {
-				//int threadID = rs.getInt("ThreadID");
+				// int threadID = rs.getInt("ThreadID");
 				Integer forumID = rs.getInt("ForumID");
 				String title = rs.getString("Thread_Title");
 				String author = rs.getString("Thread_Author");
@@ -483,12 +497,13 @@ public class DataAccessObject {
 				boolean isSticky = rs.getBoolean("Thread_IsSticky");
 				boolean isDeleted = rs.getBoolean("Thread_IsDeleted");
 				int numberOfViews = rs.getInt("Thread_NumberOfViews");
-				return new Thread(threadID, forumID, title, author, lastUpdator, creationTime, lastUpdateTime,
-						isSticky, isDeleted, numberOfViews);
+				return new Thread(threadID, forumID, title, author, lastUpdator, creationTime, lastUpdateTime, isSticky,
+						isDeleted, numberOfViews);
 			}
 			throw new NoSuchElementException();
 		}
 	}
+
 	public Post getPostByID(int postID)
 			throws SQLException, InstantiationException, IllegalAccessException, ClassNotFoundException {
 		String sql = "CALL get_post_by_id(?)";
@@ -511,16 +526,18 @@ public class DataAccessObject {
 			throw new NoSuchElementException();
 		}
 	}
-	public List<Forum> getFavoriteForumsByUsername(String username) throws InstantiationException, IllegalAccessException, ClassNotFoundException, SQLException {
+
+	public List<Forum> getFavoriteForumsByUsername(String username)
+			throws InstantiationException, IllegalAccessException, ClassNotFoundException, SQLException {
 		ArrayList<Forum> result = new ArrayList<>();
 		String sql = "CALL get_FavoriteForums_by_UserName(?)";
-		try (Connection connection = this.getConnection(); CallableStatement statement = connection.prepareCall(sql)){
+		try (Connection connection = this.getConnection(); CallableStatement statement = connection.prepareCall(sql)) {
 			statement.setString(1, username);
 			ResultSet rs = statement.executeQuery();
 			while (rs.next()) {
 				int forumID = rs.getInt("ForumID");
 				Forum forum = this.getForumByID(forumID);
-				result.add(forum);				
+				result.add(forum);
 			}
 		}
 		return result;

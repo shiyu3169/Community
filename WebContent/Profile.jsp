@@ -31,7 +31,7 @@
 			</form>
 			<ul class="nav navbar-nav navbar-right">
 				<li><a href="<%=request.getContextPath()%>/home">Home</a></li>
-				<li><a href="/Community/login">Log out</a></li>
+				<li><a href="<%=request.getContextPath()%>/login">Log out</a></li>
 			</ul>
 		</div>
 	</div>
@@ -65,8 +65,6 @@
 						<h3 class="text-center panel-default">${username}</h3>
 					</div>
 					<div class="panel-body">
-						<p>${password}</p>
-						<br />
 						<p>${creationTime}</p>
 						<br />
 						<p>${lastLoginTime}</p>

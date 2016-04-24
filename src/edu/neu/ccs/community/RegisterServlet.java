@@ -31,14 +31,15 @@ public class RegisterServlet extends HttpServlet {
 		String email = request.getParameter("email");
 		Character gender = request.getParameter("gender") == null ? null : request.getParameter("gender").charAt(0);
 		String autobiography = request.getParameter("autobiography");
-		Date now = new Date(System.currentTimeMillis());
+		Date dateOfBirth = request.getParameter("dateOfBirth") == null ? null
+				: Date.valueOf(request.getParameter("dateOfBirth"));
 		request.setAttribute("username", username);
 		request.setAttribute("password", password);
 		request.setAttribute("email", email);
 		// User user = new User(username, password, email,
 		// request.getRemoteAddr(), now, now, null, false, false);
 		User user = new User(username, password, email, request.getRemoteAddr(), false, false, gender, autobiography,
-				0);
+				dateOfBirth, 0);
 		DataAccessObject dao = new DataAccessObject();
 		try {
 			dao.create(user);

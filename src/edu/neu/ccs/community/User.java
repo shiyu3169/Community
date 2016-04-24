@@ -17,7 +17,7 @@ public class User {
 	private String password;
 	private String email;
 	// String registerationIpAddress;
-	private  String loginIpAddress;
+	private String loginIpAddress;
 
 	private Timestamp registerationTime;
 	private Timestamp lastLoginTime;
@@ -25,14 +25,17 @@ public class User {
 
 	private boolean isAdministrator;
 	private boolean isBanned;
-	
+
 	private Character gender;
 	private String autobiography;
-	
+	private Date dateOfBirth;
+
 	private int newMessages;
-	//Constructor
+
+	// Constructor
 	public User(String username, String password, String email, String loginIpAddress, Timestamp registerationTime,
-			Timestamp lastLoginTime, Timestamp lastPostTime, boolean isAdministrator, boolean isBanned, Character gender, String autobiography) {
+			Timestamp lastLoginTime, Timestamp lastPostTime, boolean isAdministrator, boolean isBanned,
+			Character gender, String autobiography, Date dateOfBirth) {
 		super();
 		// this.userID = userID;
 		this.username = username;
@@ -47,11 +50,13 @@ public class User {
 		this.isBanned = isBanned;
 		this.gender = gender;
 		this.autobiography = autobiography;
+		this.dateOfBirth = dateOfBirth;
 		this.newMessages = 0;
 	}
-	//Constructor without time
+
+	// Constructor without time
 	public User(String username, String password, String email, String loginIpAddress, boolean isAdministrator,
-			boolean isBanned, Character gender, String autobiography, int newMessages) {
+			boolean isBanned, Character gender, String autobiography, Date dateOfBirth, int newMessages) {
 		super();
 		// this.userID = null;
 		this.username = username;
@@ -66,10 +71,11 @@ public class User {
 		this.isBanned = isBanned;
 		this.gender = gender;
 		this.autobiography = autobiography;
+		this.dateOfBirth = dateOfBirth;
 		this.newMessages = newMessages;
 	}
-	
-	//getter and setter
+
+	// getter and setter
 	public String getUsername() {
 		return username;
 	}
@@ -141,47 +147,72 @@ public class User {
 	public void setBanned(boolean isBanned) {
 		this.isBanned = isBanned;
 	}
+
 	/**
 	 * @return the newMessages
 	 */
 	public int getNewMessages() {
 		return newMessages;
 	}
+
 	/**
-	 * @param newMessages the newMessages to set
+	 * @param newMessages
+	 *            the newMessages to set
 	 */
 	public void setNewMessages(int newMessages) {
 		this.newMessages = newMessages;
 	}
+
 	/**
-	 * @param username the username to set
+	 * @param username
+	 *            the username to set
 	 */
 	public void setUsername(String username) {
 		this.username = username;
 	}
+
 	/**
 	 * @return the gender
 	 */
 	public Character getGender() {
 		return gender;
 	}
+
 	/**
-	 * @param gender the gender to set
+	 * @param gender
+	 *            the gender to set
 	 */
 	public void setGender(Character gender) {
 		this.gender = gender;
 	}
+
 	/**
 	 * @return the autobiography
 	 */
 	public String getAutobiography() {
 		return autobiography;
 	}
+
 	/**
-	 * @param autobiography the autobiography to set
+	 * @param autobiography
+	 *            the autobiography to set
 	 */
 	public void setAutobiography(String autobiography) {
 		this.autobiography = autobiography;
 	}
-	
+
+	/**
+	 * @return the dateOfBirth
+	 */
+	public Date getDateOfBirth() {
+		return dateOfBirth;
+	}
+
+	/**
+	 * @param dateOfBirth the dateOfBirth to set
+	 */
+	public void setDateOfBirth(Date dateOfBirth) {
+		this.dateOfBirth = dateOfBirth;
+	}
+
 }
