@@ -45,7 +45,7 @@ public class DeleteForumServlet extends HttpServlet {
 		} catch (Exception e) {
 			throw new IllegalArgumentException();
 		}
-		if (!loginManager.getCurrentUser().isAdministrator) {
+		if (!loginManager.getCurrentUser().isAdministrator()) {
 			request.setAttribute("message",
 					"You need to log in as an administrator to delete a forum.");
 			request.getRequestDispatcher("/Login.jsp").forward(request, response);
