@@ -45,6 +45,21 @@
 	<div class="container">
 		<div class="row">
 			<div class="col-lg-4">
+				<!-- Search -->
+				<div class="container">
+					<form class="form" method="get" action="searchUser">
+						<div class="col-lg-3"></div>
+						<div class="col-lg-6">
+							<div class="input-group">
+								<input type="text" name="search"
+									class="form-control" placeholder="Seaching for other user...">
+								<span class="input-group-btn">
+									<a href="profile?user=<%=request.getAttribute("user")%>" class="btn btn-primary btn-block" type="submit">Go!</a>
+								</span>
+							</div>
+						</div>
+					</form>
+				</div>
 				<div class="panel panel-default">
 					<div class="panel-heading">
 						<h3 class="text-center panel-default">${username}</h3>
