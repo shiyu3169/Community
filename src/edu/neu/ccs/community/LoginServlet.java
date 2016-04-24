@@ -22,6 +22,7 @@ public class LoginServlet extends HttpServlet {
         request.setAttribute("username", loginManager.getSavedUsername());
     	loginManager.logOut();
     	try {
+    		
 			request.getRequestDispatcher("/Login.jsp").forward(request, response);
 		} catch (ServletException e) {
 			// TODO Auto-generated catch block
