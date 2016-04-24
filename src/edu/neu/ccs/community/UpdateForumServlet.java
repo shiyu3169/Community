@@ -72,7 +72,7 @@ public class UpdateForumServlet extends HttpServlet {
 		} catch (Exception e) {
 			throw new IllegalArgumentException();
 		}
-		if (!forum.getOwner().equals(currentUser.getUsername()) && !currentUser.isAdministrator) {
+		if (!forum.getOwner().equals(currentUser.getUsername()) && !currentUser.isAdministrator()) {
 			request.setAttribute("message",
 					"You do not have the authority to update the forum. You need to log in either the owner's accout or as an administrator.");
 			request.getRequestDispatcher("/Login.jsp").forward(request, response);
