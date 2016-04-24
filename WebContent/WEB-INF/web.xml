@@ -4,13 +4,7 @@
   <welcome-file-list>
     <welcome-file>/home</welcome-file>
   </welcome-file-list>
-<<<<<<< HEAD
-<!-- <error-page>
-    <location>/goHome</location>
-</error-page> -->
-=======
   <error-page>
     <location>/goHome</location>
   </error-page>
->>>>>>> 8b5f26f99164d43cb16e8dfe6eac646e07135581
 </web-app>
