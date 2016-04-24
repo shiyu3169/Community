@@ -27,6 +27,7 @@
 					<button class="btn btn-primary" type="submit">Go!</button>
 				</form>
 				<ul class="nav navbar-nav navbar-right">
+					<li><a href="<%=request.getContextPath()%>/home">Home</a></li>
 					<%
 						if (request.getAttribute("username") == null) {
 					%>
