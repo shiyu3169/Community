@@ -59,6 +59,7 @@ public class LoginManager {
 		try {
 			return dao.getUserByName(this.getSavedUsername());
 		} catch (Exception e) {
+			e.printStackTrace();
 			return null;
 		}
 	}
