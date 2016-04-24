@@ -20,6 +20,7 @@
 	}
 
 	void updatePostid(int input) {
+		System.out.println("postid:"+input);
 		postid = input;
 	}%>
 <body background="./image/thread.jpg">
@@ -101,18 +102,17 @@
 							<!-- buttons  -->
 							<div>
 								<button data-toggle="modal" data-target="#edit"
+									onclick="<%updatePostid(post.getPostID());%>"
 									<%if (!post.getAuthor().equals(request.getAttribute("username"))
 							&& !(boolean) request.getAttribute("isAdmin")) {%>
-									style="visibility: hidden;" onclick=""
-									<%} else {
-						updatePostid(post.getPostID());
+									style="visibility: hidden;"
+									<%} else {				
 					}%>
 									class="btn btn-primary">Edit</button>
 								<button data-toggle="modal" data-target="#delete"
 									<%if (!(boolean) request.getAttribute("isAdmin")) {%>
 									style="visibility: hidden;"
-									<%} else {
-						updatePostid(post.getPostID());
+									<%} else {					
 					}%>
 									class="btn btn-danger">Delete</button>
 							</div>
