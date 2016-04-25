@@ -36,7 +36,7 @@
 					<%
 						} else {
 					%>
-					<li><a href="#">Hi ${username}</a></li>
+					<li><a href="profile?user=<%=request.getAttribute("username")%>">Hi ${username}</a></li>
 					<li><a href="/Community/login">Log out</a></li>
 					<%
 						}
