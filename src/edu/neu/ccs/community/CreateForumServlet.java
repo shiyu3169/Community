@@ -61,7 +61,7 @@ public class CreateForumServlet extends HttpServlet {
 			int forumID = dao.create(new Forum(parentID, forumName, owner, catagory, description, isVerified));
 			response.sendRedirect("forum?id=" + forumID);
 		} catch (InstantiationException | IllegalAccessException | ClassNotFoundException | SQLException e) {
-			request.setAttribute("message", e.getMessage());
+			request.setAttribute("message", "This forum is already existing");
 			request.getRequestDispatcher("/Home.jsp").forward(request, response);
 			return;
 		}

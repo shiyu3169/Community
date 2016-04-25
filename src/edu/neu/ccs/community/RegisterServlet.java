@@ -55,7 +55,11 @@ public class RegisterServlet extends HttpServlet {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		} catch (SQLException e) {
-			request.setAttribute("message", e.getMessage());
+			if (e.getMessage().contains("User_EMail")){
+				request.setAttribute("message", "This email is already used, please enter a new one");
+			} else {
+				request.setAttribute("message", "This username is already used, please try another");
+			}
 			request.getRequestDispatcher("/Register.jsp").forward(request, response);
 			e.printStackTrace();
 		}
