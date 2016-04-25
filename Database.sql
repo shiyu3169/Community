@@ -98,8 +98,27 @@ BEGIN
 END//
 DROP PROCEDURE IF EXISTS update_user //
 CREATE PROCEDURE update_user (
+	Old_UserName 	VARCHAR(50),
+	New_UserName VARCHAR(50),
+    New_User_Password VARCHAR(512),
+    New_User_EMail VARCHAR(63),
+    New_User_IsAdministrator BOOLEAN,
+    New_User_IsBanned BOOLEAN,
+    New_User_Gender CHAR(1),
+    New_User_Autobiography LONGTEXT,
+    New_User_DateOfBirth DATE
 )
 BEGIN
+	UPDATE Users SET 
+		UserName = New_UserName,
+		User_Password = New_User_Password,
+		User_EMail = New_User_EMail,
+		User_IsAdministrator = New_User_IsAdministrator,
+		User_IsBanned = New_User_IsBanned,
+		User_Gender = New_User_Gender,
+		User_Autobiography = New_User_Autobiography,
+		User_DateOfBirth = New_User_DateOfBirth
+		WHERE UserName = Old_UserName LIMIT 1;
 END//
 DROP FUNCTION IF EXISTS user_login_validation//
 CREATE FUNCTION user_login_validation(

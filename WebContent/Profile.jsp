@@ -161,11 +161,12 @@
 				<div class="modal-body">
 					<form class="form form-horizontal" method="post"
 						action="updateProfile">
+						<input name="oldUsername" type="hidden" value="${owner }" />
 						<div class="form-group">
 							<label class="col-sm-3 control-label">User Name</label>
 							<div class="col-sm-8">
 								<input id="username" name="username" type="text"
-									class="form-control" value="${username}"
+									class="form-control" value="${owner}"
 									placeholder="User Name" required />
 							</div>
 						</div>
@@ -181,14 +182,14 @@
 							<label class="col-sm-3 control-label">Gender</label>
 							<div class="col-sm-8">
 								<select id="gender" name="gender" class="form-control">
-									<option>Hidden</option>
+									<option value="null">Hidden</option>
 									<option value="M">Male</option>
 									<option value="F">Female</option>
 								</select>
 							</div>
 						</div>
 						<div class="form-group">
-							<label class="col-sm-3 control-label">${bio }</label>
+							<label class="col-sm-3 control-label">Biography</label>
 							<div class="col-sm-8">
 								<textarea id="bio" name="bio" class="form-control"
 									maxlength="400" placeholder="A short discription about you">${bio}</textarea>
@@ -213,6 +214,7 @@
 				</div>
 				<div class="modal-body">
 					<form class="form form-horizontal" method="post" action="banUser">
+						<input type="hidden" name="username" value="${owner}" />
 						<h3>Are you sure to ban this user?</h3>
 						<div class="modal-footer">
 							<button type="submit" class="btn btn-danger" id="ok">Ban</button>
