@@ -13,16 +13,6 @@
 	src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"></script>
 <link rel="stylesheet" href="./css/fresh-bootstrap-table.css">
 </head>
-<%!int postid = 0;
-
-	int getPostid() {
-		return postid;
-	}
-
-	void updatePostid(int input) {
-		System.out.println("postid:"+input);
-		postid = input;
-	}%>
 <body background="./image/thread.jpg">
 	<div>
 		<header> <nav class="navbar navbar-inverse navbar-fixed-top">
@@ -101,20 +91,70 @@
 							%>
 							<!-- buttons  -->
 							<div>
-								<button data-toggle="modal" data-target="#edit"
-									onclick="<%updatePostid(post.getPostID());%>"
+								<button data-toggle="modal"
+									data-target="#<%=post.getPostID()%>"
 									<%if (!post.getAuthor().equals(request.getAttribute("username"))
 							&& !(boolean) request.getAttribute("isAdmin")) {%>
-									style="visibility: hidden;"
-									<%} else {				
+									style="visibility: hidden;" <%} else {
 					}%>
 									class="btn btn-primary">Edit</button>
-								<button data-toggle="modal" data-target="#delete"
+								<!-- Edit -->
+								<div class="modal fade" id="<%=post.getPostID()%>">
+									<div class="modal-dialog">
+										<div class="modal-content">
+											<div class="modal-header">
+												<h4 class="modal-title">Edit Forum</h4>
+											</div>
+											<div class="modal-body">
+												<form class="form form-horizontal" method="post"
+													action="updatePost">
+													<input type="hidden" id="postID" name="postID"
+														value="<%=post.getPostID()%>" />
+													<div class="form-group">
+														<label class="col-sm-3 control-label">Content</label>
+														<div class="col-sm-8">
+															<textarea id="content" name="content"
+																class="form-control" maxlength="400"
+																placeholder="The content of the post"><%=post.getContent() %></textarea>
+														</div>
+													</div>
+													<div class="modal-footer">
+														<button type="submit" class="btn btn-success" id="ok">Confirm</button>
+														<button type="button" data-dismiss="modal"
+															class="btn btn-danger" id="cancelAdd">Cancel</button>
+													</div>
+												</form>
+											</div>
+										</div>
+									</div>
+								</div>
+								<button data-toggle="modal" data-target="#delete<%=post.getPostID() %>"
 									<%if (!(boolean) request.getAttribute("isAdmin")) {%>
-									style="visibility: hidden;"
-									<%} else {					
+									style="visibility: hidden;" <%} else {
 					}%>
 									class="btn btn-danger">Delete</button>
+								<!-- Delete -->
+								<div class="modal fade" id="delete<%=post.getPostID()%>">
+									<div class="modal-dialog">
+										<div class="modal-content">
+											<div class="modal-header">
+												<h4 class="modal-title">Delete Post</h4>
+											</div>
+											<div class="modal-body">
+												<form class="form form-horizontal" method="post"
+													action="deletePost">
+													<input type="hidden" name="postID" value="<%=post.getPostID()%>" />
+													<h3>Are you sure to delete this post?</h3>
+													<div class="modal-footer">
+														<button type="submit" class="btn btn-danger" id="ok">Delete</button>
+														<button type="button" data-dismiss="modal"
+															class="btn btn-success" id="cancelAdd">Cancel</button>
+													</div>
+												</form>
+											</div>
+										</div>
+									</div>
+								</div>
 							</div>
 						</div>
 						<%
@@ -142,57 +182,6 @@
 					<button type="submit" class="btn btn-success" id="Submit">Submit</button>
 				</div>
 			</form>
-		</div>
-	</div>
-	<!-- Edit -->
-	<div class="modal fade" id="edit">
-		<div class="modal-dialog">
-			<div class="modal-content">
-				<div class="modal-header">
-					<h4 class="modal-title">Edit Forum</h4>
-				</div>
-				<div class="modal-body">
-					<form class="form form-horizontal" method="post"
-						action="updatePost">
-						<input type="hidden" id="postID" name="postID"
-							value="<%=getPostid()%>" />
-						<div class="form-group">
-							<label class="col-sm-3 control-label">Content</label>
-							<div class="col-sm-8">
-								<textarea id="content" name="content" class="form-control"
-									maxlength="400" placeholder="The content of the post"></textarea>
-							</div>
-						</div>
-						<div class="modal-footer">
-							<button type="submit" class="btn btn-success" id="ok">Confirm</button>
-							<button type="button" data-dismiss="modal" class="btn btn-danger"
-								id="cancelAdd">Cancel</button>
-						</div>
-					</form>
-				</div>
-			</div>
-		</div>
-	</div>
-	<!-- Delete -->
-	<div class="modal fade" id="delete">
-		<div class="modal-dialog">
-			<div class="modal-content">
-				<div class="modal-header">
-					<h4 class="modal-title">Delete Post</h4>
-				</div>
-				<div class="modal-body">
-					<form class="form form-horizontal" method="post"
-						action="deletePost">
-						<input type="hidden" name="postID" value="<%=getPostid()%>" />
-						<h3>Are you sure to delete this post?</h3>
-						<div class="modal-footer">
-							<button type="submit" class="btn btn-danger" id="ok">Delete</button>
-							<button type="button" data-dismiss="modal"
-								class="btn btn-success" id="cancelAdd">Cancel</button>
-						</div>
-					</form>
-				</div>
-			</div>
 		</div>
 	</div>
 </body>
