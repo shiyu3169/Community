@@ -47,14 +47,14 @@
 			<div class="col-lg-4">
 				<!-- Search -->
 				<div class="container">
-					<form class="form" method="get" action="searchUser">
+					<form class="form" method="get" action="profile">
 						<div class="col-lg-3"></div>
 						<div class="col-lg-6">
 							<div class="input-group">
-								<input type="text" name="search"
+								<input type="text" name="user"
 									class="form-control" placeholder="Seaching for other user...">
 								<span class="input-group-btn">
-									<a href="profile?user=<%=request.getAttribute("user")%>" class="btn btn-primary btn-block" type="submit">Go!</a>
+									<button class="btn btn-primary btn-block" type="submit">Go!</button>
 								</span>
 							</div>
 						</div>
@@ -62,14 +62,12 @@
 				</div>
 				<div class="panel panel-default">
 					<div class="panel-heading">
-						<h3 class="text-center panel-default">${username}</h3>
+						<h3 class="text-center panel-default">${owner}</h3>
 					</div>
 					<div class="panel-body">
 						<p>${creationTime}</p>
 						<br />
 						<p>${lastLoginTime}</p>
-						<br />
-						<p>${lastPostTime}</p>
 						<br />
 						<p>${lastPostTime}</p>
 						<br />
@@ -102,11 +100,11 @@
 						</thead>
 						<tbody>
 							<%
-								if (request.getAttribute("recentPostedThread") == null) {
+								if (request.getAttribute("recentPostedThreads") == null) {
 							%>
 							<%
 								} else {
-									List<Thread> threads = (List<Thread>) request.getAttribute("recentPostedThread");
+									List<Thread> threads = (List<Thread>) request.getAttribute("recentPostedThreads");
 									for (Thread thread : threads) {
 							%>
 							<tr>
@@ -132,11 +130,11 @@
 						</thead>
 						<tbody>
 							<%
-								if (request.getAttribute("favoriteForum") == null) {
+								if (request.getAttribute("favoriteForums") == null) {
 							%>
 							<%
 								} else {
-									List<Forum> forums = (List<Forum>) request.getAttribute("favoriteForum");
+									List<Forum> forums = (List<Forum>) request.getAttribute("favoriteForums");
 									for (Forum forum : forums) {
 							%>
 							<tr>
@@ -163,11 +161,12 @@
 				<div class="modal-body">
 					<form class="form form-horizontal" method="post"
 						action="updateProfile">
+						<input name="oldUsername" type="hidden" value="${owner }" />
 						<div class="form-group">
 							<label class="col-sm-3 control-label">User Name</label>
 							<div class="col-sm-8">
 								<input id="username" name="username" type="text"
-									class="form-control" value="${username}"
+									class="form-control" value="${owner}"
 									placeholder="User Name" required />
 							</div>
 						</div>
@@ -183,14 +182,14 @@
 							<label class="col-sm-3 control-label">Gender</label>
 							<div class="col-sm-8">
 								<select id="gender" name="gender" class="form-control">
-									<option>Hidden</option>
+									<option value="null">Hidden</option>
 									<option value="M">Male</option>
 									<option value="F">Female</option>
 								</select>
 							</div>
 						</div>
 						<div class="form-group">
-							<label class="col-sm-3 control-label">${bio }</label>
+							<label class="col-sm-3 control-label">Biography</label>
 							<div class="col-sm-8">
 								<textarea id="bio" name="bio" class="form-control"
 									maxlength="400" placeholder="A short discription about you">${bio}</textarea>
@@ -215,6 +214,7 @@
 				</div>
 				<div class="modal-body">
 					<form class="form form-horizontal" method="post" action="banUser">
+						<input type="hidden" name="username" value="${owner}" />
 						<h3>Are you sure to ban this user?</h3>
 						<div class="modal-footer">
 							<button type="submit" class="btn btn-danger" id="ok">Ban</button>

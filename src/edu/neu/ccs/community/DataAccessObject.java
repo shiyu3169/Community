@@ -27,7 +27,7 @@ public class DataAccessObject {
 	private final String userName = "root";
 
 	/** The password for the MySQL account (or empty for anonymous) */
-	private final String password = "cliff92711";
+	private final String password = "hpahzGSYCl05116";
 
 	/** The name of the computer running MySQL */
 	private final String serverName = "localhost";
@@ -83,7 +83,8 @@ public class DataAccessObject {
 	/** Create User */
 	public void create(User user)
 			throws SQLException, InstantiationException, IllegalAccessException, ClassNotFoundException {
-		String sql = "SELECT create_user(?,?,?,?,?,?,?,?,?,?,?,?)"; // No need for
+		String sql = "SELECT create_user(?,?,?,?,?,?,?,?,?,?,?,?)"; // No need
+																	// for
 																	// the
 																	// function
 																	// result
@@ -138,12 +139,12 @@ public class DataAccessObject {
 				boolean isAdministrator = rs.getBoolean("User_IsAdministrator");
 				boolean isBanned = rs.getBoolean("User_IsBanned");
 				String genderString = rs.getString("User_Gender");
-				Character gender = genderString == null? null:genderString.charAt(0);
+				Character gender = genderString == null ? null : genderString.charAt(0);
 				String autobiography = rs.getString("User_Autobiography");
 				Date dateOfBirth = rs.getDate("User_DateOfBirth");
 				int newMessages = rs.getInt("User_NumberOfNewMessages");
-				return new User(username, password, email, loginIpAddress, isAdministrator,
-						isBanned, gender, autobiography, dateOfBirth, newMessages);
+				return new User(username, password, email, loginIpAddress, isAdministrator, isBanned, gender,
+						autobiography, dateOfBirth, newMessages);
 			} else {
 				return null;
 			}
@@ -244,6 +245,44 @@ public class DataAccessObject {
 		}
 	}
 
+	public void update(String oldUsername, User user)
+			throws SQLException, InstantiationException, IllegalAccessException, ClassNotFoundException {
+		String sql = "CALL update_user(?,?,?,?,?,?,?,?,?)";
+		try (Connection connection = this.getConnection(); CallableStatement statement = connection.prepareCall(sql)) {
+			/*
+			 * Old_UserName VARCHAR(50), New_UserName VARCHAR(50),
+			 * New_User_Password VARCHAR(512), New_User_EMail VARCHAR(63),
+			 * New_User_IsAdministrator BOOLEAN, New_User_IsBanned BOOLEAN,
+			 * New_User_Gender CHAR(1), New_User_Autobiography LONGTEXT,
+			 * New_User_DateOfBirth DATE
+			 */
+			statement.setString(1, oldUsername);
+			statement.setString(2, user.getUsername());
+			statement.setString(3, user.getPassword());
+			statement.setString(4, user.getEmail());
+			statement.setBoolean(5, user.isAdministrator());
+			statement.setBoolean(6, user.isBanned());
+			if (user.getGender() == null) {
+				statement.setNull(7, Types.CHAR);
+			} else {
+				statement.setString(7, user.getGender().toString());
+			}
+			if (user.getAutobiography() == null) {
+				statement.setNull(8, Types.CHAR);
+			} else {
+				statement.setString(8, user.getAutobiography());
+			}
+			if (user.getDateOfBirth()==null) {
+				statement.setNull(9, Types.DATE);
+			}
+			else {
+				statement.setDate(9, user.getDateOfBirth());
+			}
+			
+			statement.execute();
+		}
+	}
+
 	public List<Forum> searchForumByName(String name)
 			throws SQLException, InstantiationException, IllegalAccessException, ClassNotFoundException {
 		String sql = "CALL search_forum_by_name(?)";
@@ -310,7 +349,7 @@ public class DataAccessObject {
 				boolean isVerified = rs.getBoolean("Forum_IsVerified");
 				result.add(new Forum(forumID, parentID, forumName, owner, catagory, description, creationTime,
 						lastPostTime, isVerified));
-				System.out.println(forumName);
+				// System.out.println(forumName);
 			}
 		}
 		return result;
@@ -449,6 +488,33 @@ public class DataAccessObject {
 				int numberOfViews = rs.getInt("Thread_NumberOfViews");
 				result.add(new Thread(threadID, forumID, title, author, lastUpdator, creationTime, lastUpdateTime,
 						isSticky, isDeleted, numberOfViews));
+			}
+		}
+
+		return result;
+	}
+
+	public List<Thread> getRecentThreadsUpdatedByUser(String username)
+			throws SQLException, InstantiationException, IllegalAccessException, ClassNotFoundException {
+		String sql = "CALL get_recent_threads_updated_by_user(?)";
+		ArrayList<Thread> result = new ArrayList<Thread>();
+		try (Connection connection = this.getConnection(); CallableStatement statement = connection.prepareCall(sql)) {
+			statement.setString(1, username);
+			ResultSet rs = statement.executeQuery();
+			while (rs.next()) {
+				int threadID = rs.getInt("ThreadID");
+				Integer forumID = rs.getInt("ForumID");
+				String title = rs.getString("Thread_Title");
+				String author = rs.getString("Thread_Author");
+				String lastUpdator = rs.getString("Thread_LastUpdator");
+				Timestamp creationTime = rs.getTimestamp("Thread_CreationTime");
+				Timestamp lastUpdateTime = rs.getTimestamp("Thread_LastUpdateTime");
+				boolean isSticky = rs.getBoolean("Thread_IsSticky");
+				boolean isDeleted = rs.getBoolean("Thread_IsDeleted");
+				int numberOfViews = rs.getInt("Thread_NumberOfViews");
+				result.add(new Thread(threadID, forumID, title, author, lastUpdator, creationTime, lastUpdateTime,
+						isSticky, isDeleted, numberOfViews));
+				System.out.println(title);
 			}
 		}
 
