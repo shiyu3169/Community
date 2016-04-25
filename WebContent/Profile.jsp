@@ -57,6 +57,9 @@
 					</div>
 				</div>
 			</form>
+			<p align="middle">
+				<font color="red">${message }</font>
+			</p>
 		</div>
 		<br /> <br /> <br />
 		<div class="row">
@@ -176,16 +179,15 @@
 							<label class="col-sm-3 control-label">Password</label>
 							<div class="col-sm-8">
 								<input id="password" name="password" type="password"
-									class="form-control" value="${password}" placeholder="Enter the password to edit profile..."
-									required />
+									class="form-control" value="${password}"
+									placeholder="Enter the password to edit profile..." required />
 							</div>
 						</div>
 						<div class="form-group">
 							<label class="col-sm-3 control-label">Email</label>
 							<div class="col-sm-8">
-								<input id="email" name="email" type="email"
-									class="form-control" value="${email}" placeholder="Email"
-									required />
+								<input id="email" name="email" type="email" class="form-control"
+									value="${email}" placeholder="Email" required />
 							</div>
 						</div>
 						<div class="form-group">
