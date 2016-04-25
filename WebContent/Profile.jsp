@@ -47,11 +47,11 @@
 			<div class="col-lg-4">
 				<!-- Search -->
 				<div class="container">
-					<form class="form" method="get" action="searchUser">
+					<form class="form" method="get" action="profile">
 						<div class="col-lg-3"></div>
 						<div class="col-lg-6">
 							<div class="input-group">
-								<input type="text" name="search"
+								<input type="text" name="user"
 									class="form-control" placeholder="Seaching for other user...">
 								<span class="input-group-btn">
 									<button class="btn btn-primary btn-block" type="submit">Go!</button>
