@@ -97,8 +97,8 @@
 					</div>
 				</div>
 				<div align="middle">
-				<button type="button" class="btn btn-warning"
-					data-toggle="modal" data-target="#create">Create Sub Forum</button>
+					<button type="button" class="btn btn-warning" data-toggle="modal"
+						data-target="#create">Create Sub Forum</button>
 				</div>
 			</div>
 		</div>
@@ -166,6 +166,30 @@
 						${lastPostTime}</font></strong>
 			</p>
 			<hr />
+			<div>
+				<%
+					DataAccessObject dao = new DataAccessObject();
+					if (!dao.isFavoriteForum(request.getAttribute("forumName"))) {
+				%>
+				<form ethod="post" action="addFavorite">
+					<div align="middle">
+						<button type="button" class="btn btn-warning">Add this
+							forum to my favorite</button>
+					</div>
+				</form>
+				<%
+					} else {
+				%>
+				<form ethod="post" action="removeFavorite">
+					<div align="middle">
+						<button type="button" class="btn btn-warning">Remove this
+							forum from my favorite</button>
+					</div>
+				</form>
+				<%
+					}
+				%>
+			</div>
 		</div>
 	</div>
 	<form class="container" method="post" action="createThread">
@@ -262,7 +286,8 @@
 				<div class="modal-body">
 					<form class="form form-horizontal" method="post"
 						action="createForum">
-						<input type="hidden" name="parentID" value="<%=request.getParameter("id")%>">
+						<input type="hidden" name="parentID"
+							value="<%=request.getParameter("id")%>">
 						<div class="form-group">
 							<label class="col-sm-3 control-label">Forum Name</label>
 							<div class="col-sm-8">
