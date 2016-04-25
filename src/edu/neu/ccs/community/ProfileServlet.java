@@ -60,7 +60,7 @@ public class ProfileServlet extends HttpServlet {
 		request.setAttribute("bio", user.getAutobiography() == null ? "" : user.getAutobiography());
 		
 		try {
-			request.setAttribute("favorateForums", dao.getFavoriteForumsByUsername(username));
+			request.setAttribute("favoriteForums", dao.getFavoriteForumsByUsername(username));
 			request.setAttribute("recentPostedThreads", dao.getRecentThreadsUpdatedByUser(username));
 		} catch (InstantiationException | IllegalAccessException | ClassNotFoundException | SQLException e) {
 			// TODO Auto-generated catch block

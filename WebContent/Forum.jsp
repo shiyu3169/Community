@@ -171,18 +171,20 @@
 					DataAccessObject dao = new DataAccessObject();
 					if (!dao.isForumFavoriteWithUser(Integer.valueOf(request.getParameter("id")), String.valueOf(request.getAttribute("username")))) {
 				%>
-				<form ethod="post" action="addFavorite">
+				<form method="post" action="addFavorite">
 					<div align="middle">
-						<button type="button" class="btn btn-warning">Add this
+						<input type="hidden" name="forumID" value="<%=request.getParameter("id")%>" />
+						<button type="submit" class="btn btn-warning">Add this
 							forum to my favorite</button>
 					</div>
 				</form>
 				<%
 					} else {
 				%>
-				<form ethod="post" action="removeFavorite">
+				<form method="post" action="removeFavorite">
 					<div align="middle">
-						<button type="button" class="btn btn-warning">Remove this
+					<input type="hidden" name="forumID" value="<%=request.getParameter("id")%>" />
+						<button type="submit" class="btn btn-warning">Remove this
 							forum from my favorite</button>
 					</div>
 				</form>

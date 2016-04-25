@@ -12,8 +12,8 @@ import javax.servlet.http.HttpServletResponse;
 /**
  * Servlet implementation class AddFavoriteServlet
  */
-@WebServlet("/addFavorite")
-public class AddFavoriteServlet extends HttpServlet {
+@WebServlet("/removeFavorite")
+public class RemoveFavoriteServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 
 	/**
@@ -39,7 +39,7 @@ public class AddFavoriteServlet extends HttpServlet {
 			return;
 		}
 		try {
-			dao.addForumFavoriteWithUser(forumID, username);
+			dao.removeForumFavoriteWithUser(forumID, username);
 		} catch (InstantiationException | IllegalAccessException | ClassNotFoundException | SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();

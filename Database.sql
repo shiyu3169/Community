@@ -700,14 +700,14 @@ BEGIN
 		VALUES (Given_ForumID, Given_UserName);
 	RETURN LAST_INSERT_ID();
 END//
-DROP PROCEDURE IF EXISTS add_forum_favorite_with_user//
+DROP PROCEDURE IF EXISTS remove_forum_favorite_with_user//
 CREATE PROCEDURE remove_forum_favorite_with_user
 (
 	Given_ForumID INT,
     Given_UserName VARCHAR(50)
 )
 BEGIN
-	DELETE FROM FavoriteForum 
+	DELETE FROM FavoriteForums 
 		WHERE ForumID = Given_ForumID AND UserName = Given_UserName;
 END//
 DELIMITER ;

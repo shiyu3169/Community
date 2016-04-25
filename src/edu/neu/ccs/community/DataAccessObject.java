@@ -27,7 +27,7 @@ public class DataAccessObject {
 	private final String userName = "root";
 
 	/** The password for the MySQL account (or empty for anonymous) */
-	private final String password = "cliff92711";
+	private final String password = "hpahzGSYCl05116";
 
 	/** The name of the computer running MySQL */
 	private final String serverName = "localhost";
@@ -625,12 +625,12 @@ public class DataAccessObject {
 	}
 	public void addForumFavoriteWithUser(int forumID, String username)
 			throws InstantiationException, IllegalAccessException, ClassNotFoundException, SQLException {
-		String sql = "SELECT add_forum_favorite_with_user(?,?) }";
+		String sql = "SELECT add_forum_favorite_with_user(?,?)";
 
 		try (Connection connection = this.getConnection(); CallableStatement statement = connection.prepareCall(sql)) {
-			statement.setInt(2, forumID);
-			statement.setString(3, username);
-			statement.registerOutParameter(1, java.sql.Types.BOOLEAN);
+			statement.setInt(1, forumID);
+			statement.setString(2, username);
+
 
 			statement.execute();
 
@@ -639,12 +639,11 @@ public class DataAccessObject {
 	}
 	public void removeForumFavoriteWithUser(int forumID, String username)
 			throws InstantiationException, IllegalAccessException, ClassNotFoundException, SQLException {
-		String sql = "CALL remove_forum_favorite_with_user(?,?) }";
+		String sql = "CALL remove_forum_favorite_with_user(?,?)";
 
 		try (Connection connection = this.getConnection(); CallableStatement statement = connection.prepareCall(sql)) {
-			statement.setInt(2, forumID);
-			statement.setString(3, username);
-			statement.registerOutParameter(1, java.sql.Types.BOOLEAN);
+			statement.setInt(1, forumID);
+			statement.setString(2, username);
 
 			statement.execute();
 
