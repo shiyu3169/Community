@@ -48,10 +48,12 @@ public class UpdateUserServlet extends HttpServlet {
 		}
 		String newUsername = request.getParameter("username");
 		String newPassword = request.getParameter("password");
+		String newEmail = request.getParameter("email");
 		Character newGender = request.getParameter("gender") == null || request.getParameter("gender").equals("null") ? null : request.getParameter("gender").charAt(0);
 		String newBio = request.getParameter("bio");
 		user.setUserName(newUsername);
 		user.setPassword(newPassword);
+		user.setEmail(newEmail);
 		user.setGender(newGender);
 		user.setAutobiography(newBio);
 		try {

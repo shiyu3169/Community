@@ -52,6 +52,7 @@ public class ProfileServlet extends HttpServlet {
 		request.setAttribute("owner", username);
 		request.setAttribute("username", loginManager.getSavedUsername());
 		request.setAttribute("isAdmin", loginManager.hasLoggedIn() && loginManager.getCurrentUser().isAdministrator());
+		request.setAttribute("email", user.getEmail());
 		request.setAttribute("creationTime", user.getRegisterationTime());
 		request.setAttribute("lastLoginTime", user.getLastLoginTime());
 		request.setAttribute("lastPostTime", user.getLastPostTime());
