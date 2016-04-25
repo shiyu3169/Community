@@ -5,27 +5,19 @@ USE Community;
 
 /* User Table */
 DROP TABLE IF EXISTS Users;
-CREATE TABLE Users(
-	-- UserID	INT PRIMARY KEY AUTO_INCREMENT,
-    UserName 	VARCHAR(50) PRIMARY KEY,
-    
-    User_Password	VARCHAR(512) NOT NULL, -- in SHA3-512
-    User_EMail	VARCHAR(63) NOT NULL UNIQUE,
-    
-    -- User_RegisterationIpAddress	VARCHAR(45) NOT NULL, -- Maxium length of IPv6 is 45
-    User_LoginIpAddress	VARCHAR(45) NOT NULL,    
-    
-    User_RegisterationTime	DATETIME NOT NULL,
-	User_LastLoginTime	DATETIME NOT NULL,
-    User_LastPostTime	DATETIME,
-    
-    User_IsAdministrator	BOOLEAN NOT NULL,
-    User_IsBanned	BOOLEAN NOT NULL,
-    
+CREATE TABLE Users (
+    UserName VARCHAR(50) PRIMARY KEY,
+    User_Password VARCHAR(512) NOT NULL,
+    User_EMail VARCHAR(63) NOT NULL UNIQUE,
+    User_LoginIpAddress VARCHAR(45) NOT NULL,
+    User_RegisterationTime DATETIME NOT NULL,
+    User_LastLoginTime DATETIME NOT NULL,
+    User_LastPostTime DATETIME,
+    User_IsAdministrator BOOLEAN NOT NULL,
+    User_IsBanned BOOLEAN NOT NULL,
     User_Gender CHAR(1),
     User_Autobiography LONGTEXT,
-    User_DateOfBirth	DATE,
-    
+    User_DateOfBirth DATE,
     User_NumberOfNewMessages INT NOT NULL
 );
 DROP FUNCTION IF EXISTS create_user;
@@ -81,7 +73,19 @@ BEGIN
     RETURN Given_UserName;
 
 END //
-SELECT (create_user("admin", "admin", "admin@admin.org", "127.0.0.1", TRUE, FALSE, NOW(), NOW(), null, null, null, 0)) //
+SELECT 
+    (CREATE_USER('admin',
+            'admin',
+            'admin@admin.org',
+            '127.0.0.1',
+            TRUE,
+            FALSE,
+            NOW(),
+            NOW(),
+            NULL,
+            NULL,
+            NULL,
+            0))//
 -- SELECT (create_forums("admin", "admin", "admin@admin.org", "127.0.0.1", TRUE, FALSE, NOW(), NOW())) //
 DELIMITER ;
 DROP PROCEDURE IF EXISTS delete_user;
@@ -109,9 +113,9 @@ BEGIN
 		WHERE UserName = Given_UserName AND User_Password = Given_User_Password);
 END//
 DELIMITER ;
-SELECT user_login_validation("admin","admin");
+SELECT USER_LOGIN_VALIDATION('admin', 'admin');
 CALL delete_user("admin");
-SELECT user_login_validation("admin","admin");
+SELECT USER_LOGIN_VALIDATION('admin', 'admin');
 DELIMITER //
 DROP PROCEDURE IF EXISTS get_user_by_name//
 CREATE PROCEDURE get_user_by_name (
@@ -126,23 +130,20 @@ CALL get_user_by_name("admin");
 DROP TABLE IF EXISTS Forums;
 DELIMITER //
 CREATE TABLE Forums (
-	ForumID	INT PRIMARY KEY AUTO_INCREMENT,
-    ParentID	INT,	-- foreign key to ForumID
-    ForumName	VARCHAR(50) UNIQUE, -- Forum can be identified by name
-    
-    Forum_Owner	VARCHAR(50), -- foreign key to Users(Username) to speed up access
-    Forum_Category	VARCHAR(63),
+    ForumID INT PRIMARY KEY AUTO_INCREMENT,
+    ParentID INT,
+    ForumName VARCHAR(50) UNIQUE,
+    Forum_Owner VARCHAR(50),
+    Forum_Category VARCHAR(63),
     Forum_Description VARCHAR(255),
-    
-    Forum_CreationTime	DATETIME NOT NULL,
-    Forum_LastPostTime	DATETIME,
-    
-    Forum_IsVerified	BOOLEAN,
-    CONSTRAINT Forum_fk_Forum
-		FOREIGN KEY (ParentID) REFERENCES Forums(ForumID)
+    Forum_CreationTime DATETIME NOT NULL,
+    Forum_LastPostTime DATETIME,
+    Forum_IsVerified BOOLEAN,
+    CONSTRAINT Forum_fk_Forum FOREIGN KEY (ParentID)
+        REFERENCES Forums (ForumID)
         ON UPDATE CASCADE ON DELETE CASCADE,
-    CONSTRAINT Forum_fk_User
-		FOREIGN KEY (Forum_Owner) REFERENCES Users(UserName)
+    CONSTRAINT Forum_fk_User FOREIGN KEY (Forum_Owner)
+        REFERENCES Users (UserName)
         ON UPDATE CASCADE ON DELETE SET NULL
 )//
 DROP FUNCTION IF EXISTS create_forum//
@@ -192,49 +193,67 @@ BEGIN
     RETURN LAST_INSERT_ID();
 END//
 DELIMITER ;
-SELECT create_user("admin", "admin", "admin@admin.org", "127.0.0.1", TRUE, FALSE, NOW(), NOW(), NULL, NULL,NULL, 0);
-SELECT create_forum(NULL,	
-		"Root", 
-		"admin", 
-		"Forum_Category",
-		"Forum_Description",
-		NOW(),
-		TRUE);
-SELECT create_forum(1,	
-		"Cats", 
-		"admin", 
-		"Forum_Category",
-		"Forum_Description",
-		NOW(),
-		TRUE);
-SELECT create_forum(1,	
-		"Hello Kitty", 
-		"admin", 
-		"Forum_Category",
-		"Forum_Description",
-		NOW(),
-		TRUE);
-SELECT create_forum(1,	
-		"Big Face Cat", 
-		"admin", 
-		"Forum_Category",
-		"Forum_Description",
-		NOW(),
-		TRUE);   
-SELECT create_forum(1,	
-		"Garfield", 
-		"admin", 
-		"Forum_Category",
-		"Forum_Description",
-		NOW(),
-		TRUE);
-SELECT create_forum(1,	
-		"Doraemon", 
-		"admin", 
-		"Forum_Category",
-		"Forum_Description",
-		NOW(),
-		TRUE);
+SELECT 
+    CREATE_USER('admin',
+            'admin',
+            'admin@admin.org',
+            '127.0.0.1',
+            TRUE,
+            FALSE,
+            NOW(),
+            NOW(),
+            NULL,
+            NULL,
+            NULL,
+            0);
+SELECT 
+    CREATE_FORUM(NULL,
+            'Root',
+            'admin',
+            'Forum_Category',
+            'Forum_Description',
+            NOW(),
+            TRUE);
+SELECT 
+    CREATE_FORUM(1,
+            'Cats',
+            'admin',
+            'Forum_Category',
+            'Forum_Description',
+            NOW(),
+            TRUE);
+SELECT 
+    CREATE_FORUM(1,
+            'Hello Kitty',
+            'admin',
+            'Forum_Category',
+            'Forum_Description',
+            NOW(),
+            TRUE);
+SELECT 
+    CREATE_FORUM(1,
+            'Big Face Cat',
+            'admin',
+            'Forum_Category',
+            'Forum_Description',
+            NOW(),
+            TRUE);
+SELECT 
+    CREATE_FORUM(1,
+            'Garfield',
+            'admin',
+            'Forum_Category',
+            'Forum_Description',
+            NOW(),
+            TRUE);
+SELECT 
+    CREATE_FORUM(1,
+            'Doraemon',
+            'admin',
+            'Forum_Category',
+            'Forum_Description',
+            NOW(),
+            TRUE);
 DELIMITER //
 DROP PROCEDURE IF EXISTS update_forum//
 CREATE PROCEDURE update_forum (
@@ -324,28 +343,25 @@ END//
 DELIMITER ;
 DROP TABLE IF EXISTS Threads;
 CREATE TABLE Threads (
-	ThreadID	INT PRIMARY KEY AUTO_INCREMENT,
-    ForumID	INT, -- foreign key to Forums(ForumID)
-    Thread_Title	VARCHAR(255),
-    Thread_Author	VARCHAR(50), -- foreign key to Users(UserName) to speed up access
-    Thread_LastUpdator	VARCHAR(50),	-- the last replier or administortor who update it, foreign key to Users(UserName) to speed up access
-    
-    Thread_CreationTime	DATETIME,
-    Thread_LastUpdateTime	DATETIME,
-    
-    Thread_IsSticky	BOOLEAN,
-    Thread_IsDeleted	BOOLEAN,
-    Thread_NumberOfViews	INT NOT NULL,
-    
-    CONSTRAINT Thread_fk_Forum
-		FOREIGN KEY (ForumID) REFERENCES Forums(ForumID)
+    ThreadID INT PRIMARY KEY AUTO_INCREMENT,
+    ForumID INT,
+    Thread_Title VARCHAR(255),
+    Thread_Author VARCHAR(50),
+    Thread_LastUpdator VARCHAR(50),
+    Thread_CreationTime DATETIME,
+    Thread_LastUpdateTime DATETIME,
+    Thread_IsSticky BOOLEAN,
+    Thread_IsDeleted BOOLEAN,
+    Thread_NumberOfViews INT NOT NULL,
+    CONSTRAINT Thread_fk_Forum FOREIGN KEY (ForumID)
+        REFERENCES Forums (ForumID)
         ON UPDATE CASCADE ON DELETE CASCADE,
-    CONSTRAINT Thread_Author_fk_User
-		FOREIGN KEY (Thread_Author) REFERENCES Users(UserName)
+    CONSTRAINT Thread_Author_fk_User FOREIGN KEY (Thread_Author)
+        REFERENCES Users (UserName)
         ON UPDATE CASCADE ON DELETE CASCADE,
-    CONSTRAINT Thread_LastUpdator_fk_User
-		FOREIGN KEY (Thread_Author) REFERENCES Users(UserName)
-        ON UPDATE CASCADE ON DELETE SET NULL        
+    CONSTRAINT Thread_LastUpdator_fk_User FOREIGN KEY (Thread_Author)
+        REFERENCES Users (UserName)
+        ON UPDATE CASCADE ON DELETE SET NULL
 );
 
 DELIMITER //
@@ -393,50 +409,42 @@ BEGIN
     RETURN LAST_INSERT_ID();
 END//
 DELIMITER ;
-SELECT create_thread(
-		1,
-		"Is Hello Kitty cat?",
-		"admin",
-		"admin",
-    
-		NOW(),
-		NOW(),
-    
-		FALSE,
-		FALSE);
-SELECT create_thread(
-		2,
-		"Is Hello Kitty cat?",
-		"admin",
-		"admin",
-    
-		NOW(),
-		NOW(),
-    
-		FALSE,
-		FALSE);
-SELECT create_thread(
-		3,
-		"Is Hello Kitty cat?",
-		"admin",
-		"admin",
-    
-		NOW(),
-		NOW(),
-    
-		FALSE,
-		FALSE);
-SELECT create_thread(
-		3,
-		"Is Hello Kitty cat?",
-		"admin",
-		"admin",
-    
-		NOW(),
-		NOW(),
-    
-		FALSE,
-		FALSE);
+SELECT 
+    CREATE_THREAD(1,
+            'Is Hello Kitty cat?',
+            'admin',
+            'admin',
+            NOW(),
+            NOW(),
+            FALSE,
+            FALSE);
+SELECT 
+    CREATE_THREAD(2,
+            'Is Hello Kitty cat?',
+            'admin',
+            'admin',
+            NOW(),
+            NOW(),
+            FALSE,
+            FALSE);
+SELECT 
+    CREATE_THREAD(3,
+            'Is Hello Kitty cat?',
+            'admin',
+            'admin',
+            NOW(),
+            NOW(),
+            FALSE,
+            FALSE);
+SELECT 
+    CREATE_THREAD(3,
+            'Is Hello Kitty cat?',
+            'admin',
+            'admin',
+            NOW(),
+            NOW(),
+            FALSE,
+            FALSE);
 DELIMITER //
 DROP PROCEDURE IF EXISTS get_thread_list_by_forumID//
 CREATE PROCEDURE get_thread_list_by_forumID(
@@ -450,32 +458,23 @@ CALL get_thread_list_by_forumID(3);
 /* Posts Table */
 DROP TABLE IF EXISTS Posts;
 CREATE TABLE Posts (
-	PostID	INT PRIMARY KEY AUTO_INCREMENT,
-    ThreadID	INT, -- foreign key to Threads(ThreadID)
-    ReplyToPost	INT, -- foreign key to Post(PostID)
-    
-    Post_Author	VARCHAR(50),
-    -- Post_LastModifier	VARCHAR(50),
-    
-    Post_Content	LONGTEXT,
-    
-    Post_CreationTime	DATETIME NOT NULL,
-    Post_LastModificationTime	DATETIME,
-    
-    Post_IsDeleted	BOOLEAN,
-    
-    CONSTRAINT Post_fk_Thread
-		FOREIGN KEY (ThreadID) REFERENCES Threads(ThreadID)
-		ON UPDATE CASCADE ON DELETE CASCADE,
-    CONSTRAINT Post_fk_Post
-		FOREIGN KEY (ReplyToPost) REFERENCES Posts(PostID)
-		ON UPDATE CASCADE ON DELETE CASCADE,
-	CONSTRAINT Post_Author_fk_User
-		FOREIGN KEY (Post_Author) REFERENCES Users(UserName)
+    PostID INT PRIMARY KEY AUTO_INCREMENT,
+    ThreadID INT,
+    ReplyToPost INT,
+    Post_Author VARCHAR(50),
+    Post_Content LONGTEXT,
+    Post_CreationTime DATETIME NOT NULL,
+    Post_LastModificationTime DATETIME,
+    Post_IsDeleted BOOLEAN,
+    CONSTRAINT Post_fk_Thread FOREIGN KEY (ThreadID)
+        REFERENCES Threads (ThreadID)
+        ON UPDATE CASCADE ON DELETE CASCADE,
+    CONSTRAINT Post_fk_Post FOREIGN KEY (ReplyToPost)
+        REFERENCES Posts (PostID)
+        ON UPDATE CASCADE ON DELETE CASCADE,
+    CONSTRAINT Post_Author_fk_User FOREIGN KEY (Post_Author)
+        REFERENCES Users (UserName)
         ON UPDATE CASCADE ON DELETE CASCADE
-	-- CONSTRAINT Post_LastModifier_fk_User
-		-- FOREIGN KEY (Post_LastModifier) REFERENCES Users(UserName)
-        -- ON UPDATE CASCADE ON DELETE CASCADE
 );
 DELIMITER //
 DROP FUNCTION IF EXISTS create_post//
@@ -525,19 +524,14 @@ BEGIN
         RETURN LAST_INSERT_ID();
 END//
 
-SELECT create_post(1, -- foreign key to Threads(ThreadID)
-			NULL, -- foreign key to Post(PostID)
-			
-			"admin",
-			-- "admin",
-			
-			"Yes!!!! It is!!!",
-			
-			NOW(),
-			NOW(),
-			
-			FALSE
-)
+SELECT 
+    CREATE_POST(1,
+            NULL,
+            'admin',
+            'Yes!!!! It is!!!',
+            NOW(),
+            NOW(),
+            FALSE)
 //
 DROP TRIGGER IF EXISTS update_information_after_post_inserted //
 CREATE TRIGGER update_information_after_post_inserted
@@ -613,14 +607,14 @@ DELIMITER ;
 /* FavoriteForums Table */
 DROP TABLE IF EXISTS FavoriteForums;
 CREATE TABLE FavoriteForums (
-	UserName VARCHAR(50),
-    ForumID	INT,
-    CONSTRAINT FavoriteForum_fk_User
-		FOREIGN KEY (UserName) REFERENCES Users(UserName)
+    UserName VARCHAR(50),
+    ForumID INT,
+    CONSTRAINT FavoriteForum_fk_User FOREIGN KEY (UserName)
+        REFERENCES Users (UserName)
         ON UPDATE CASCADE ON DELETE CASCADE,
-	CONSTRAINT FavoriteForum_fk_Fourm
-		FOREIGN KEY (ForumID) REFERENCES Forums(ForumID)
-		ON UPDATE CASCADE ON DELETE CASCADE
+    CONSTRAINT FavoriteForum_fk_Fourm FOREIGN KEY (ForumID)
+        REFERENCES Forums (ForumID)
+        ON UPDATE CASCADE ON DELETE CASCADE
 );
 DROP PROCEDURE IF EXISTS get_FavoriteForums_by_UserName;
 DELIMITER //
@@ -632,21 +626,33 @@ END//
 DELIMITER ;
 DROP TABLE IF EXISTS User_Friends;
 CREATE TABLE User_Friends (
-	UserName VARCHAR(50),
+    UserName VARCHAR(50),
     Friend_UserName VARCHAR(50),
-    CONSTRAINT User_Friends_UserName_fk_Users
-		FOREIGN KEY (UserName) REFERENCES Users(UserName),
-    CONSTRAINT User_Friends_Friend_UserName_fk_Users
-		FOREIGN KEY (Friend_UserName) REFERENCES Users(UserName)
+    CONSTRAINT User_Friends_UserName_fk_Users FOREIGN KEY (UserName)
+        REFERENCES Users (UserName),
+    CONSTRAINT User_Friends_Friend_UserName_fk_Users FOREIGN KEY (Friend_UserName)
+        REFERENCES Users (UserName)
 );
 DROP TABLE IF EXISTS User_Messages;
 CREATE TABLE User_Messages (
-	Sender VARCHAR(50),
+    Sender VARCHAR(50),
     Recipient VARCHAR(50),
     Message_Title VARCHAR(255),
     Message_Content LONGTEXT,
-    CONSTRAINT User_Messages_Sender_fk_Users
-		FOREIGN KEY (Sender) REFERENCES Users(UserName),
-    CONSTRAINT User_Messages_Recipient_fk_Users
-		FOREIGN KEY (Recipient) REFERENCES Users(UserName)
+    CONSTRAINT User_Messages_Sender_fk_Users FOREIGN KEY (Sender)
+        REFERENCES Users (UserName),
+    CONSTRAINT User_Messages_Recipient_fk_Users FOREIGN KEY (Recipient)
+        REFERENCES Users (UserName)
 );
+DROP PROCEDURE IF EXISTS get_recent_threads_updated_by_user;
+DELIMITER //
+CREATE PROCEDURE get_recent_threads_updated_by_user (
+	Given_UserName VARCHAR(50)
+)
+BEGIN
+	SELECT DISTINCT * FROM Posts 
+		NATURAL JOIN Threads WHERE Posts.Post_Author = Given_UserName
+			GROUP BY Posts.ThreadID
+            ORDER BY Post_CreationTime LIMIT 10;
+END//
+DELIMITER ;

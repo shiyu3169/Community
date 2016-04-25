@@ -54,7 +54,7 @@
 								<input type="text" name="search"
 									class="form-control" placeholder="Seaching for other user...">
 								<span class="input-group-btn">
-									<a href="profile?user=<%=request.getAttribute("user")%>" class="btn btn-primary btn-block" type="submit">Go!</a>
+									<button class="btn btn-primary btn-block" type="submit">Go!</button>
 								</span>
 							</div>
 						</div>
@@ -62,14 +62,12 @@
 				</div>
 				<div class="panel panel-default">
 					<div class="panel-heading">
-						<h3 class="text-center panel-default">${username}</h3>
+						<h3 class="text-center panel-default">${owner}</h3>
 					</div>
 					<div class="panel-body">
 						<p>${creationTime}</p>
 						<br />
 						<p>${lastLoginTime}</p>
-						<br />
-						<p>${lastPostTime}</p>
 						<br />
 						<p>${lastPostTime}</p>
 						<br />
@@ -102,11 +100,11 @@
 						</thead>
 						<tbody>
 							<%
-								if (request.getAttribute("recentPostedThread") == null) {
+								if (request.getAttribute("recentPostedThreads") == null) {
 							%>
 							<%
 								} else {
-									List<Thread> threads = (List<Thread>) request.getAttribute("recentPostedThread");
+									List<Thread> threads = (List<Thread>) request.getAttribute("recentPostedThreads");
 									for (Thread thread : threads) {
 							%>
 							<tr>
@@ -132,11 +130,11 @@
 						</thead>
 						<tbody>
 							<%
-								if (request.getAttribute("favoriteForum") == null) {
+								if (request.getAttribute("favoriteForums") == null) {
 							%>
 							<%
 								} else {
-									List<Forum> forums = (List<Forum>) request.getAttribute("favoriteForum");
+									List<Forum> forums = (List<Forum>) request.getAttribute("favoriteForums");
 									for (Forum forum : forums) {
 							%>
 							<tr>
