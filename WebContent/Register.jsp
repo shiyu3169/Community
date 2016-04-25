@@ -32,13 +32,13 @@
 	            	<font color="white">Please Register </font>
 	            </h2>
 	            <label for="inputUserName" class="sr-only">User Name</label>
-	            <input type="text" name="username" id="Username" class="form-control" placeholder="UserName" value="${username}" required autofocus>
+	            <input type="text" name="username" id="Username" class="form-control" placeholder="UserName" value="${username}" pattern=".{5,}" title="Minimum 5 characters required" required autofocus>
 	            <br/>
 	            <label for="inputEmail" class="sr-only">Email</label>
 	            <input type="email" name="email" id="email" class="form-control" placeholder="Email@example.com" value="${email}" required>
 	            <br/>
 	            <label for="inputPassword" class="sr-only">Password</label>   
-	            <input type="password" name="password" id="Password" class="form-control" placeholder="Password" value="${password}"  required>	 
+	            <input type="password" name="password" id="Password" class="form-control" placeholder="Password" value="${password}" pattern=".{5,}" title="Minimum 5 characters required" required>	 
 	            <br/>           
 	            <button class="btn btn-lg btn-primary btn-block" type="submit">Sign up</button>
 	            <h3>

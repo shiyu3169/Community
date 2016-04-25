@@ -77,7 +77,9 @@
 						<br />
 						<p>Last Post Time: ${lastPostTime}</p>
 						<br />
-						<p>Gender: ${gender }</p>
+						<p>
+							Gender:
+							<%=request.getAttribute("gender")%></p>
 						<br />
 						<p>Birthday: ${birthday }</p>
 						<br />
@@ -171,23 +173,24 @@
 							<label class="col-sm-3 control-label">User Name</label>
 							<div class="col-sm-8">
 								<input id="username" name="username" type="text"
-									class="form-control" value="${owner}" placeholder="User Name"
-									required />
+									class="form-control" value="${owner}"
+									placeholder="User Name..." required />
 							</div>
 						</div>
 						<div class="form-group">
 							<label class="col-sm-3 control-label">Password</label>
 							<div class="col-sm-8">
 								<input id="password" name="password" type="password"
+									pattern=".{5,}" title="Minimum 5 characters required"
 									class="form-control" value="${password}"
-									placeholder="Enter the password to edit profile..." required />
+									placeholder="Passowrd..." required />
 							</div>
 						</div>
 						<div class="form-group">
 							<label class="col-sm-3 control-label">Email</label>
 							<div class="col-sm-8">
 								<input id="email" name="email" type="email" class="form-control"
-									value="${email}" placeholder="Email" required />
+									value="${email}" placeholder="Email..." required />
 							</div>
 						</div>
 						<div class="form-group">
@@ -204,14 +207,15 @@
 							<label class="col-sm-3 control-label">Birthday</label>
 							<div class="col-sm-8">
 								<input id="password" name="birthday" type="date"
-									class="form-control" value="${birthday}" placeholder="Birthday" />
+									class="form-control" value="${birthday}"
+									placeholder="Birthday..." />
 							</div>
 						</div>
 						<div class="form-group">
 							<label class="col-sm-3 control-label">Biography</label>
 							<div class="col-sm-8">
 								<textarea id="bio" name="bio" class="form-control"
-									maxlength="400" placeholder="A short discription about you">${bio}</textarea>
+									maxlength="400" placeholder="A short discription about you...">${bio}</textarea>
 							</div>
 						</div>
 						<div class="modal-footer">
