@@ -43,39 +43,42 @@
 	<br />
 	<br />
 	<div class="container">
+		<!-- Search -->
+		<div class="container">
+			<form class="form" method="get" action="profile">
+				<div class="col-lg-3"></div>
+				<div class="col-lg-6">
+					<div class="input-group">
+						<input type="text" name="user" class="form-control"
+							placeholder="Seaching for other user..."> <span
+							class="input-group-btn">
+							<button class="btn btn-primary btn-block" type="submit">Go!</button>
+						</span>
+					</div>
+				</div>
+			</form>
+		</div>
+		<br /> <br /> <br />
 		<div class="row">
 			<div class="col-lg-4">
-				<!-- Search -->
-				<div class="container">
-					<form class="form" method="get" action="profile">
-						<div class="col-lg-3"></div>
-						<div class="col-lg-6">
-							<div class="input-group">
-								<input type="text" name="user"
-									class="form-control" placeholder="Seaching for other user...">
-								<span class="input-group-btn">
-									<button class="btn btn-primary btn-block" type="submit">Go!</button>
-								</span>
-							</div>
-						</div>
-					</form>
-				</div>
 				<div class="panel panel-default">
 					<div class="panel-heading">
 						<h3 class="text-center panel-default">${owner}</h3>
 					</div>
 					<div class="panel-body">
-						<p>${creationTime}</p>
+						<p>Email: ${email}</p>
 						<br />
-						<p>${lastLoginTime}</p>
+						<p>Creation Time: ${creationTime}</p>
 						<br />
-						<p>${lastPostTime}</p>
+						<p>Last Login Time: ${lastLoginTime}</p>
 						<br />
-						<p>${gender }</p>
+						<p>Last Post Time: ${lastPostTime}</p>
 						<br />
-						<p>${birthday }</p>
+						<p>Gender: ${gender }</p>
 						<br />
-						<p>${bio }</p>
+						<p>Birthday: ${birthday }</p>
+						<br />
+						<p>Biography: ${bio }</p>
 					</div>
 				</div>
 				<br />
@@ -108,8 +111,7 @@
 									for (Thread thread : threads) {
 							%>
 							<tr>
-								<td><a
-									href="goThread?forumid=<%=thread.getForumID()%>&threadid=<%=thread.getThreadID()%>"><%=thread.getTitle()%></a>
+								<td><a href="thread?id=<%=thread.getThreadID()%>"><%=thread.getTitle()%></a>
 								</td>
 							</tr>
 							<%
@@ -166,15 +168,23 @@
 							<label class="col-sm-3 control-label">User Name</label>
 							<div class="col-sm-8">
 								<input id="username" name="username" type="text"
-									class="form-control" value="${owner}"
-									placeholder="User Name" required />
+									class="form-control" value="${owner}" placeholder="User Name"
+									required />
 							</div>
 						</div>
 						<div class="form-group">
 							<label class="col-sm-3 control-label">Password</label>
 							<div class="col-sm-8">
 								<input id="password" name="password" type="password"
-									class="form-control" value="${password}" placeholder="password"
+									class="form-control" value="${password}" placeholder="Enter the password to edit profile..."
+									required />
+							</div>
+						</div>
+						<div class="form-group">
+							<label class="col-sm-3 control-label">Email</label>
+							<div class="col-sm-8">
+								<input id="email" name="email" type="email"
+									class="form-control" value="${email}" placeholder="Email"
 									required />
 							</div>
 						</div>
@@ -186,6 +196,13 @@
 									<option value="M">Male</option>
 									<option value="F">Female</option>
 								</select>
+							</div>
+						</div>
+						<div class="form-group">
+							<label class="col-sm-3 control-label">Birthday</label>
+							<div class="col-sm-8">
+								<input id="password" name="birthday" type="date"
+									class="form-control" value="${birthday}" placeholder="Birthday" />
 							</div>
 						</div>
 						<div class="form-group">
