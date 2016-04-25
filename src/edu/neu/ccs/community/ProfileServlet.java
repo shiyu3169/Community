@@ -40,9 +40,12 @@ public class ProfileServlet extends HttpServlet {
 			if (user == null) {
 				throw new NoSuchElementException("The user \""+username+"\" does not exist.");
 			}
+			if (user.isBanned()) {
+				throw new RuntimeException("The user has been banned.");
+			}
 		} catch (Exception e) {
 			request.setAttribute("message", e.getMessage());
-			request.getRequestDispatcher("/Home").forward(request, response);
+			request.getRequestDispatcher("/Home.jsp").forward(request, response);
 			return;
 		}
 		System.out.println(username);
