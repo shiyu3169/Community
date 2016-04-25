@@ -272,13 +272,12 @@ public class DataAccessObject {
 			} else {
 				statement.setString(8, user.getAutobiography());
 			}
-			if (user.getDateOfBirth()==null) {
+			if (user.getDateOfBirth() == null) {
 				statement.setNull(9, Types.DATE);
-			}
-			else {
+			} else {
 				statement.setDate(9, user.getDateOfBirth());
 			}
-			
+
 			statement.execute();
 		}
 	}
@@ -609,4 +608,47 @@ public class DataAccessObject {
 		return result;
 	}
 
+	public boolean isForumFavoriteWithUser(int forumID, String username)
+			throws InstantiationException, IllegalAccessException, ClassNotFoundException, SQLException {
+		String sql = "{ ? = CALL is_forum_favorite_with_user(?,?) }";
+
+		try (Connection connection = this.getConnection(); CallableStatement statement = connection.prepareCall(sql)) {
+			statement.setInt(2, forumID);
+			statement.setString(3, username);
+			statement.registerOutParameter(1, java.sql.Types.BOOLEAN);
+
+			statement.execute();
+			return statement.getBoolean(1);
+
+		}
+
+	}
+	public void addForumFavoriteWithUser(int forumID, String username)
+			throws InstantiationException, IllegalAccessException, ClassNotFoundException, SQLException {
+		String sql = "SELECT add_forum_favorite_with_user(?,?) }";
+
+		try (Connection connection = this.getConnection(); CallableStatement statement = connection.prepareCall(sql)) {
+			statement.setInt(2, forumID);
+			statement.setString(3, username);
+			statement.registerOutParameter(1, java.sql.Types.BOOLEAN);
+
+			statement.execute();
+
+		}
+
+	}
+	public void removeForumFavoriteWithUser(int forumID, String username)
+			throws InstantiationException, IllegalAccessException, ClassNotFoundException, SQLException {
+		String sql = "CALL remove_forum_favorite_with_user(?,?) }";
+
+		try (Connection connection = this.getConnection(); CallableStatement statement = connection.prepareCall(sql)) {
+			statement.setInt(2, forumID);
+			statement.setString(3, username);
+			statement.registerOutParameter(1, java.sql.Types.BOOLEAN);
+
+			statement.execute();
+
+		}
+
+	}
 }

@@ -169,7 +169,7 @@
 			<div>
 				<%
 					DataAccessObject dao = new DataAccessObject();
-					if (!dao.isFavoriteForum(request.getAttribute("forumName"))) {
+					if (!dao.isForumFavoriteWithUser(Integer.valueOf(request.getParameter("id")), String.valueOf(request.getAttribute("username")))) {
 				%>
 				<form ethod="post" action="addFavorite">
 					<div align="middle">

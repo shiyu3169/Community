@@ -127,9 +127,9 @@ CREATE FUNCTION user_login_validation(
 RETURNS BOOLEAN
 BEGIN
 	UPDATE Users SET User_LastLoginTime = NOW()
-		WHERE UserName = Given_UserName AND User_Password = Given_User_Password LIMIT 1;
+		WHERE UserName = Given_UserName AND User_Password = Given_User_Password AND User_IsBanned=FALSE LIMIT 1;
 	RETURN EXISTS(SELECT * FROM Users 
-		WHERE UserName = Given_UserName AND User_Password = Given_User_Password);
+		WHERE UserName = Given_UserName AND User_Password = Given_User_Password  AND User_IsBanned = FALSE);
 END//
 DELIMITER ;
 SELECT USER_LOGIN_VALIDATION('admin', 'admin');
@@ -626,6 +626,7 @@ DELIMITER ;
 /* FavoriteForums Table */
 DROP TABLE IF EXISTS FavoriteForums;
 CREATE TABLE FavoriteForums (
+    FavoriteForumID INT AUTO_INCREMENT PRIMARY KEY,
     UserName VARCHAR(50),
     ForumID INT,
     CONSTRAINT FavoriteForum_fk_User FOREIGN KEY (UserName)
@@ -645,6 +646,7 @@ END//
 DELIMITER ;
 DROP TABLE IF EXISTS User_Friends;
 CREATE TABLE User_Friends (
+    FriendID INT AUTO_INCREMENT PRIMARY KEY,
     UserName VARCHAR(50),
     Friend_UserName VARCHAR(50),
     CONSTRAINT User_Friends_UserName_fk_Users FOREIGN KEY (UserName)
@@ -654,10 +656,12 @@ CREATE TABLE User_Friends (
 );
 DROP TABLE IF EXISTS User_Messages;
 CREATE TABLE User_Messages (
+	MessageID INT AUTO_INCREMENT PRIMARY KEY,
     Sender VARCHAR(50),
     Recipient VARCHAR(50),
     Message_Title VARCHAR(255),
     Message_Content LONGTEXT,
+    Message_IsRead BOOLEAN,
     CONSTRAINT User_Messages_Sender_fk_Users FOREIGN KEY (Sender)
         REFERENCES Users (UserName),
     CONSTRAINT User_Messages_Recipient_fk_Users FOREIGN KEY (Recipient)
@@ -673,5 +677,37 @@ BEGIN
 		NATURAL JOIN Threads WHERE Posts.Post_Author = Given_UserName
 			GROUP BY Posts.ThreadID
             ORDER BY Post_CreationTime LIMIT 10;
+END//
+DROP FUNCTION IF EXISTS is_forum_favorite_with_user//
+CREATE FUNCTION is_forum_favorite_with_user
+(
+	Given_ForumID INT,
+    Given_UserName VARCHAR(50)
+)
+RETURNS BOOLEAN
+BEGIN
+	RETURN EXISTS (SELECT * FROM FavoriteForums WHERE UserName = Given_UserName AND ForumID = Given_ForumID LIMIT 1);
+END//
+DROP FUNCTION IF EXISTS add_forum_favorite_with_user//
+CREATE FUNCTION add_forum_favorite_with_user
+(
+	Given_ForumID INT,
+    Given_UserName VARCHAR(50)
+)
+RETURNS INT
+BEGIN
+	INSERT INTO FavoriteForums (ForumID, UserName) 
+		VALUES (Given_ForumID, Given_UserName);
+	RETURN LAST_INSERT_ID();
+END//
+DROP PROCEDURE IF EXISTS add_forum_favorite_with_user//
+CREATE PROCEDURE remove_forum_favorite_with_user
+(
+	Given_ForumID INT,
+    Given_UserName VARCHAR(50)
+)
+BEGIN
+	DELETE FROM FavoriteForum 
+		WHERE ForumID = Given_ForumID AND UserName = Given_UserName;
 END//
 DELIMITER ;
