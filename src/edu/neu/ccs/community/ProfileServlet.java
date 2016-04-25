@@ -45,13 +45,14 @@ public class ProfileServlet extends HttpServlet {
 			}
 		} catch (Exception e) {
 			request.setAttribute("message", e.getMessage());
-			request.getRequestDispatcher("/Home.jsp").forward(request, response);
+			request.getRequestDispatcher("/Error.jsp").forward(request, response);
 			return;
 		}
 		System.out.println(username);
 		request.setAttribute("owner", username);
 		request.setAttribute("username", loginManager.getSavedUsername());
 		request.setAttribute("isAdmin", loginManager.hasLoggedIn() && loginManager.getCurrentUser().isAdministrator());
+		request.setAttribute("email", user.getEmail());
 		request.setAttribute("creationTime", user.getRegisterationTime());
 		request.setAttribute("lastLoginTime", user.getLastLoginTime());
 		request.setAttribute("lastPostTime", user.getLastPostTime());

@@ -18,6 +18,23 @@
 	src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.2/js/select2.min.js"></script>
 </head>
 <body background="">
+	<header> <nav class="navbar navbar-inverse navbar-fixed-top">
+	<div class="container">
+		<div id="navbar" class="collapse navbar-collapse" aria-expanded="true">
+			<form class="navbar-form navbar-left" method="get" action="home">
+				<div class="form-group">
+					<input type="text" name="search" value="${forumName }"
+						class="form-control" placeholder="Seaching for forum ...">
+				</div>
+				<button class="btn btn-primary" type="submit">Go!</button>
+			</form>
+			<ul class="nav navbar-nav navbar-right">
+				<li><a href="<%=request.getContextPath()%>/home">Home</a></li>
+				<li><a href="<%=request.getContextPath()%>/login">Log out</a></li>
+			</ul>
+		</div>
+	</div>
+	</nav> </header>
 	<br />
 	<br />
 	<br />
@@ -31,7 +48,7 @@
 			<div class="col-md-4">
 				<div align="center">
 					<h1>Oops!</h1>
-					<p>${message }</p>
+					<p align="middle">${message }</p>
 					<div align="center">
 						<a href="home" class="btn btn-primary btn-lg"><span
 							class="glyphicon glyphicon-home"></span> Take Me Home </a>
